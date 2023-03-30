@@ -9,7 +9,7 @@
                       <span aria-hidden="true">×</span>
                     </button>
                     <h3 class="text-center">
-                      Selamat Datang Di Sistem Informasi Manajemen (SIM) LKP DAINFO
+                      Selamat Datang Di Sistem Informasi Manajemen (SIM) LKP Cendekia Utama
                     </h3>
                   </div>
                 </div>

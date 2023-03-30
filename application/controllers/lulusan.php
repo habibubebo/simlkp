@@ -48,7 +48,7 @@ class lulusan  extends CI_Controller {
         $this->load->view('layout/footer');
     }
     // ubah
-    function ubah($Id){
+    function ubah($Id  = null){
         $Id = $this->input->post('Id');
         $nama = $this->input->post('nmlulusan');
         $jk = $this->input->post('jk');

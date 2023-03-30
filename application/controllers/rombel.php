@@ -44,7 +44,7 @@ class rombel  extends CI_Controller {
         $this->load->view('layout/footer');
     }
     // ubah
-    function ubah($Id){
+    function ubah($Id  = null){
         $Id = $this->input->post('Id');
         $nm = $this->input->post('nm');
         $kls = $this->input->post('kls');

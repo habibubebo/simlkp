@@ -62,9 +62,9 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="<?php echo base_url("index.php/laporan/#")?>">
+        <a class="nav-link" href="<?php echo base_url('index.php/Laporan/sertifikat'); ?>">
           <i class="fas fa-fw fa-archive"></i>
-          <span>Laporan</span>
+          <span>Sertifikat</span>
         </a>
       </li>
       <hr class="sidebar-divider">

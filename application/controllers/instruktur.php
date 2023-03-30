@@ -50,7 +50,7 @@ class instruktur  extends CI_Controller {
         $this->load->view('layout/footer');
     }
     // ubah
-    function ubah($Id){
+    function ubah($Id  = null){
         $Id = $this->input->post('Id');
         $ni = $this->input->post('ni');
         $jk = $this->input->post('jk');

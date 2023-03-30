@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `instruktur` (
 -- Dumping data for table db_lkp.instruktur: ~2 rows (approximately)
 /*!40000 ALTER TABLE `instruktur` DISABLE KEYS */;
 INSERT INTO `instruktur` (`Id`, `NamaInstruktur`, `Kelamin`, `Tempatlahir`, `Tanggallahir`, `Namaibu`, `Alamat`, `Email`) VALUES
-	(1, 'Habib Muhammad, S.Pd', 'Laki - Laki', 'Blitar', '04/02/1999', 'Rupiah', 'Srengat', 'habib@cenditama.com'),
+	(1, 'Habib Muhammad, S.Pd', 'Laki - Laki', 'Blitar', '29/03/2023', 'Cenditama', 'Blitar', 'habib@cenditama.com'),
 	(2, 'Haris Dwi Saputra, S.Pi', 'Laki - Laki', 'Blitar', '29/03/2023', 'Cenditama', 'Blitar', 'haris@cenditama.com');
 /*!40000 ALTER TABLE `instruktur` ENABLE KEYS */;
 
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `peserta` (
 -- Dumping data for table db_lkp.peserta: ~1 rows (approximately)
 /*!40000 ALTER TABLE `peserta` DISABLE KEYS */;
 INSERT INTO `peserta` (`Id`, `Nama`, `Kelamin`, `Nipd`, `Nik`, `Nokk`, `Jeniskursus`, `Kelas`, `Tanggalmasuk`, `Ttl`) VALUES
-	(1, 'Nama peserta', 'Laki - Laki', '1000', '350503', '350503', 'Microsoft Office', 'Reguler', '01/03/2023', '01/06/2005');
+	(1, 'Nama peserta benar', 'Laki - Laki', '1000', '350503', '350503', 'Microsoft Office', 'Reguler', '29/03/2023', '29/03/2023');
 /*!40000 ALTER TABLE `peserta` ENABLE KEYS */;
 
 -- Dumping structure for table db_lkp.profil

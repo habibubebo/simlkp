@@ -32,7 +32,7 @@
                     </div>
                     <div class="form-group col-md-8">
                         <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                        placeholder="Nama Peserta" name="Nama" maxlength=20 required value="<?php echo $tp->Nama ?>">
+                        placeholder="Nama Peserta" name="Nama" maxlength=50 required value="<?php echo $tp->Nama ?>">
                     </div>
                     <div class="form-group col-md-4">
                         <select class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"

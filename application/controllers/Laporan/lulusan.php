@@ -88,7 +88,7 @@ Class lulusan extends CI_Controller{
             $pdf->Cell(50,7,$row->Kelas,1,0,"C"); 
             $pdf->Cell(50,7,$row->Tgllulus,1,0,"C"); 
             $pdf->Cell(50,7,$row->Ttl,1,1,"C"); 
-            $total += count($row->Nama);
+            $total += 1;
             if ($row->Kelamin == "Laki - Laki") {
                 $laki += 1;
             }elseif($row->Kelamin == "Perempuan") {

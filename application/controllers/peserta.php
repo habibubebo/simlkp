@@ -54,7 +54,7 @@ class peserta  extends CI_Controller {
         $this->load->view('layout/footer');
     }
     // ubah
-    function ubah($Id){
+    function ubah($Id  = null){
         $Id = $this->input->post('Id');
         $nipd = $this->input->post('Nipd');
         $nokk = $this->input->post('Nokk');
@@ -67,7 +67,8 @@ class peserta  extends CI_Controller {
         $tglmasuk = $this->input->post('Tglmasuk');
 
         $data = array(
-            'Nama' => $nama,
+            'Id' => $Id,
+			'Nama' => $nama,
             'Kelamin' => $kelamin,
             'Nipd' => $nipd,
             'Nik' => $nik,

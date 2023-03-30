@@ -28,16 +28,17 @@ Class instruktur extends CI_Controller{
             $pdf->Cell(0,7,'CENDEKIA UTAMA',0,1,'C');
             // $pdf->SetFont('Times','B',24);
             $pdf->SetFont('Times','',14);
-            $pdf->Cell(0,5,'Akta Notaris ',0,1,'C');
+            $pdf->Cell(0,4,'Akta Notaris ',0,1,'C');
             $pdf->SetFont('Times','',12);
             $pdf->Cell(0,5,'Jl. Veteran No. 44 Kota Blitar, e-mail : cenditama@gmail.com',0,1,'C');
             $pdf->SetTextColor(255,0,0);
             $pdf->SetFont('Times','B',16);
             $pdf->Cell(0,5,'TERAKREDITASI',0,1,'C');
             $pdf->SetTextColor(0,0,0);
+			$pdf->Cell(0,3,'',0,1,'C');
         // Garis
             $pdf->SetLineWidth(1);
-            $pdf->Line(15.3,39, 338.8, 39);
+            $pdf->Line(15.3,39, 338.7, 39);
             $pdf->SetLineWidth(0.5);
             $pdf->Line(15,40.0, 339, 40.0);
             $pdf->SetLineWidth(0);

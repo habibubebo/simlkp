@@ -52,7 +52,7 @@ class sapras  extends CI_Controller {
         $this->load->view('layout/footer');
     }
     // ubah
-    function ubah($Id){
+    function ubah($Id  = null){
         $Id = $this->input->post('Id');
         $Jenis = $this->input->post('Jsp');
         $Nama = $this->input->post('Nsp');
