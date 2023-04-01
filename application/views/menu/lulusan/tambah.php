@@ -15,14 +15,12 @@
         <div class="card-body">
             <form action="<?php echo base_url().'index.php/lulusan/tambah'; ?>" method="POST">
                 <div class="row">
-					<div class="form-group col-md-12">
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                        placeholder="Nomor Induk" name="Nipd" maxlength=20 required onkeyup="GetDetail(this.value)">
+					<div class="form-group col-md-4">
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nomor Induk" name="nipd" maxlength=20 required onkeyup="GetDetail(this.value)">
                     </div>
-					<div class="form-group col-md-8">
+                    <div class="form-group col-md-8">
                         <input class="form-control" id="nama" aria-describedby="emailHelp"
-                         name="nmlulusan" maxlength=50 required>
-                        
+                         placeholder="Nama" name="nmlulusan" maxlength=50 required>
                     </div>
                     <div class="form-group col-md-4">
                         <select class="form-control" id="jk" aria-describedby="emailHelp" name="jk" required>
@@ -31,7 +29,7 @@
                             <option value="Perempuan">Perempuan</option>
                         </select>
                     </div>
-					 <div class="form-group col-md-6">
+					 <div class="form-group col-md-8">
                         <input type="text" class="form-control" id="ttl" aria-describedby="emailHelp"
                         placeholder="Tempat Tanggal Lahir" name="ttl" maxlength="30" required>
                     </div>
@@ -48,14 +46,6 @@
                             <?php } ?>
                         </select>
                     </div>
-                    <div class="form-group col-md-6" id="simple-date1">
-                        <div class="input-group date">
-                            <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                            </div>
-                            <input type="text" name="tl" class="form-control" placeholder="Tanggal Lulus" id="simpleDataInput" maxlength=30 required>
-                        </div>
-                    </div>
                     <div class="form-group col-md-6">
                         <select type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
                         name="Instruktur" maxlength=20 required>
@@ -69,21 +59,46 @@
                             <?php } ?>
                         </select>
                     </div>
+                    <div class="form-group col-md-4" id="simple-date2">
+                        <div class="input-group date">
+                            <div class="input-group-prepend">
+                            <span class="input-group-text" id="tmp"><i class="fas fa-calendar"></i></span>
+                            </div>
+                            <input type="text" name="tm" class="form-control" placeholder="Tgl Masuk" id="tm" maxlength=30 required>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4" id="simple-date1">
+                        <div class="input-group date">
+                            <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                            </div>
+                            <input type="text" name="tl" class="form-control" placeholder="Tgl Lulus" id="tl" maxlength=30 required>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-4" id="simple-date1">
+                        <div class="input-group date">
+                            <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-calendar"></i></span>
+                            </div>
+                            <input type="text" name="tc" class="form-control" placeholder="Tgl Cetak" id="tc" maxlength=30 required>
+                        </div>
+                    </div>
+                    
 					<div class="form-group col-md-3">
 					<input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
                         placeholder="Nilai 1" name="n1" maxlength="1" required>
 					</div>
 					<div class="form-group col-md-3">
 					<input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                        placeholder="Nilai 2" name="n1" maxlength="1" required>
+                        placeholder="Nilai 2" name="n2" maxlength="1" required>
 					</div>
 					<div class="form-group col-md-3">
 					<input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                        placeholder="Nilai 3" name="n1" maxlength="1" required>
+                        placeholder="Nilai 3" name="n3" maxlength="1" required>
 					</div>
 					<div class="form-group col-md-3">
 					<input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                        placeholder="Nilai 4" name="n1" maxlength="1" required>
+                        placeholder="Nilai 4" name="n4" maxlength="1" required>
 					</div>
                 </div>
                 <button type="submit" class="btn btn-primary">Simpan</button>
@@ -92,16 +107,13 @@
     </div>
 </div>
 <script>
-
-// onkeyup event will occur when the user
-// release the key and calls the function
-// assigned to this event
 function GetDetail(str) {
     if (str.length == 0) {
         document.getElementById("nama").value = "";
         document.getElementById("jk").value = "";
         document.getElementById("ttl").value = "";
         document.getElementById("jks").value = "";
+        document.getElementById("tm").value = "";
         return;
     }
     else {
@@ -110,39 +122,28 @@ function GetDetail(str) {
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function () {
 
-            // Defines a function to be called when
-            // the readyState property changes
             if (this.readyState == 4 &&
                     this.status == 200) {
                 
-                // Typical action to be performed
-                // when the document is ready
                 var myObj = JSON.parse(this.responseText);
-
-                // Returns the response data as a
-                // string and store this array in
-                // a variable assign the value
-                // received to first name input field
                 
-                document.getElementById
-                    ("nama").value = myObj[0];
+                console.log(myObj);
+                $.each(myObj, function(i){
                 
-                // Assign the value received to
-                // last name input field
-                document.getElementById(
-                    "jk").value = myObj[1];
-                document.getElementById(
-                    "ttl").value = myObj[2];
-                document.getElementById(
-                    "jks").value = myObj[3];
+                document.getElementById("nama").value = myObj[i].Nama;
+                document.getElementById("jk").value = myObj[i].Kelamin;
+                document.getElementById("ttl").value = myObj[i].Ttl;
+                document.getElementById("jks").value = myObj[i].Jeniskursus;
+                document.getElementById("tm").value = myObj[i].Tanggalmasuk;
+                
+                });
+             
             }
         };
 
-        // xhttp.open("GET", "filename", true);
-        xmlhttp.open("GET", "kon.php?nipd=" + str, true);
-        
-        // Sends the request to the server
-        xmlhttp.send();
+        xmlhttp.open("POST", "<?=base_url()?>index.php/pesertas/nipd", true);
+        xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xmlhttp.send("Nipd="+ str);
     }
 }
 
