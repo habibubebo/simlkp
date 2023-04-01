@@ -42,21 +42,36 @@
                             <option value="Perempuan">Perempuan</option>
                         </select>
                     </div>
-                    <div class="form-group col-md-6" id="simple-date1">
-                        <div class="input-group date">
-                            <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                            </div>
-                            <input type="text" name="Tgl" class="form-control" placeholder="Tanggal Lahir" id="simpleDataInput" maxlength=20 required value="<?php echo $tp->Ttl ?>">
+                    <div class="form-group col-md-8" id="exampleInputEmail1">
+                        <div class="input-group">
+                            <input type="text" name="Tgl" class="form-control" placeholder="Tempat, Tanggal Lahir" id="simpleDataInput" maxlength=50 required value="<?php echo $tp->Ttl ?>">
                         </div>
                     </div>
-                    <div class="form-group col-md-6">
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                        placeholder="Jenis Kursus" name="Jenis" maxlength=20 required value="<?php echo $tp->Jeniskursus ?>">
+                    <div class="form-group col-md-4">
+                        <select class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                         name="Jenis" maxlength=50 required value="<?php echo $tp->Jeniskursus ?>">
+                        <option disabled value="">Jenis Kursus</option>
+                            <?php
+                            $data = $this->db->query("SELECT * FROM rombel")->result();
+                            foreach ($data as $row){ ?>    
+                                <option value="<?php echo $row->Namarombel ?>">
+                                <?php echo $row->Namarombel ?>
+                                </option>
+                            <?php } ?>
+                        </select>
                     </div>
                     <div class="form-group col-md-6">
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                        placeholder="Kelas" name="Kls" maxlength=20 required value="<?php echo $tp->Kelas ?>">
+                        <select type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                        name="Kls" maxlength=20 required value="<?php echo $tp->Kelas ?>">
+                        <option disabled value="">Kelas</option>
+                            <?php
+                            $data = $this->db->query("SELECT * FROM rombel")->result();
+                            foreach ($data as $row){ ?>    
+                                <option value="<?php echo $row->Kelas ?>">
+                                <?php echo $row->Kelas ?>
+                                </option>
+                            <?php } ?>
+                        </select>
                     </div>
                     <div class="form-group col-md-6" id="simple-date1">
                         <div class="input-group date">
