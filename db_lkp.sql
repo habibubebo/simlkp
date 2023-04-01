@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `akun` (
 
 -- Dumping data for table db_lkp.akun: ~0 rows (approximately)
 /*!40000 ALTER TABLE `akun` DISABLE KEYS */;
-INSERT INTO `akun` (`id`, `username`, `password`, `nama`) VALUES
+INSERT IGNORE INTO `akun` (`id`, `username`, `password`, `nama`) VALUES
 	(1, 'admin', 'admin', 'admin');
 /*!40000 ALTER TABLE `akun` ENABLE KEYS */;
 
@@ -46,24 +46,33 @@ CREATE TABLE IF NOT EXISTS `instruktur` (
 
 -- Dumping data for table db_lkp.instruktur: ~2 rows (approximately)
 /*!40000 ALTER TABLE `instruktur` DISABLE KEYS */;
-INSERT INTO `instruktur` (`Id`, `NamaInstruktur`, `Kelamin`, `Tempatlahir`, `Tanggallahir`, `Namaibu`, `Alamat`, `Email`) VALUES
-	(1, 'Habib Muhammad, S.Pd', 'Laki - Laki', 'Blitar', '29/03/2023', 'Cenditama', 'Blitar', 'habib@cenditama.com'),
-	(2, 'Haris Dwi Saputra, S.Pi', 'Laki - Laki', 'Blitar', '29/03/2023', 'Cenditama', 'Blitar', 'haris@cenditama.com');
+INSERT IGNORE INTO `instruktur` (`Id`, `NamaInstruktur`, `Kelamin`, `Tempatlahir`, `Tanggallahir`, `Namaibu`, `Alamat`, `Email`) VALUES
+	(1, 'Habib, S.Pd', 'Laki - Laki', 'Blitar', '29/03/2023', 'Cenditama', 'Blitar', 'habib@cenditama.com'),
+	(2, 'Haris, S.Pi', 'Laki - Laki', 'Blitar', '29/03/2023', 'Cenditama', 'Blitar', 'haris@cenditama.com');
 /*!40000 ALTER TABLE `instruktur` ENABLE KEYS */;
 
 -- Dumping structure for table db_lkp.lulusan
 CREATE TABLE IF NOT EXISTS `lulusan` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Nipd` int(6) DEFAULT NULL,
   `Nama` text,
+  `Ttl` text,
   `Kelamin` text,
   `Jeniskursus` text,
   `Kelas` text,
-  `Tgllulus` text,
-  `Ttl` text,
+  `Tglmasuk` date DEFAULT NULL,
+  `Tgllulus` date DEFAULT NULL,
+  `Tglcetak` date DEFAULT NULL,
+  `n1` text,
+  `n2` text,
+  `n3` text,
+  `n4` text,
+  `n5` text,
+  `Instruktur` text,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table db_lkp.lulusan: ~0 rows (approximately)
+-- Dumping data for table db_lkp.lulusan: ~1 rows (approximately)
 /*!40000 ALTER TABLE `lulusan` DISABLE KEYS */;
 /*!40000 ALTER TABLE `lulusan` ENABLE KEYS */;
 
@@ -72,20 +81,19 @@ CREATE TABLE IF NOT EXISTS `peserta` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Nama` text,
   `Kelamin` text,
-  `Nipd` text,
+  `Nipd` int(6) DEFAULT NULL,
   `Nik` text,
   `Nokk` text,
   `Jeniskursus` text,
   `Kelas` text,
-  `Tanggalmasuk` text,
+  `Tanggalmasuk` date DEFAULT NULL,
   `Ttl` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`Id`),
+  UNIQUE KEY `Nipd` (`Nipd`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
--- Dumping data for table db_lkp.peserta: ~0 rows (approximately)
+-- Dumping data for table db_lkp.peserta: ~2 rows (approximately)
 /*!40000 ALTER TABLE `peserta` DISABLE KEYS */;
-INSERT INTO `peserta` (`Id`, `Nama`, `Kelamin`, `Nipd`, `Nik`, `Nokk`, `Jeniskursus`, `Kelas`, `Tanggalmasuk`, `Ttl`) VALUES
-	(3, 'Nama peserta benar', 'Laki - Laki', '1000', '2345', '2356', 'Microsoft Office', 'pagi', '30/03/2023', 'Blitar, 17 Agustus 1945');
 /*!40000 ALTER TABLE `peserta` ENABLE KEYS */;
 
 -- Dumping structure for table db_lkp.profil
@@ -110,7 +118,7 @@ CREATE TABLE IF NOT EXISTS `profil` (
 
 -- Dumping data for table db_lkp.profil: ~0 rows (approximately)
 /*!40000 ALTER TABLE `profil` DISABLE KEYS */;
-INSERT INTO `profil` (`id`, `Namalkp`, `Alamat`, `Kelurahan`, `Kecamatan`, `Kota`, `Provinsi`, `Rt`, `Rw`, `Kodepos`, `Namayayasan`, `Telepon`, `Nofax`, `Email`, `Npsn`) VALUES
+INSERT IGNORE INTO `profil` (`id`, `Namalkp`, `Alamat`, `Kelurahan`, `Kecamatan`, `Kota`, `Provinsi`, `Rt`, `Rw`, `Kodepos`, `Namayayasan`, `Telepon`, `Nofax`, `Email`, `Npsn`) VALUES
 	(1, 'LKP CENDITAMA', 'Jalan Veteran 44 ', 'Kepanjen kidul', 'Kepanjen kidul', 'Blitar', 'Jawa Timur', '', '', '', '', '', '', '', '123');
 /*!40000 ALTER TABLE `profil` ENABLE KEYS */;
 
@@ -124,9 +132,9 @@ CREATE TABLE IF NOT EXISTS `rombel` (
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table db_lkp.rombel: ~2 rows (approximately)
+-- Dumping data for table db_lkp.rombel: ~3 rows (approximately)
 /*!40000 ALTER TABLE `rombel` DISABLE KEYS */;
-INSERT INTO `rombel` (`Id`, `Namarombel`, `Kelas`, `Jumlahpeserta`, `Ruangan`) VALUES
+INSERT IGNORE INTO `rombel` (`Id`, `Namarombel`, `Kelas`, `Jumlahpeserta`, `Ruangan`) VALUES
 	(1, 'Microsoft Office', 'pagi', '15', 'depan'),
 	(2, 'Desain Grafis', 'Reguler', '15', 'depan'),
 	(3, 'Simple Microsoft Office', 'Reguler', '15', 'depan');

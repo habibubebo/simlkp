@@ -21,35 +21,31 @@ Class form extends CI_Controller{
         // setting jenis font yang akan digunakan
         
         // header halaman 
-            $pdf->Image(base_url('asset/img/logo/logo.png'),15,6,30);
+            $pdf->Image(base_url('asset/img/logo/logo.png'),15,14,35);
             
-            $pdf->SetFont('Times','B',16);
-            $pdf->text(50,15,'LEMBAGA KETERAMPILAN DAN PELATIHAN (LKP)',0,1,'C');
-            $pdf->text(85,22,'DADAHA INFORMATIK ',0,1,'C');
-            // $pdf->SetFont('Times','B',24);
-            $pdf->SetFont('Times','',12);
-            $pdf->text(60,27,'Akta Notaris Hani Mulyani, SH., Sp 1. No 59 Tanggal 13 Oktober 2014',0,1,'C');
-            $pdf->SetFont('Times','',11);
-            $pdf->text(45,32,'Jl. Gunung Jati No 32 Telp. (0265) 335215 Tasikmalaya 46124 e-mail : lkpdadaha16@gmail.com',0,1,'C');
+            $pdf->SetFont('Times','B',12);
+            $pdf->Cell(0,5,'LEMBAGA KURSUS DAN PELATIHAN (LKP)',0,1,'C');
+            $pdf->Cell(0,5,'CENDEKIA UTAMA',0,1,'C');
+            $pdf->Cell(0,4,'Akta Notaris ',0,1,'C');
+            $pdf->Cell(0,5,'Jl. Veteran No. 44 Kota Blitar, e-mail : cenditama@gmail.com',0,1,'C');
             $pdf->SetTextColor(255,0,0);
-            $pdf->SetFont('Times','B',16);
-            $pdf->text(90,38,'TERAKREDITASI',0,1,'C');
+            $pdf->Cell(0,5,'TERAKREDITASI',0,1,'C');
             $pdf->SetTextColor(0,0,0);
+            $pdf->Cell(0,3,'',0,1,'C');
         // Garis
+            $pdf->SetLineWidth(1);
+            $pdf->Line(15.3,34, 197.7, 34);
             $pdf->SetLineWidth(0.5);
-            $pdf->Line(15,39, 200, 39);
-            $pdf->SetLineWidth(0,5);
-            $pdf->Line(15,40.0, 200, 40.0);
+            $pdf->Line(15,35, 198, 35);
             $pdf->SetLineWidth(0);
 
-        // setting jenis font yang akan digunakan
-            $pdf->SetFont('Times','B',14);
         
         // Title 
-            $pdf->text(70,50,'FORMULIR PENDAFTARAN KURSUS',0,0,'C');
+            $pdf->Cell(0,10,'FORMULIR PENDAFTARAN KURSUS',0,1,'C');
+            
         
         // Memberikan space kebawah agar tidak terlalu rapat
-        $pdf->ln(50);
+        $pdf->ln(20);
 
         // setting jenis font yang akan digunakan
         $pdf->SetFont('Times','',12);

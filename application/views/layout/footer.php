@@ -60,7 +60,7 @@
       $('#dataTableHover').DataTable(); // ID From dataTable with Hover
             // Bootstrap Date Picker
       $('#simple-date1 .input-group.date').datepicker({
-        format: 'dd/mm/yyyy',
+        format: 'yyyy-mm-dd',
         todayBtn: 'linked',
         todayHighlight: true,
         autoclose: true,        
@@ -68,7 +68,7 @@
 
       $('#simple-date2 .input-group.date').datepicker({
         startView: 1,
-        format: 'dd/mm/yyyy',        
+        format: 'yyyy-mm-dd',        
         autoclose: true,     
         todayHighlight: true,   
         todayBtn: 'linked',
@@ -76,14 +76,14 @@
 
       $('#simple-date3 .input-group.date').datepicker({
         startView: 2,
-        format: 'dd/mm/yyyy',        
+        format: 'yyyy-mm-dd',        
         autoclose: true,     
         todayHighlight: true,   
         todayBtn: 'linked',
       });
 
       $('#simple-date4 .input-daterange').datepicker({        
-        format: 'dd/mm/yyyy',        
+        format: 'yyyy-mm-dd',        
         autoclose: true,     
         todayHighlight: true,   
         todayBtn: 'linked',

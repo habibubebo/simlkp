@@ -24,21 +24,22 @@ Class lulusan extends CI_Controller{
             $pdf->Image(base_url('asset/img/logo/logo.png'),30,6,25);
             
             $pdf->SetFont('Times','B',18);
-            $pdf->text(100,15,'LEMBAGA KETERAMPILAN DAN PELATIHAN (LKP)',0,1,'C');
-            $pdf->text(140,22,'DADAHA INFORMATIK ',0,1,'C');
+            $pdf->Cell(0,7,'LEMBAGA KURSUS DAN PELATIHAN (LKP)',0,1,'C');
+            $pdf->Cell(0,7,'CENDEKIA UTAMA',0,1,'C');
             // $pdf->SetFont('Times','B',24);
             $pdf->SetFont('Times','',14);
-            $pdf->text(110,27,'Akta Notaris Hani Mulyani, SH., Sp 1. No 59 Tanggal 13 Oktober 2014',0,1,'C');
+            $pdf->Cell(0,4,'Akta Notaris ',0,1,'C');
             $pdf->SetFont('Times','',12);
-            $pdf->text(97,33,'Jl. Gunung Jati No 32 Telp. (0265) 335215 Tasikmalaya 46124 e-mail : lkpdadaha16@gmail.com',0,1,'C');
+            $pdf->Cell(0,5,'Jl. Veteran No. 44 Kota Blitar, e-mail : cenditama@gmail.com',0,1,'C');
             $pdf->SetTextColor(255,0,0);
             $pdf->SetFont('Times','B',16);
-            $pdf->text(150,38,'TERAKREDITASI',0,1,'C');
+            $pdf->Cell(0,5,'TERAKREDITASI',0,1,'C');
             $pdf->SetTextColor(0,0,0);
+            $pdf->Cell(0,3,'',0,1,'C');
         // Garis
+            $pdf->SetLineWidth(1);
+            $pdf->Line(15.3,39, 338.7, 39);
             $pdf->SetLineWidth(0.5);
-            $pdf->Line(15,39, 339, 39);
-            $pdf->SetLineWidth(0,5);
             $pdf->Line(15,40.0, 339, 40.0);
             $pdf->SetLineWidth(0);
 

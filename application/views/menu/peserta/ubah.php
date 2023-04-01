@@ -73,7 +73,7 @@
                             <?php } ?>
                         </select>
                     </div>
-                    <div class="form-group col-md-6" id="simple-date1">
+                    <div class="form-group col-md-6" id="simple-date2">
                         <div class="input-group date">
                             <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-calendar"></i></span>

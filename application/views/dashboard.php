@@ -140,10 +140,10 @@
                         $data = $this->db->query("SELECT * FROM lulusan")->result();
                         $lus = 0;
                         foreach ($data as $row){
-                          $lus += count($row->Nama);
+                          $lus += 1;
                         }              
                       ?>
-                        <span><?php echo $pes;?> Lulusan</span>
+                        <span><?php echo $lus;?> Lulusan</span>
                       </div>
                       <div class="mt-2 mb-0 text-muted text-md">
                         <a class="badge badge-danger" href="<?php echo base_url("index.php/pages/lulusan")?>">

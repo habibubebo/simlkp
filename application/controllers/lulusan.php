@@ -17,7 +17,9 @@ class lulusan  extends CI_Controller {
     }
     // form-tambah
     function form(){
-        $this->load->view('menu/lulusan/tambah');
+        $users = $this->Model_APS->getNipds();
+        $data['nipds'] = $users;
+        $this->load->view('menu/lulusan/tambah',$data);
         $this->load->view('layout/footer');
     }
     // Tambah
@@ -28,6 +30,14 @@ class lulusan  extends CI_Controller {
         $kls = $this->input->post('kls');
         $tl = $this->input->post('tl');
         $ttl = $this->input->post('ttl');
+        $nipd = $this->input->post('nipd');
+        $ins = $this->input->post('Instruktur');
+        $tm = $this->input->post('tm');
+        $tc = $this->input->post('tc');
+        $n1 = $this->input->post('n1');
+        $n2 = $this->input->post('n2');
+        $n3 = $this->input->post('n3');
+        $n4 = $this->input->post('n4');
 
         $data = array(
             'Nama' => $nama,
@@ -35,7 +45,15 @@ class lulusan  extends CI_Controller {
             'Jeniskursus' => $jks,
             'Kelas' => $kls,
             'Tgllulus' => $tl,
-            'Ttl' => $ttl
+            'Ttl' => $ttl,
+            'Nipd' => $nipd,
+            'Instruktur' => $ins,
+            'Tglmasuk' => $tm,
+            'Tglcetak' => $tc,
+            'n1' => $n1,
+            'n2' => $n2,
+            'n3' => $n3,
+            'n4' => $n4
         );
         $this->Model_APS->simpan_data($data,'lulusan');
         redirect('index.php/pages/lulusan');
@@ -56,6 +74,14 @@ class lulusan  extends CI_Controller {
         $kls = $this->input->post('kls');
         $tl = $this->input->post('tl');
         $ttl = $this->input->post('ttl');
+        $nipd = $this->input->post('nipd');
+        $ins = $this->input->post('Instruktur');
+        $tm = $this->input->post('tm');
+        $tc = $this->input->post('tc');
+        $n1 = $this->input->post('n1');
+        $n2 = $this->input->post('n2');
+        $n3 = $this->input->post('n3');
+        $n4 = $this->input->post('n4');
 
         $data = array(
             'Nama' => $nama,
@@ -63,7 +89,15 @@ class lulusan  extends CI_Controller {
             'Jeniskursus' => $jks,
             'Kelas' => $kls,
             'Tgllulus' => $tl,
-            'Ttl' => $ttl
+            'Ttl' => $ttl,
+            'Nipd' => $nipd,
+            'Instruktur' => $ins,
+            'Tglmasuk' => $tm,
+            'Tglcetak' => $tc,
+            'n1' => $n1,
+            'n2' => $n2,
+            'n3' => $n3,
+            'n4' => $n4
         );
         $where = array('Id' => $Id);
         $this->Model_APS->proses_update($where,$data,'lulusan');
@@ -75,5 +109,13 @@ class lulusan  extends CI_Controller {
         $this->Model_APS->hapus_data($where,'lulusan');
         redirect('index.php/pages/lulusan');
 
+    }
+    function cetak($Id){
+        $where = array('Id' => $Id);
+        $data['lulusan'] = $this->Model_APS->edit_data('lulusan',$where)->result();
+        $this->load->library('pdf');
+        $this->load->model('Model_APS');
+        $this->load->view('menu/lulusan/cetak',$data);
+        
     }
 }

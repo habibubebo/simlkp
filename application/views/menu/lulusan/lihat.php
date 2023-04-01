@@ -29,30 +29,51 @@
         <table class="table align-items-center table-flush table-hover" id="dataTableHover">
           <thead class="thead-light">
             <tr>
+              <th>No</th>
               <th>Nama</th>
-              <th>L/P</th>
-              <th>Jenis Kursus</th>
-              <th>Kelas</th>
-              <th>Tanggal Lulus</th>
+              <th>No Induk</th>
               <th>Tempat Tanggal Lahir</th>
+              <th>Jenis Kursus</th>
+              <th>Tanggal Masuk</th>
+              <th>Tanggal Lulus</th>
+              <th>Tanggal Cetak</th>
+              <th>Instruktur</th>
+              <th>Nilai 1</th>
+              <th>Nilai 2</th>
+              <th>Nilai 3</th>
+              <th>Nilai 4</th>
               <th>Aksi</th>
             </tr>
           </thead>
           <tbody>
             <?php
+              $no = 0;
               foreach($lulusan as $tp){ 
+                $no += 1;
             ?>
             <tr>
+              <td><?php echo $no ?></td>
               <td><?php echo $tp->Nama ?></td>
-              <td><?php echo $tp->Kelamin ?></td>
-              <td><?php echo $tp->Jeniskursus ?></td>
-              <td><?php echo $tp->Kelas ?></td>
-              <td><?php echo $tp->Tgllulus ?></td>
+              <td><?php echo $tp->Nipd ?></td>
               <td><?php echo $tp->Ttl ?></td>
+              <td><?php echo $tp->Jeniskursus ?></td>
+              <td><?php echo $tp->Tglmasuk ?></td>
+              <td><?php echo $tp->Tgllulus ?></td>
+              <td><?php echo $tp->Tglcetak ?></td>
+              <td><?php echo $tp->Instruktur ?></td>
+              <td><?php echo $tp->n1 ?></td>
+              <td><?php echo $tp->n2 ?></td>
+              <td><?php echo $tp->n3 ?></td>
+              <td><?php echo $tp->n4 ?></td>
+              
               <td>
                 <a href="<?= base_url("index.php/lulusan/form_ubah/$tp->Id")?>" class="btn btn-warning btn-sm" 
                    title="Klik untuk merubah data.">
                   <i class="fas fa-pen-alt"></i>
+                </a>
+                <a href="<?= base_url("index.php/sertifikat?Id=$tp->Id")?>" class="btn btn-success btn-sm" 
+                   title="Klik untuk mencetak pdf.">
+                  <i class="fas fa-print"></i>
                 </a>
                 <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" 
                    data-target="#deleteuser<?php echo $tp->Id; ?>"

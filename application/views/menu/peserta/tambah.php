@@ -49,8 +49,7 @@
                          name="Jenis" maxlength=50 required>
                         <option disabled selected value="">Jenis Kursus</option>
                             <?php
-                            $data = $this->db->query("SELECT * FROM rombel")->result();
-                            foreach ($data as $row){ ?>    
+                            foreach ($rombel as $row){ ?>    
                                 <option value="<?php echo $row->Namarombel ?>">
                                 <?php echo $row->Namarombel ?>
                                 </option>
@@ -62,15 +61,14 @@
                         name="Kls" maxlength=20 required>
                         <option disabled selected value="">Kelas</option>
                             <?php
-                            $data = $this->db->query("SELECT * FROM rombel")->result();
-                            foreach ($data as $row){ ?>    
+                            foreach ($rombel as $row){ ?>    
                                 <option value="<?php echo $row->Kelas ?>">
                                 <?php echo $row->Kelas ?>
                                 </option>
                             <?php } ?>
                         </select>
                     </div>
-                    <div class="form-group col-md-6" id="simple-date1">
+                    <div class="form-group col-md-6" id="simple-date2">
                         <div class="input-group date">
                             <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-calendar"></i></span>

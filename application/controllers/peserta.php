@@ -17,7 +17,8 @@ class peserta  extends CI_Controller {
     }
     // form-tambah
     function form(){
-        $this->load->view('menu/peserta/tambah');
+        $data['rombel'] = $this->db->query("SELECT Namarombel,Kelas FROM rombel")->result();
+        $this->load->view('menu/peserta/tambah',$data);
         $this->load->view('layout/footer');
     }
     // Tambah
