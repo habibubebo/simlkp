@@ -11,7 +11,7 @@
                 <h5><?php echo $pr->Namalkp ?></h5>  
             </div>
             <div class=" ml-2 text-white">
-                <small>(Version 0.1 Beta) </small>
+                <small>(Version 0.2 Beta) </small>
             </div>
           <!-- User Info -->
           <ul class="navbar-nav ml-auto">

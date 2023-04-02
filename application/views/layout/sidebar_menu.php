@@ -62,9 +62,9 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="<?php echo base_url("index.php/pages/presensi")?>">
           <i class="fas fa-fw fa-archive"></i>
-          <span>Arsip</span>
+          <span>Presensi</span>
         </a>
       </li>
       <hr class="sidebar-divider">

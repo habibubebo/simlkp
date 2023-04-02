@@ -46,7 +46,7 @@
                 $this->db->where($kondisi);
                 return $query = $this->db->get();
             }
-        // Membuat fungsi proses_update($kondisi,$data,$nm_table)---------------------------------------------------------------
+        // Membuat fungsi proses_update($kondisi,$data,$nm_table)-----------------------------------------
             function proses_update($kondisi,$data,$nm_table){
                 $this->db->where($kondisi);
                 $this->db->update($nm_table,$data);
@@ -54,30 +54,25 @@
             function proses_update_all($data,$nm_table){
                 $this->db->update($nm_table,$data);
             }
-        
-        //cari data Nipd
-        function getNipds(){
-        $this->db->select('Nipd');
-        $records = $this->db->get('peserta');
-        $users = $records->result_array();
-        return $users;
-     }
-      function getNipdD($postData=array()){
- 
-        $response = array();
+        //cari data Nipd----------------------------------------------------------------------------------
+            function getNipds(){
+                $this->db->select('Nipd');
+                $records = $this->db->get('peserta');
+                $users = $records->result_array();
+                return $users;
+            }
+        //cari detail Nipd--------------------------------------------------------------------------------
+            function getNipdD($postData=array()){
+                $response = array();
      
-        if(isset($postData['Nipd']) ){
-     
-          // Select record
-          $this->db->select('*');
-          $this->db->where('Nipd', $postData['Nipd']);
-          $records = $this->db->get('peserta');
-          $response = $records->result_array();
-     
-        }
-     
-        return $response;
-    }
+                if(isset($postData['Nipd']) ){
+                      $this->db->select('*');
+                      $this->db->where('Nipd', $postData['Nipd']);
+                      $records = $this->db->get('peserta');
+                      $response = $records->result_array();
+                 }
+                return $response;
+            }       
 
 	
     }
