@@ -30,7 +30,7 @@
                         <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
                         placeholder="Tempat Lahir" name="tl" maxlength=20 required>
                     </div>
-                    <div class="form-group col-md-6" id="simple-date1">
+                    <div class="form-group col-md-6" id="simple-date3">
                         <div class="input-group date">
                             <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-calendar"></i></span>

@@ -47,8 +47,8 @@
   <script src="<?php echo base_url("asset/vendor/bootstrap/js/bootstrap.bundle.min.js")?>"></script>
   <script src="<?php echo base_url("asset/vendor/jquery-easing/jquery.easing.min.js")?>"></script>
   <script src="<?php echo base_url("asset/js/ruang-admin.min.js")?>"></script>
-  <script src="<?php echo base_url("asset/vendor/chart.js/Chart.min.js")?>"></script>
-  <script src="<?php echo base_url("asset/js/demo/chart-area-demo.js")?>"></script>  
+  <!-- <script src="<?php echo base_url("asset/vendor/chart.js/Chart.min.js")?>"></script>
+  <script src="<?php echo base_url("asset/js/demo/chart-area-demo.js")?>"></script> -->  
   <!-- Page level plugins -->
   <script src="<?php echo base_url("asset/vendor/datatables/jquery.dataTables.min.js")?>"></script>
   <script src="<?php echo base_url("asset/vendor/datatables/dataTables.bootstrap4.min.js")?>"></script>
@@ -88,6 +88,23 @@
         todayHighlight: true,   
         todayBtn: 'linked',
       });
+      $('#nama').change(function(){
+                    var username = $(this).val();
+                    $.ajax({
+                        url:'<?=base_url()?>index.php/pesertas/nipd',
+                        method: 'post',
+                        data: {Nipd: username},
+                        dataType: 'json',
+                        success: function(response){
+                            var len = response.length;
+                                document.getElementById("jks").value = '';
+                            if(len > 0){
+                                document.getElementById("jks").value = response[0].Jeniskursus;
+                              }
+                           
+                        }
+                    });
+                });
     });
   </script>
 

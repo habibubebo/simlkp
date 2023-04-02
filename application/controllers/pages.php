@@ -101,4 +101,11 @@ class pages  extends CI_Controller {
         $this->load->view('menu/lulusan/lihat',$data);
         $this->load->view('layout/footer');
     }
+    function presensi(){
+        $on = "presensi.Nipd=peserta.Nipd";
+        $data['presensi'] = $this->Model_APS->tampil_data_join('peserta','presensi',$on, 'presensi.Id','ASC')->result();
+        
+        $this->load->view('menu/presensi/lihat',$data);
+        $this->load->view('layout/footer');
+    }
 }
