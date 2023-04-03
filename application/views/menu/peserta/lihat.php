@@ -35,7 +35,6 @@
               <th>L/P</th>
               <th>Tanggal Lahir</th>
               <th>Jenis Kursus / Kelas</th>
-              <!-- <th>Kelas</th> -->
               <th>Tanggal Masuk</th>
               <th>Aksi</th>
             </tr>
@@ -54,8 +53,7 @@
             <tr>
               <td><?php echo $tp->Nipd ?></td>
               <td><?php echo $tp->Nokk ?><br>
-                  ----------------------
-                  <br><?php echo $tp->Nik ?></td>
+                  /<br><?php echo $tp->Nik ?></td>
               <td><?php echo $tp->Nama ?></td>
               <td><?php echo $jk; ?></td>
               <td><?php echo $tp->Ttl ?></td>
