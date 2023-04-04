@@ -32,6 +32,7 @@ class peserta  extends CI_Controller {
         $jenis = $this->input->post('Jenis');
         $kls = $this->input->post('Kls');
         $tglmasuk = $this->input->post('Tglmasuk');
+        $stat = $this->input->post('Status');
 
         $data = array(
             'Nama' => $nama,
@@ -42,7 +43,8 @@ class peserta  extends CI_Controller {
             'Jeniskursus' => $jenis,
             'Kelas' => $kls,
             'Tanggalmasuk' => $tglmasuk,
-            'Ttl' => $tgl
+            'Ttl' => $tgl,
+            'Status' => $stat
         );
         $this->Model_APS->simpan_data($data,'peserta');
         redirect('index.php/pages/peserta');
@@ -66,10 +68,10 @@ class peserta  extends CI_Controller {
         $jenis = $this->input->post('Jenis');
         $kls = $this->input->post('Kls');
         $tglmasuk = $this->input->post('Tglmasuk');
+        $stat = $this->input->post('Status');
 
         $data = array(
-            'Id' => $Id,
-			'Nama' => $nama,
+            'Nama' => $nama,
             'Kelamin' => $kelamin,
             'Nipd' => $nipd,
             'Nik' => $nik,
@@ -77,7 +79,8 @@ class peserta  extends CI_Controller {
             'Jeniskursus' => $jenis,
             'Kelas' => $kls,
             'Tanggalmasuk' => $tglmasuk,
-            'Ttl' => $tgl
+            'Ttl' => $tgl,
+            'Status' => $stat
         );
         $where = array('Id' => $Id);
         $this->Model_APS->proses_update($where,$data,'peserta');

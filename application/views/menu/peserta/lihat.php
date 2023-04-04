@@ -47,11 +47,19 @@
                 $jk = "L";
               } else {
                 $jk = "P";
+              };
+              if ($tp->Status == "0") {
+                $status = "Nonaktif";
+              } elseif ($tp->Status == "1") {
+                  $status = "Aktif";
+              }
+              else {
+                $status = "Lulus";
               }
 
             ?>
               <tr>
-                <td><?php echo $tp->Nipd ?></td>
+                <td><?php echo $tp->Nipd ?><br><?php echo $status ?></td>
                 <td><?php echo $tp->Nokk ?><br>
                   /<br><?php echo $tp->Nik ?></td>
                 <td><?php echo $tp->Nama ?></td>
@@ -61,7 +69,7 @@
                   <?php echo "/" . $tp->Kelas ?>
                 </td>
 
-                <td><?php echo $tp->Tanggalmasuk ?></td>
+                <td><?php echo $tp->Tglmasuk ?></td>
                 <td>
                   <a href="<?= base_url("index.php/peserta/form_ubah/$tp->Id") ?>" class="btn btn-warning btn-sm" title="Klik untuk merubah data.">
                     <i class="fas fa-pen-alt"></i>

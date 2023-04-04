@@ -12,13 +12,21 @@
         <div class="card-body">
             <form action="<?php echo base_url() . 'index.php/peserta/tambah'; ?>" method="POST">
                 <div class="row">
-                    <div class="form-group col-md-12">
+                    <div class="form-group col-md-6">
                         <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nomor Induk" name="Nipd" maxlength=20 required>
                     </div>
-                    <div class="form-group col-md-12">
+                    <div class="form-group col-md-6">
+                        <select class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="Status" required>
+                            <option disabled selected value="">Status</option>
+                            <option value="0">Nonaktif</option>
+                            <option value="1">Aktif</option>
+                            <option value="2">Lulus</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
                         <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="No Kartu Keluarga" name="Nokk" maxlength=30 required>
                     </div>
-                    <div class="form-group col-md-12">
+                    <div class="form-group col-md-6">
                         <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="No Induk Keluarga" name="Nik" maxlength=30 required>
                     </div>
                     <div class="form-group col-md-8">
@@ -26,7 +34,7 @@
                     </div>
                     <div class="form-group col-md-4">
                         <select class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="Jk" required>
-                            <option value="">Kelamin</option>
+                            <option disabled selected value="">Kelamin</option>
                             <option value="Laki - Laki">Laki - Laki</option>
                             <option value="Perempuan">Perempuan</option>
                         </select>
@@ -68,6 +76,7 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Simpan</button>
+                <a href="<?php echo base_url("index.php/pages/peserta") ?>" class="btn btn-secondary" role="button">Batal</a>
             </form>
         </div>
     </div>

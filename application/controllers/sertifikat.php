@@ -11,8 +11,11 @@ Class sertifikat extends CI_Controller{
 	
     function index(){
     	$Id = $_REQUEST['Id'];
-    	$where = array('Id' => $Id);
-        $data['lulusan'] = $this->Model_APS->edit_data('lulusan',$where)->result();
+    	$where = array('lulusan.Id' => $Id);
+        $sel = "lulusan.Id,lulusan.Nipd,lulusan.Tgllulus,lulusan.Tglcetak,lulusan.Instruktur,lulusan.n1,lulusan.n2,lulusan.n3,lulusan.n4,lulusan.n5,peserta.Nama,peserta.Jeniskursus,peserta.Ttl,peserta.Tglmasuk,instruktur.NamaInstruktur";
+        $on = "lulusan.Nipd=peserta.Nipd";
+        $on2 = "lulusan.Instruktur=instruktur.Id";
+        $data['lulusan'] = $this->Model_APS->edit_data_join2($sel,'lulusan','peserta',$on,'instruktur',$on2,$where)->result();
 		function tgl_indo($tanggal){
 			$bulan = array (
 				1 =>   'Januari',
@@ -102,10 +105,10 @@ Class sertifikat extends CI_Controller{
 			$pdf->ln(160);
             $pdf->SetFont('arialbd','',12);
 			$pdf->Cell(190,5,'',0,0,'R');
-			$pdf->Cell(60,5,$row->Instruktur,0,0,'C');
+			$pdf->Cell(60,5,$row->NamaInstruktur,0,0,'C');
 			
 		//jadikan pdf				
-        //$pdf->Output('I', 'Serttifikat '.$nama.'.pdf');
+        // $pdf->Output('I', 'Serttifikat '.$nama.'.pdf');
 			$pdf->Output('I', 'Serttifikat.pdf');
 	}
 	}

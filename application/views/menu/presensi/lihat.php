@@ -45,7 +45,7 @@
                 <td><?php echo $tp->Tgl ?></td>
                 <td><?php echo $tp->Nama ?></td>
                 <td><?php echo $tp->Jeniskursus ?></td>
-                <td><?php echo $tp->Instruktur ?></td>
+                <td><?php echo $tp->NamaInstruktur ?></td>
                 <td><?php echo $tp->Materi ?></td>
                 <td>
                   <a href="<?= base_url("index.php/presensi/form_ubah/$tp->Id") ?>" class="btn btn-warning btn-sm" title="Klik untuk merubah data.">
