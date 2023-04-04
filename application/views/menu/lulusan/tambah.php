@@ -16,20 +16,20 @@
                         <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nomor Induk" name="nipd" maxlength=20 required onkeyup="GetDetail(this.value)">
                     </div>
                     <div class="form-group col-md-8">
-                        <input class="form-control" id="nama" aria-describedby="emailHelp" placeholder="Nama" name="nmlulusan" maxlength=50 required>
+                        <input class="form-control" id="nama" aria-describedby="emailHelp" placeholder="Nama" name="nmlulusan" maxlength=50 disabled>
                     </div>
                     <div class="form-group col-md-4">
-                        <select class="form-control" id="jk" aria-describedby="emailHelp" name="jk" required>
+                        <select class="form-control" id="jk" aria-describedby="emailHelp" name="jk" disabled>
                             <option value="">Kelamin</option>
                             <option value="Laki - Laki">Laki - laki</option>
                             <option value="Perempuan">Perempuan</option>
                         </select>
                     </div>
                     <div class="form-group col-md-8">
-                        <input type="text" class="form-control" id="ttl" aria-describedby="emailHelp" placeholder="Tempat Tanggal Lahir" name="ttl" maxlength="30" required>
+                        <input type="text" class="form-control" id="ttl" aria-describedby="emailHelp" placeholder="Tempat Tanggal Lahir" name="ttl" maxlength="30" disabled>
                     </div>
                     <div class="form-group col-md-6">
-                        <select class="form-control" id="jks" aria-describedby="emailHelp" name="jks" maxlength=50 required>
+                        <select class="form-control" id="jks" aria-describedby="emailHelp" name="jks" maxlength=50 disabled>
                             <option disabled selected value="">Jenis Kursus</option>
                             <?php
                             $data = $this->db->query("SELECT * FROM rombel")->result();
@@ -44,9 +44,9 @@
                         <select type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="Instruktur" maxlength=20 required>
                             <option disabled selected value="">Instruktur</option>
                             <?php
-                            $data = $this->db->query("SELECT * FROM instruktur")->result();
+                            $data = $this->db->query("SELECT Id,NamaInstruktur FROM instruktur")->result();
                             foreach ($data as $row) { ?>
-                                <option value="<?php echo $row->NamaInstruktur ?>">
+                                <option value="<?php echo $row->Id ?>">
                                     <?php echo $row->NamaInstruktur ?>
                                 </option>
                             <?php } ?>
@@ -57,7 +57,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="tmp"><i class="fas fa-calendar"></i></span>
                             </div>
-                            <input type="text" name="tm" class="form-control" placeholder="Tgl Masuk" id="tm" maxlength=30 required>
+                            <input type="text" name="tm" class="form-control" placeholder="Tgl Masuk" id="tm" maxlength=30 disabled>
                         </div>
                     </div>
                     <div class="form-group col-md-4" id="simple-date1">

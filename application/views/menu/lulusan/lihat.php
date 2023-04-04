@@ -60,7 +60,7 @@
                 <td><?php echo $tp->Tglmasuk ?></td>
                 <td><?php echo $tp->Tgllulus ?></td>
                 <td><?php echo $tp->Tglcetak ?></td>
-                <td><?php echo $tp->Instruktur ?></td>
+                <td><?php echo $tp->NamaInstruktur ?></td>
                 <td><?php echo $tp->n1 ?></td>
                 <td><?php echo $tp->n2 ?></td>
                 <td><?php echo $tp->n3 ?></td>

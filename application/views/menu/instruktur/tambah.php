@@ -44,6 +44,7 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Simpan</button>
+                <a href="<?php echo base_url("index.php/pages/instruktur") ?>" class="btn btn-secondary" role="button">Batal</a>
             </form>
         </div>
     </div>

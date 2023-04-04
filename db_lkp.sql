@@ -25,11 +25,7 @@ CREATE TABLE IF NOT EXISTS `akun` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table db_lkp.akun: ~0 rows (approximately)
-/*!40000 ALTER TABLE `akun` DISABLE KEYS */;
-REPLACE INTO `akun` (`id`, `username`, `password`, `nama`) VALUES
-	(1, 'admin', 'admin', 'admin');
-/*!40000 ALTER TABLE `akun` ENABLE KEYS */;
+-- Data exporting was unselected.
 
 -- Dumping structure for table db_lkp.instruktur
 CREATE TABLE IF NOT EXISTS `instruktur` (
@@ -44,37 +40,24 @@ CREATE TABLE IF NOT EXISTS `instruktur` (
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table db_lkp.instruktur: ~2 rows (approximately)
-/*!40000 ALTER TABLE `instruktur` DISABLE KEYS */;
-REPLACE INTO `instruktur` (`Id`, `NamaInstruktur`, `Kelamin`, `Tempatlahir`, `Tanggallahir`, `Namaibu`, `Alamat`, `Email`) VALUES
-	(2, 'Haris, S.Pi', 'Laki - Laki', 'Blitar', '29/03/2023', 'Cenditama', 'Blitar', 'haris@cenditama.com'),
-	(3, 'Habib, S.Pd', 'Laki - Laki', 'Blitar', '1999-02-04', 'Cenditama', 'Blitar', 'habib@cenditama.com');
-/*!40000 ALTER TABLE `instruktur` ENABLE KEYS */;
+-- Data exporting was unselected.
 
 -- Dumping structure for table db_lkp.lulusan
 CREATE TABLE IF NOT EXISTS `lulusan` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Nipd` int(6) DEFAULT NULL,
-  `Nama` text,
-  `Ttl` text,
-  `Kelamin` text,
-  `Jeniskursus` text,
-  `Kelas` text,
-  `Tglmasuk` date DEFAULT NULL,
   `Tgllulus` date DEFAULT NULL,
   `Tglcetak` date DEFAULT NULL,
+  `Instruktur` int(11) DEFAULT NULL,
   `n1` text,
   `n2` text,
   `n3` text,
   `n4` text,
   `n5` text,
-  `Instruktur` text,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table db_lkp.lulusan: ~1 rows (approximately)
-/*!40000 ALTER TABLE `lulusan` DISABLE KEYS */;
-/*!40000 ALTER TABLE `lulusan` ENABLE KEYS */;
+-- Data exporting was unselected.
 
 -- Dumping structure for table db_lkp.peserta
 CREATE TABLE IF NOT EXISTS `peserta` (
@@ -86,18 +69,14 @@ CREATE TABLE IF NOT EXISTS `peserta` (
   `Nokk` text,
   `Jeniskursus` text,
   `Kelas` text,
-  `Tanggalmasuk` date DEFAULT NULL,
+  `Tglmasuk` date DEFAULT NULL,
   `Ttl` varchar(50) DEFAULT NULL,
+  `Status` int(1) DEFAULT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Nipd` (`Nipd`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table db_lkp.peserta: ~2 rows (approximately)
-/*!40000 ALTER TABLE `peserta` DISABLE KEYS */;
-REPLACE INTO `peserta` (`Id`, `Nama`, `Kelamin`, `Nipd`, `Nik`, `Nokk`, `Jeniskursus`, `Kelas`, `Tanggalmasuk`, `Ttl`) VALUES
-	(1, 'Nama peserta benar', 'Laki - Laki', 1001, '12345', '1234', 'Microsoft Office', 'Reguler', '2023-04-02', 'blitar, 17 agustus 1945'),
-	(2, 'Nama peserta benar d', 'Laki - Laki', 1000, '12345', '1234', 'Desain Grafis', 'Reguler', '2023-04-02', '29/03/2023');
-/*!40000 ALTER TABLE `peserta` ENABLE KEYS */;
+-- Data exporting was unselected.
 
 -- Dumping structure for table db_lkp.presensi
 CREATE TABLE IF NOT EXISTS `presensi` (
@@ -105,16 +84,12 @@ CREATE TABLE IF NOT EXISTS `presensi` (
   `Tgl` date NOT NULL,
   `Nipd` int(11) NOT NULL,
   `Jeniskursus` text NOT NULL,
-  `Instruktur` text NOT NULL,
+  `Instruktur` int(11) NOT NULL DEFAULT '0',
   `Materi` varchar(50) NOT NULL DEFAULT '',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table db_lkp.presensi: ~0 rows (approximately)
-/*!40000 ALTER TABLE `presensi` DISABLE KEYS */;
-REPLACE INTO `presensi` (`Id`, `Tgl`, `Nipd`, `Jeniskursus`, `Instruktur`, `Materi`) VALUES
-	(1, '2023-04-02', 1001, 'Microsoft Office', 'Habib, S.Pd', 'excel 1');
-/*!40000 ALTER TABLE `presensi` ENABLE KEYS */;
+-- Data exporting was unselected.
 
 -- Dumping structure for table db_lkp.profil
 CREATE TABLE IF NOT EXISTS `profil` (
@@ -136,11 +111,7 @@ CREATE TABLE IF NOT EXISTS `profil` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table db_lkp.profil: ~0 rows (approximately)
-/*!40000 ALTER TABLE `profil` DISABLE KEYS */;
-REPLACE INTO `profil` (`id`, `Namalkp`, `Alamat`, `Kelurahan`, `Kecamatan`, `Kota`, `Provinsi`, `Rt`, `Rw`, `Kodepos`, `Namayayasan`, `Telepon`, `Nofax`, `Email`, `Npsn`) VALUES
-	(1, 'LKP CENDITAMA', 'Jalan Veteran 44 ', 'Kepanjen kidul', 'Kepanjen kidul', 'Blitar', 'Jawa Timur', '', '', '', '', '', '', '', '123');
-/*!40000 ALTER TABLE `profil` ENABLE KEYS */;
+-- Data exporting was unselected.
 
 -- Dumping structure for table db_lkp.rombel
 CREATE TABLE IF NOT EXISTS `rombel` (
@@ -150,15 +121,9 @@ CREATE TABLE IF NOT EXISTS `rombel` (
   `Jumlahpeserta` text,
   `Ruangan` text,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
--- Dumping data for table db_lkp.rombel: ~3 rows (approximately)
-/*!40000 ALTER TABLE `rombel` DISABLE KEYS */;
-REPLACE INTO `rombel` (`Id`, `Namarombel`, `Kelas`, `Jumlahpeserta`, `Ruangan`) VALUES
-	(1, 'Microsoft Office', 'pagi', '15', 'depan'),
-	(2, 'Desain Grafis', 'Reguler', '15', 'depan'),
-	(3, 'Simple Microsoft Office', 'Reguler', '15', 'depan');
-/*!40000 ALTER TABLE `rombel` ENABLE KEYS */;
+-- Data exporting was unselected.
 
 -- Dumping structure for table db_lkp.sapras
 CREATE TABLE IF NOT EXISTS `sapras` (
@@ -174,9 +139,21 @@ CREATE TABLE IF NOT EXISTS `sapras` (
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table db_lkp.sapras: ~0 rows (approximately)
-/*!40000 ALTER TABLE `sapras` DISABLE KEYS */;
-/*!40000 ALTER TABLE `sapras` ENABLE KEYS */;
+-- Data exporting was unselected.
+
+-- Dumping structure for table db_lkp.unitkompetensi
+CREATE TABLE IF NOT EXISTS `unitkompetensi` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Rombel` int(11) NOT NULL,
+  `Uk1` text NOT NULL,
+  `Uk2` text NOT NULL,
+  `Uk3` text NOT NULL,
+  `Uk4` text NOT NULL,
+  `Uk5` text NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- Data exporting was unselected.
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;

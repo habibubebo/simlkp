@@ -22,6 +22,14 @@
                 $this->db->order_by($field, $order);
                 return $query = $this->db->get();
             }
+            function tampil_data_join2($sel, $nm_tabel, $nm_tabel_join, $kondisi, $nm_tabel_join2, $kondisi2, $field,$order){
+                $this->db->select($sel);
+                $this->db->from($nm_tabel);
+                $this->db->join($nm_tabel_join, $kondisi);
+                $this->db->join($nm_tabel_join2, $kondisi2);
+                $this->db->order_by($field, $order);
+                return $query = $this->db->get();
+            }
         // Membuat fungsi simpan_data($data,$nm_tabel)-----------------------------------------------------------------
             function simpan_data($data,$nm_table){
                 // Memanggil fungsi insert($nm_tabel,$data)----------------------------------------------------------------
@@ -43,6 +51,14 @@
                 $this->db->select('*');
                 $this->db->from($nm_tabel);
                 $this->db->join($nm_tabel_join, $on);
+                $this->db->where($kondisi);
+                return $query = $this->db->get();
+            }
+            function edit_data_join2($sel, $nm_tabel, $nm_tabel_join, $on, $nm_tabel_join2, $on2, $kondisi){
+                $this->db->select($sel);
+                $this->db->from($nm_tabel);
+                $this->db->join($nm_tabel_join, $on);
+                $this->db->join($nm_tabel_join2, $on2);
                 $this->db->where($kondisi);
                 return $query = $this->db->get();
             }

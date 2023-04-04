@@ -21,51 +21,18 @@
                         <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nomor Induk" name="nipd" maxlength=20 required value="<?php echo $tp->Nipd ?>" onkeyup="GetDetail(this.value)">
                     </div>
                     <div class="form-group col-md-8">
-                        <input class="form-control" id="nama" aria-describedby="emailHelp" placeholder="Nama" name="nmlulusan" maxlength=50 required value="<?php echo $tp->Nama ?>">
-                    </div>
-                    <div class="form-group col-md-4">
-                        <select class="form-control" id="jk" aria-describedby="emailHelp" name="jk" required>
-                            <option value="<?php echo $tp->Kelamin ?>"><?php echo $tp->Kelamin ?></option>
-                            <option value="Laki - Laki">Laki - laki</option>
-                            <option value="Perempuan">Perempuan</option>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-8">
-                        <input type="text" class="form-control" id="ttl" aria-describedby="emailHelp" placeholder="Tempat Tanggal Lahir" name="ttl" maxlength="30" required value="<?php echo $tp->Ttl ?>">
-                    </div>
-                    <div class="form-group col-md-6">
-                        <select class="form-control" id="jks" aria-describedby="emailHelp" name="jks" maxlength=50 required>
-                            <option selected value="<?php echo $tp->Jeniskursus ?>"><?php echo $tp->Jeniskursus ?></option>
-                            <?php
-                            $data = $this->db->query("SELECT * FROM rombel")->result();
-                            foreach ($data as $row) { ?>
-                                <option value="<?php echo $row->Namarombel ?>">
-                                    <?php echo $row->Namarombel ?>
-                                </option>
-                            <?php } ?>
-                        </select>
-                    </div>
-                    <div class="form-group col-md-6">
                         <select type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="Instruktur" maxlength=20 required>
-                            <option selected value="<?php echo $tp->Instruktur ?>"><?php echo $tp->Instruktur ?></option>
+                            <option selected value="<?php echo $tp->Instruktur ?>"><?php echo $tp->NamaInstruktur ?></option>
                             <?php
                             $data = $this->db->query("SELECT * FROM instruktur")->result();
                             foreach ($data as $row) { ?>
-                                <option value="<?php echo $row->NamaInstruktur ?>">
+                                <option value="<?php echo $row->Id ?>">
                                     <?php echo $row->NamaInstruktur ?>
                                 </option>
                             <?php } ?>
                         </select>
                     </div>
-                    <div class="form-group col-md-4" id="simple-date2">
-                        <div class="input-group date">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text" id="tmp"><i class="fas fa-calendar"></i></span>
-                            </div>
-                            <input type="text" name="tm" class="form-control" placeholder="Tgl Masuk" id="tm" maxlength=30 required value="<?php echo $tp->Tglmasuk ?>">
-                        </div>
-                    </div>
-                    <div class="form-group col-md-4" id="simple-date1">
+                    <div class="form-group col-md-6" id="simple-date1">
                         <div class="input-group date">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-calendar"></i></span>
@@ -73,7 +40,7 @@
                             <input type="text" name="tl" class="form-control" placeholder="Tgl Lulus" id="simpleDataInput" maxlength=30 required value="<?php echo $tp->Tgllulus ?>">
                         </div>
                     </div>
-                    <div class="form-group col-md-4" id="simple-date1">
+                    <div class="form-group col-md-6" id="simple-date1">
                         <div class="input-group date">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-calendar"></i></span>
@@ -81,7 +48,6 @@
                             <input type="text" name="tc" class="form-control" placeholder="Tgl Cetak" id="simpleDataInput" maxlength=30 required value="<?php echo $tp->Tglcetak ?>">
                         </div>
                     </div>
-
                     <div class="form-group col-md-3">
                         <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nilai 1" name="n1" maxlength="1" required value="<?php echo $tp->n1 ?>">
                     </div>

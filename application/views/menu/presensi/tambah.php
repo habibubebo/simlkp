@@ -39,9 +39,9 @@
                         <select type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="Instruktur" maxlength=20 required>
                             <option disabled selected value="">Instruktur</option>
                             <?php
-                            $data = $this->db->query("SELECT NamaInstruktur FROM instruktur")->result();
+                            $data = $this->db->query("SELECT Id,NamaInstruktur FROM instruktur")->result();
                             foreach ($data as $row) { ?>
-                                <option value="<?php echo $row->NamaInstruktur ?>">
+                                <option value="<?php echo $row->Id ?>">
                                     <?php echo $row->NamaInstruktur ?>
                                 </option>
                             <?php } ?>

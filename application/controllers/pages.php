@@ -96,14 +96,19 @@ class pages  extends CI_Controller {
         $this->load->view('layout/footer');
     }
     function lulusan(){
-        $data['lulusan'] = $this->Model_APS->tampil_data('lulusan', 'Id','ASC')->result();
+        $sel = "lulusan.Id,lulusan.Nipd,lulusan.Tgllulus,lulusan.Tglcetak,lulusan.Instruktur,lulusan.n1,lulusan.n2,lulusan.n3,lulusan.n4,lulusan.n5,peserta.Nama,peserta.Jeniskursus,peserta.Ttl,peserta.Tglmasuk,instruktur.NamaInstruktur";
+        $on = "lulusan.Nipd=peserta.Nipd";
+        $on2 = "lulusan.Instruktur=instruktur.Id";
+        $data['lulusan'] = $this->Model_APS->tampil_data_join2($sel, 'lulusan','peserta',$on, 'instruktur',$on2, 'lulusan.Id','ASC')->result();
         
         $this->load->view('menu/lulusan/lihat',$data);
         $this->load->view('layout/footer');
     }
     function presensi(){
+        $sel = "*";
         $on = "presensi.Nipd=peserta.Nipd";
-        $data['presensi'] = $this->Model_APS->tampil_data_join('peserta','presensi',$on, 'presensi.Id','ASC')->result();
+        $on2 = "presensi.Instruktur=instruktur.Id";
+        $data['presensi'] = $this->Model_APS->tampil_data_join2($sel,'peserta','presensi',$on, 'instruktur',$on2, 'presensi.Id','ASC')->result();
         
         $this->load->view('menu/presensi/lihat',$data);
         $this->load->view('layout/footer');

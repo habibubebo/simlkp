@@ -24,80 +24,60 @@ class lulusan  extends CI_Controller {
     }
     // Tambah
     function tambah(){
-        $nama = $this->input->post('nmlulusan');
-        $jk = $this->input->post('jk');
-        $jks = $this->input->post('jks');
-        $kls = $this->input->post('kls');
-        $tl = $this->input->post('tl');
-        $ttl = $this->input->post('ttl');
         $nipd = $this->input->post('nipd');
-        $ins = $this->input->post('Instruktur');
-        $tm = $this->input->post('tm');
+        $tl = $this->input->post('tl');
         $tc = $this->input->post('tc');
+        $ins = $this->input->post('Instruktur');
         $n1 = $this->input->post('n1');
         $n2 = $this->input->post('n2');
         $n3 = $this->input->post('n3');
         $n4 = $this->input->post('n4');
+        $n5 = $this->input->post('n5');
 
         $data = array(
-            'Nama' => $nama,
-            'Kelamin' => $jk,
-            'Jeniskursus' => $jks,
-            'Kelas' => $kls,
-            'Tgllulus' => $tl,
-            'Ttl' => $ttl,
             'Nipd' => $nipd,
-            'Instruktur' => $ins,
-            'Tglmasuk' => $tm,
+            'Tgllulus' => $tl,
             'Tglcetak' => $tc,
+            'Instruktur' => $ins,
             'n1' => $n1,
             'n2' => $n2,
             'n3' => $n3,
-            'n4' => $n4
+            'n4' => $n4,
+            'n5' => $n5
         );
         $this->Model_APS->simpan_data($data,'lulusan');
         redirect('index.php/pages/lulusan');
     }
     // from-Ubah
     function form_ubah($Id){
-        $where = array('Id' => $Id);
-        $data['lulusan'] = $this->Model_APS->edit_data('lulusan',$where)->result();
+        $where = array('lulusan.Id' => $Id);
+        $data['lulusan'] = $this->Model_APS->edit_data_join('lulusan','instruktur','lulusan.Instruktur=instruktur.Id',$where)->result();
         $this->load->view('menu/lulusan/ubah',$data);
         $this->load->view('layout/footer');
     }
     // ubah
     function ubah($Id  = null){
         $Id = $this->input->post('Id');
-        $nama = $this->input->post('nmlulusan');
-        $jk = $this->input->post('jk');
-        $jks = $this->input->post('jks');
-        $kls = $this->input->post('kls');
-        $tl = $this->input->post('tl');
-        $ttl = $this->input->post('ttl');
         $nipd = $this->input->post('nipd');
-        $ins = $this->input->post('Instruktur');
-        $tm = $this->input->post('tm');
+        $tl = $this->input->post('tl');
         $tc = $this->input->post('tc');
+        $ins = $this->input->post('Instruktur');
         $n1 = $this->input->post('n1');
         $n2 = $this->input->post('n2');
         $n3 = $this->input->post('n3');
         $n4 = $this->input->post('n4');
+        $n5 = $this->input->post('n5');
 
         $data = array(
-            'Nama' => $nama,
-            'Kelamin' => $jk,
-            'Jeniskursus' => $jks,
-            'Kelas' => $kls,
-            'Tgllulus' => $tl,
-            'Ttl' => $ttl,
             'Nipd' => $nipd,
-            'Instruktur' => $ins,
-            'Tglmasuk' => $tm,
+            'Tgllulus' => $tl,
             'Tglcetak' => $tc,
+            'Instruktur' => $ins,
             'n1' => $n1,
             'n2' => $n2,
             'n3' => $n3,
-            'n4' => $n4
+            'n4' => $n4,
+            'n5' => $n5
         );
         $where = array('Id' => $Id);
         $this->Model_APS->proses_update($where,$data,'lulusan');
@@ -108,14 +88,10 @@ class lulusan  extends CI_Controller {
         $where = array('Id' => $Id);
         $this->Model_APS->hapus_data($where,'lulusan');
         redirect('index.php/pages/lulusan');
-
     }
     function cetak($Id){
-        $where = array('Id' => $Id);
-        $data['lulusan'] = $this->Model_APS->edit_data('lulusan',$where)->result();
         $this->load->library('pdf');
         $this->load->model('Model_APS');
-        $this->load->view('menu/lulusan/cetak',$data);
-        
+        $this->load->view('menu/lulusan/cetak');  
     }
 }
