@@ -7,14 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="habibubebo">
-  <link href="<?php echo base_url("asset/img/logo/logo.png")?>" rel="icon">
+  <link href="<?php echo base_url("asset/img/logo/logo.png") ?>" rel="icon">
   <title>Dashboard - <?php echo $this->session->userdata('nama') ?></title>
-  <link href="<?php echo base_url("asset/vendor/fontawesome-free/css/all.min.css")?>" rel="stylesheet" type="text/css">
-  <link href="<?php echo base_url("asset/vendor/bootstrap/css/bootstrap.min.css")?>" rel="stylesheet" type="text/css">
-  <link href="<?php echo base_url("asset/css/ruang-admin.min.css")?>" rel="stylesheet">
-  <link href="<?php echo base_url("asset/vendor/datatables/dataTables.bootstrap4.min.css")?>" rel="stylesheet">
-  <link href="<?php echo base_url("asset/vendor/bootstrap-datepicker/css/bootstrap-datepicker.min.css")?>" rel="stylesheet" >
+  <link href="<?php echo base_url("asset/vendor/fontawesome-free/css/all.min.css") ?>" rel="stylesheet" type="text/css">
+  <link href="<?php echo base_url("asset/vendor/bootstrap/css/bootstrap.min.css") ?>" rel="stylesheet" type="text/css">
+  <link href="<?php echo base_url("asset/css/ruang-admin.min.css") ?>" rel="stylesheet">
+  <link href="<?php echo base_url("asset/vendor/datatables/dataTables.bootstrap4.min.css") ?>" rel="stylesheet">
+  <link href="<?php echo base_url("asset/vendor/bootstrap-datepicker/css/bootstrap-datepicker.min.css") ?>" rel="stylesheet">
 </head>
 
 <body id="page-top">
-    <div id="wrapper">
+  <div id="wrapper">
