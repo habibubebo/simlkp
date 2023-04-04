@@ -1,6 +1,6 @@
 # Sistem Informasi Manajemen - LKP Cendekia Utama
 
-Dikembangkan dengan suasana hati gembira, tapi kode belum DRY masih basah kuyup 
+Dikembangkan dengan suasana hati gembira, tapi kode belum DRY masih basah kuyup
 
 ## Features
 

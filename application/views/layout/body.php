@@ -16,11 +16,11 @@
 
                 <div class="card-body">
                   <div class="text-center">
-                    <img style="width:30%;" src="<?php echo base_url("asset/img/boy.png")?>">
+                    <img style="width:30%;" src="<?php echo base_url("asset/img/boy.png") ?>">
                   </div>
                 </div>
                 <div class="card-footer text-center">
-                  <h4><?php echo $this->session->userdata('nama')?></h4>
+                  <h4><?php echo $this->session->userdata('nama') ?></h4>
                 </div>
               </div>
             </div>

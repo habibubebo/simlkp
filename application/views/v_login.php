@@ -10,9 +10,9 @@
   <meta name="author" content="">
   <!-- <link href="img/logo/logo.png" rel="icon"> -->
   <title>LKP - Login</title>
-  <link href="<?php echo base_url("asset/vendor/fontawesome-free/css/all.min.css")?>" rel="stylesheet" type="text/css">
-  <link href="<?php echo base_url("asset/vendor/bootstrap/css/bootstrap.min.css")?>" rel="stylesheet" type="text/css">
-  <link href="<?php echo base_url("asset/css/ruang-admin.min.css")?>" rel="stylesheet">
+  <link href="<?php echo base_url("asset/vendor/fontawesome-free/css/all.min.css") ?>" rel="stylesheet" type="text/css">
+  <link href="<?php echo base_url("asset/vendor/bootstrap/css/bootstrap.min.css") ?>" rel="stylesheet" type="text/css">
+  <link href="<?php echo base_url("asset/css/ruang-admin.min.css") ?>" rel="stylesheet">
 
 </head>
 
@@ -27,14 +27,13 @@
               <div class="col-lg-12">
                 <div class="login-form">
                   <div class="text-center">
-                    <img src="<?php echo base_url("asset/img/logo/logo.png")?>" class="mb-1" width="70%" alt="">
+                    <img src="<?php echo base_url("asset/img/logo/logo.png") ?>" class="mb-1" width="70%" alt="">
                     <h1 class="h4 text-gray-900 mb-4"><b>SIM</b> LKP</h1>
                   </div>
 
-                  <form class="user" action="<?php echo base_url("index.php/login/auth")?>" method="POST">
+                  <form class="user" action="<?php echo base_url("index.php/login/auth") ?>" method="POST">
                     <div class="form-group">
-                      <input type="text" name="user" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp"
-                        placeholder="Username">
+                      <input type="text" name="user" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Username">
                     </div>
                     <div class="form-group">
                       <input type="password" name="pass" class="form-control" id="exampleInputPassword" placeholder="Password">
@@ -61,10 +60,10 @@
     </div>
   </div>
   <!-- Login Content -->
-  <script src="<?php echo base_url("asset/vendor/jquery/jquery.min.js")?>"></script>
-  <script src="<?php echo base_url("asset/vendor/bootstrap/js/bootstrap.bundle.min.js")?>"></script>
-  <script src="<?php echo base_url("asset/vendor/jquery-easing/jquery.easing.min.js")?>"></script>
-  <script src="<?php echo base_url("asset/js/ruang-admin.min.js")?>"></script>
+  <script src="<?php echo base_url("asset/vendor/jquery/jquery.min.js") ?>"></script>
+  <script src="<?php echo base_url("asset/vendor/bootstrap/js/bootstrap.bundle.min.js") ?>"></script>
+  <script src="<?php echo base_url("asset/vendor/jquery-easing/jquery.easing.min.js") ?>"></script>
+  <script src="<?php echo base_url("asset/js/ruang-admin.min.js") ?>"></script>
 </body>
 
 </html>
