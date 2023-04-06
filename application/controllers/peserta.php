@@ -42,7 +42,7 @@ class peserta  extends CI_Controller {
             'Nokk' => $nokk,
             'Jeniskursus' => $jenis,
             'Kelas' => $kls,
-            'Tanggalmasuk' => $tglmasuk,
+            'Tglmasuk' => $tglmasuk,
             'Ttl' => $tgl,
             'Status' => $stat
         );
@@ -78,7 +78,7 @@ class peserta  extends CI_Controller {
             'Nokk' => $nokk,
             'Jeniskursus' => $jenis,
             'Kelas' => $kls,
-            'Tanggalmasuk' => $tglmasuk,
+            'Tglmasuk' => $tglmasuk,
             'Ttl' => $tgl,
             'Status' => $stat
         );

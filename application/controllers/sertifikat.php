@@ -11,11 +11,7 @@ Class sertifikat extends CI_Controller{
 	
     function index(){
     	$Id = $_REQUEST['Id'];
-    	$where = array('lulusan.Id' => $Id);
-        $sel = "lulusan.Id,lulusan.Nipd,lulusan.Tgllulus,lulusan.Tglcetak,lulusan.Instruktur,lulusan.n1,lulusan.n2,lulusan.n3,lulusan.n4,lulusan.n5,peserta.Nama,peserta.Jeniskursus,peserta.Ttl,peserta.Tglmasuk,instruktur.NamaInstruktur";
-        $on = "lulusan.Nipd=peserta.Nipd";
-        $on2 = "lulusan.Instruktur=instruktur.Id";
-        $data['lulusan'] = $this->Model_APS->edit_data_join2($sel,'lulusan','peserta',$on,'instruktur',$on2,$where)->result();
+        $data['lulusan'] = $this->db->query("SELECT *,lulusan.Id AS Idl,rombel.Id AS Idr FROM lulusan JOIN instruktur JOIN peserta JOIN rombel JOIN unitkompetensi on lulusan.Instruktur=instruktur.Id AND lulusan.Nipd=peserta.Nipd AND peserta.Jeniskursus=rombel.Id AND unitkompetensi.Rombel=rombel.Id WHERE lulusan.Id=$Id")->result();
 		function tgl_indo($tanggal){
 			$bulan = array (
 				1 =>   'Januari',
@@ -62,7 +58,7 @@ Class sertifikat extends CI_Controller{
 		  $nama = ucwords(strtolower($row->Nama));
 		  $ttl = ucwords(strtolower($row->Ttl));
 		  $ttlfinal = "Lahir Di $ttl";
-          $ket = "telah mengikuti kursus komputer Program $row->Jeniskursus";
+          $ket = "telah mengikuti kursus komputer Program $row->Namarombel";
           $ket2 = "yang dilaksanakan tanggal $Tglmasukfinal sampai dengan $Tgllulusfinal";
           $ket3 = "di Lembaga Kursus dan Pelatihan Cendekia Utama.";
           $Tglcetakfinal = "Blitar, ".$Tglcetakfinal;
@@ -91,25 +87,80 @@ Class sertifikat extends CI_Controller{
 		
 		//halaman kedua
 		$pdf->AddPage();
-		$pdf->Image(base_url('asset/img/certioffice.png'),0,0,$pdf->GetPageWidth(),$pdf->GetPageHeight());
+		if ($row->Instruktur == 3) {
+			$pdf->Image(base_url('asset/img/certihbb.png'),0,0,$pdf->GetPageWidth(),$pdf->GetPageHeight());
+		} else {
+			$pdf->Image(base_url('asset/img/certibelakang.png'),0,0,$pdf->GetPageWidth(),$pdf->GetPageHeight());
+            }
+            // $pdf->SetFont('rockwell','',14);
+			$pdf->SetFont('arialbd','',14);
+            $pdf->ln(15);
+            $pdf->Cell(27,8,'',0,0,'C');
+            $pdf->Cell(37,8,'Nomor Induk',0,0,'L');
+            $pdf->Cell(5,8,':',0,0,'L');
+            $pdf->Cell(170,8,$row->Nipd,0,1,'L');
             
-            $pdf->SetFont('rockwell','',14);
-            $pdf->text(80,31,$row->Nipd,0,1,'');
-            $pdf->text(80,37,strtoupper($nama),0,1,'');
-            $pdf->text(80,44,$row->Jeniskursus,0,1,'');
-            $pdf->SetFont('arialbd','',14);
-            $pdf->text(187,74,$row->n1,0,1);
-            $pdf->text(187,84,$row->n2,0,1);
-            $pdf->text(187,94,$row->n3,0,1);
-            $pdf->text(187,104,$row->n4,0,1);
-			$pdf->ln(160);
+            $pdf->Cell(27,7,'',0,0,'C');
+            $pdf->Cell(37,7,'Nama',0,0,'L');
+            $pdf->Cell(5,7,':',0,0,'L');
+            $pdf->Cell(170,7,strtoupper($nama),0,1,'L');
+
+            $pdf->Cell(27,7,'',0,0,'C');
+            $pdf->Cell(37,7,'Program',0,0,'L');
+            $pdf->Cell(5,7,':',0,0,'L');
+            $pdf->Cell(170,7,$row->Namarombel,0,1,'L');
+
+            
+            $pdf->ln(10);
+            $pdf->SetDrawColor(31,31,31);
+            $pdf->SetLineWidth(0.8);
+            $pdf->Cell(23,12,'',0,0,'C');
+            $pdf->Cell(17,12,'No',1,0,'C');
+            $pdf->Cell(73,12,'Unit Kompetensi',1,0,'C');
+            $pdf->Cell(44,12,'Waktu',1,0,'C');
+            $pdf->Cell(44,12,'Nilai',1,1,'C');
+            
+            $pdf->Cell(23,10,'',0,0,'C');
+            $pdf->Cell(17,10,'1.',1,0,'C');
+            $pdf->Cell(73,10,$row->Uk1,1,0,'L');
+            $pdf->Cell(44,10,$row->Jp1,1,0,'C');
+            $pdf->Cell(44,10,$row->n1,1,1,'C');
+            
+            $pdf->Cell(23,10,'',0,0,'C');
+            $pdf->Cell(17,10,'2.',1,0,'C');
+            $pdf->Cell(73,10,$row->Uk2,1,0,'L');
+            $pdf->Cell(44,10,$row->Jp2,1,0,'C');
+            $pdf->Cell(44,10,$row->n2,1,1,'C');
+
+            $pdf->Cell(23,10,'',0,0,'C');
+            $pdf->Cell(17,10,'3.',1,0,'C');
+            $pdf->Cell(73,10,$row->Uk3,1,0,'L');
+            $pdf->Cell(44,10,$row->Jp3,1,0,'C');
+            $pdf->Cell(44,10,$row->n3,1,1,'C');
+            if ($row->Idr=2) {} else {
+            $pdf->Cell(23,10,'',0,0,'C');
+            $pdf->Cell(17,10,'4.',1,0,'C');
+            $pdf->Cell(73,10,$row->Uk4,1,0,'L');
+            $pdf->Cell(44,10,$row->Jp4,1,0,'C');
+            $pdf->Cell(44,10,$row->n4,1,1,'C');
+            }
+            $pdf->Cell(23,10,'',0,0,'C');
+            $pdf->Cell(17,10,'',1,0,'C');
+            $pdf->Cell(73,10,'JUMLAH',1,0,'C');
+            $pdf->Cell(44,10,$row->Jptotal,1,0,'C');
+            $pdf->Cell(44,10,'',1,1,'C');
+
+            $pdf->ln(30);
             $pdf->SetFont('arialbd','',12);
+            $pdf->Cell(190,5,'',0,0,'R');
+			$pdf->Cell(60,5,'Instruktur / Penguji',0,1,'C');
+			$pdf->ln(20);
 			$pdf->Cell(190,5,'',0,0,'R');
 			$pdf->Cell(60,5,$row->NamaInstruktur,0,0,'C');
 			
 		//jadikan pdf				
-        // $pdf->Output('I', 'Serttifikat '.$nama.'.pdf');
-			$pdf->Output('I', 'Serttifikat.pdf');
+        $pdf->Output('I', 'Sertifikat '.substr($nama,0,5).'.pdf');
+			// $pdf->Output('I', 'Sertifikat.pdf');
 	}
 	}
 	

@@ -66,7 +66,7 @@
                             <?php
                             $data = $this->db->query("SELECT * FROM rombel")->result();
                             foreach ($data as $row) { ?>
-                                <option value="<?php echo $row->Namarombel ?>">
+                                <option value="<?php echo $row->Id ?>">
                                     <?php echo $row->Namarombel ?>
                                 </option>
                             <?php } ?>

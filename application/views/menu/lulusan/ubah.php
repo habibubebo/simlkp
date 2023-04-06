@@ -18,7 +18,7 @@
                         <input type="text" class="form-control" id="exampleInputEmail1" hidden aria-describedby="emailHelp" placeholder="Id" name="Id" value="<?php echo $tp->Id ?>">
                     </div>
                     <div class="form-group col-md-4">
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nomor Induk" name="nipd" maxlength=20 required value="<?php echo $tp->Nipd ?>" onkeyup="GetDetail(this.value)">
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nomor Induk" name="nipd" maxlength=20 required value="<?php echo $tp->Nipd ?>">
                     </div>
                     <div class="form-group col-md-8">
                         <select type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="Instruktur" maxlength=20 required>
@@ -63,43 +63,8 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary">Simpan</button>
+                <a href="<?php echo base_url("index.php/pages/lulusan") ?>" class="btn btn-secondary" role="button">Batal</a>
             </form>
         </div>
     </div>
 </div>
-<script>
-    function GetDetail(str) {
-        if (str.length == 0) {
-
-            return;
-        } else {
-
-            // Creates a new XMLHttpRequest object
-            var xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function() {
-
-                if (this.readyState == 4 &&
-                    this.status == 200) {
-
-                    var myObj = JSON.parse(this.responseText);
-
-                    console.log(myObj);
-                    $.each(myObj, function(i) {
-
-                        document.getElementById("nama").value = myObj[i].Nama;
-                        document.getElementById("jk").value = myObj[i].Kelamin;
-                        document.getElementById("ttl").value = myObj[i].Ttl;
-                        document.getElementById("jks").value = myObj[i].Jeniskursus;
-                        document.getElementById("tm").value = myObj[i].Tanggalmasuk;
-
-                    });
-
-                }
-            };
-
-            xmlhttp.open("POST", "<?= base_url() ?>index.php/pesertas/nipd", true);
-            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            xmlhttp.send("Nipd=" + str);
-        }
-    }
-</script>

@@ -48,8 +48,9 @@
                         <select class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="Jenis" maxlength=50 required>
                             <option disabled selected value="">Jenis Kursus</option>
                             <?php
-                            foreach ($rombel as $row) { ?>
-                                <option value="<?php echo $row->Namarombel ?>">
+                            $data = $this->db->query("SELECT * FROM rombel")->result();
+                            foreach ($data as $row) { ?>
+                                <option value="<?php echo $row->Id ?>">
                                     <?php echo $row->Namarombel ?>
                                 </option>
                             <?php } ?>

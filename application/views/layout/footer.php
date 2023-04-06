@@ -32,6 +32,9 @@
               document.write(new Date().getFullYear());
             </script> - developed by
             <b><a href="https://instagram.com/habibubebo" target="_blank">Habibubebo</a></b>
+            <div class=" ml-2">
+          <small>(Version 0.4 Beta) </small>
+        </div>
           </span>
         </div>
       </div>

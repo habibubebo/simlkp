@@ -50,13 +50,15 @@ class lulusan  extends CI_Controller {
     }
     // from-Ubah
     function form_ubah($Id){
+        $sel = 'lulusan.Id,lulusan.Nipd,lulusan.Tgllulus,lulusan.Tglcetak,lulusan.Instruktur,lulusan.n1,lulusan.n2,lulusan.n3,lulusan.n4,lulusan.n5,instruktur.NamaInstruktur';
         $where = array('lulusan.Id' => $Id);
-        $data['lulusan'] = $this->Model_APS->edit_data_join('lulusan','instruktur','lulusan.Instruktur=instruktur.Id',$where)->result();
+        $data['lulusan'] = $this->Model_APS->sel_edit_data_join($sel,'lulusan','instruktur','lulusan.Instruktur=instruktur.Id',$where)->result();
+
         $this->load->view('menu/lulusan/ubah',$data);
         $this->load->view('layout/footer');
     }
     // ubah
-    function ubah($Id  = null){
+    function ubah($Id = null){
         $Id = $this->input->post('Id');
         $nipd = $this->input->post('nipd');
         $tl = $this->input->post('tl');

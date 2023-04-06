@@ -44,6 +44,12 @@
         </a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" href="<?php echo base_url("index.php/pages/uk") ?>">
+          <i class="fas fa-fw fa-archive"></i>
+          <span>Unit Kompetensi</span>
+        </a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="<?php echo base_url("index.php/pages/peserta") ?>">
           <i class="fas fa-fw fa-users"></i>
           <span>Peserta</span>
@@ -56,15 +62,15 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="<?php echo base_url('index.php/Laporan/form'); ?>">
-          <i class="fas fa-fw fa-file"></i>
-          <span>Formulir Pendaftaran</span>
-        </a>
-      </li>
-      <li class="nav-item">
         <a class="nav-link" href="<?php echo base_url("index.php/pages/presensi") ?>">
           <i class="fas fa-fw fa-archive"></i>
           <span>Presensi</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="<?php echo base_url('index.php/Laporan/form'); ?>">
+          <i class="fas fa-fw fa-file"></i>
+          <span>Formulir Pendaftaran</span>
         </a>
       </li>
       <hr class="sidebar-divider">

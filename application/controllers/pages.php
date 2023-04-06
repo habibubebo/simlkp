@@ -95,12 +95,20 @@ class pages  extends CI_Controller {
         $this->load->view('menu/rombel/lihat',$data);
         $this->load->view('layout/footer');
     }
-    function lulusan(){
-        $sel = "lulusan.Id,lulusan.Nipd,lulusan.Tgllulus,lulusan.Tglcetak,lulusan.Instruktur,lulusan.n1,lulusan.n2,lulusan.n3,lulusan.n4,lulusan.n5,peserta.Nama,peserta.Jeniskursus,peserta.Ttl,peserta.Tglmasuk,instruktur.NamaInstruktur";
-        $on = "lulusan.Nipd=peserta.Nipd";
-        $on2 = "lulusan.Instruktur=instruktur.Id";
-        $data['lulusan'] = $this->Model_APS->tampil_data_join2($sel, 'lulusan','peserta',$on, 'instruktur',$on2, 'lulusan.Id','ASC')->result();
+    function uk(){
+        $on = "unitkompetensi.Rombel=rombel.Id";
+        $data['uks'] = $this->Model_APS->tampil_data_join('unitkompetensi', 'rombel',$on,'unitkompetensi.Id','ASC')->result();
         
+        $this->load->view('menu/uk/lihat',$data);
+        $this->load->view('layout/footer');
+    }
+    function lulusan(){
+        // $sel = "lulusan.Id,lulusan.Nipd,lulusan.Tgllulus,lulusan.Tglcetak,lulusan.Instruktur,lulusan.n1,lulusan.n2,lulusan.n3,lulusan.n4,lulusan.n5,peserta.Nama,peserta.Jeniskursus,peserta.Ttl,peserta.Tglmasuk,instruktur.NamaInstruktur";
+        // $on = "lulusan.Nipd=peserta.Nipd";
+        // $on2 = "lulusan.Instruktur=instruktur.Id";
+        // $data['lulusan'] = $this->Model_APS->tampil_data_join2($sel, 'lulusan','peserta',$on, 'instruktur',$on2, 'Id','ASC')->result();
+        
+        $data['lulusan'] = $this->db->query("SELECT *,lulusan.Id AS Idl FROM lulusan JOIN instruktur JOIN peserta JOIN rombel JOIN unitkompetensi on lulusan.Instruktur=instruktur.Id AND lulusan.Nipd=peserta.Nipd AND peserta.Jeniskursus=rombel.Id AND unitkompetensi.Rombel=rombel.Id")->result();
         $this->load->view('menu/lulusan/lihat',$data);
         $this->load->view('layout/footer');
     }
