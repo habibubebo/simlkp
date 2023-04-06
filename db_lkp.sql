@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `lulusan` (
   `n4` text,
   `n5` text,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.
 
@@ -67,14 +67,14 @@ CREATE TABLE IF NOT EXISTS `peserta` (
   `Nipd` int(6) DEFAULT NULL,
   `Nik` text,
   `Nokk` text,
-  `Jeniskursus` text,
+  `Jeniskursus` int(11) DEFAULT NULL,
   `Kelas` text,
   `Tglmasuk` date DEFAULT NULL,
   `Ttl` varchar(50) DEFAULT NULL,
   `Status` int(1) DEFAULT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Nipd` (`Nipd`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.
 
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `presensi` (
   `Instruktur` int(11) NOT NULL DEFAULT '0',
   `Materi` varchar(50) NOT NULL DEFAULT '',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.
 
@@ -150,8 +150,14 @@ CREATE TABLE IF NOT EXISTS `unitkompetensi` (
   `Uk3` text NOT NULL,
   `Uk4` text NOT NULL,
   `Uk5` text NOT NULL,
+  `Jp1` text NOT NULL,
+  `Jp2` text NOT NULL,
+  `Jp3` text NOT NULL,
+  `Jp4` text NOT NULL,
+  `Jp5` text NOT NULL,
+  `Jptotal` text NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.
 

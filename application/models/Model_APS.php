@@ -47,6 +47,13 @@
                 // Mendapatkan nilai dari pengambilan data dari nama tabel dan kondisi yang dikirim 
                     return $this->db->get_where($nm_table,$kondisi);
             }
+            function sel_edit_data_join($sel, $nm_tabel, $nm_tabel_join, $on, $kondisi){
+                $this->db->select($sel);
+                $this->db->from($nm_tabel);
+                $this->db->join($nm_tabel_join, $on);
+                $this->db->where($kondisi);
+                return $query = $this->db->get();
+            }
             function edit_data_join($nm_tabel, $nm_tabel_join, $on, $kondisi){
                 $this->db->select('*');
                 $this->db->from($nm_tabel);

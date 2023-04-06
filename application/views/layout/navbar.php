@@ -10,9 +10,7 @@
           ?>
           <h5><?php echo $pr->Namalkp ?></h5>
         </div>
-        <div class=" ml-2 text-white">
-          <small>(Version 0.3 Beta) </small>
-        </div>
+        
         <!-- User Info -->
         <ul class="navbar-nav ml-auto">
           <div class="topbar-divider d-none d-sm-block"></div>

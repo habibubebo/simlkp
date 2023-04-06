@@ -78,19 +78,20 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nilai 1" name="n1" maxlength="1" required>
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nilai 1" name="n1" maxlength="1" >
                     </div>
                     <div class="form-group col-md-3">
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nilai 2" name="n2" maxlength="1" required>
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nilai 2" name="n2" maxlength="1" >
                     </div>
                     <div class="form-group col-md-3">
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nilai 3" name="n3" maxlength="1" required>
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nilai 3" name="n3" maxlength="1" >
                     </div>
                     <div class="form-group col-md-3">
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nilai 4" name="n4" maxlength="1" required>
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nilai 4" name="n4" maxlength="1" >
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Simpan</button>
+                <a href="<?php echo base_url("index.php/pages/lulusan") ?>" class="btn btn-secondary" role="button">Batal</a>
             </form>
         </div>
     </div>
@@ -122,7 +123,7 @@
                         document.getElementById("jk").value = myObj[i].Kelamin;
                         document.getElementById("ttl").value = myObj[i].Ttl;
                         document.getElementById("jks").value = myObj[i].Jeniskursus;
-                        document.getElementById("tm").value = myObj[i].Tanggalmasuk;
+                        document.getElementById("tm").value = myObj[i].Tglmasuk;
 
                     });
 
