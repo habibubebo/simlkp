@@ -12,7 +12,7 @@ class presensi extends CI_Controller {
         $this->load->view('layout/sidebar_menu',$data);
         $this->load->view('layout/navbar');
         if($this->session->userdata('status') == ""){
-            redirect(base_url("index.php/login"));
+            redirect(base_url("login"));
         }
     }
     // form-tambah
@@ -36,13 +36,13 @@ class presensi extends CI_Controller {
             'Materi' => $materi
         );
         $this->Model_APS->simpan_data($data,'presensi');
-        redirect('index.php/pages/presensi');
+        redirect('pages/presensi');
     }
     // from-Ubah
     function form_ubah($Id){
         $where = array('presensi.Id' => $Id);
         $on = "presensi.Nipd=peserta.Nipd";
-        $data['presensi'] = $this->Model_APS->edit_data_join('presensi','peserta',$on,$where)->result();
+        $data['presensi'] = $this->Model_APS->edit_data_join2('*','presensi','peserta',$on, 'instruktur', 'presensi.Instruktur=instruktur.Id', $where)->result();
         $this->load->view('menu/presensi/ubah',$data);
         $this->load->view('layout/footer');
     }
@@ -64,13 +64,13 @@ class presensi extends CI_Controller {
         );
         $where = array('Id' => $Id);
         $this->Model_APS->proses_update($where,$data,'presensi');
-        redirect('index.php/pages/presensi');
+        redirect('pages/presensi');
     }
     // hapus
     function hapus($Id){
         $where = array('Id' => $Id);
         $this->Model_APS->hapus_data($where,'presensi');
-        redirect('index.php/pages/presensi');
+        redirect('pages/presensi');
 
     }
 }

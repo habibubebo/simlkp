@@ -2,7 +2,7 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Tambah Sarana Prasarana</h1>
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="<?php echo base_url("index.php/pages/sapras") ?>">Sarana Prasarana</a></li>
+        <li class="breadcrumb-item"><a href="<?php echo base_url("pages/sapras") ?>">Sarana Prasarana</a></li>
         <li class="breadcrumb-item active" aria-current="page">Tambah Sarana Prasarana</li>
     </ol>
 </div>
@@ -10,7 +10,7 @@
     <!-- Form Basic -->
     <div class="card mb-4">
         <div class="card-body">
-            <form action="<?php echo base_url() . 'index.php/sapras/tambah'; ?>" method="POST">
+            <form action="<?php echo base_url() . 'sapras/tambah'; ?>" method="POST">
                 <div class="row">
                     <div class="form-group col-md-12">
                         <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Jenis sarana prasarana" name="Jsp" maxlength=20 required>

@@ -98,7 +98,7 @@
             </table>
           </div>
           <div class="col-xl-12 col-lg-12 text-right">
-            <a href="<?php echo base_url('index.php/pages/lembaga_edit'); ?>" class="btn btn-warning btn-icon-split">
+            <a href="<?php echo base_url('pages/lembaga_edit'); ?>" class="btn btn-warning btn-icon-split">
               <span class="icon text-white-50">
                 <i class="fas fa-plus"></i>
               </span>

@@ -15,7 +15,7 @@ class utama extends CI_Controller {
                 $this->load->view('layout/sidebar_menu',$data);
                 $this->load->view('layout/navbar');
                 if($this->session->userdata('status') == ""){
-                    redirect(base_url("index.php/login"));
+                    redirect(base_url("login"));
                 }
         }
     // Fungsi Index() Untuk menjalankan baris kode secara otomatis ketika program berjalan-------------------------
@@ -42,7 +42,7 @@ class utama extends CI_Controller {
             );
             $where = array('id' => $id);
             $this->Model_APS->proses_update($where,$data,'akun');
-            redirect(base_url("index.php/login"));
+            redirect(base_url("login"));
         }
         // function notif(){
         //     $this->load->view('akun/notif');    

@@ -46,11 +46,11 @@
                     // Membuat Session untuk mengatur data user yang login---------------------------------------------
                         $this->session->set_userdata($datalogin);
                     // Memanggil fungsi header() untuk mengarahkan halaman---------------------------------------------
-                        header('location:'.base_url().'index.php/pages/dashboard');
+                        header('location:'.base_url().'pages/dashboard');
                         
                 }else{
                     // Memanggil fungsi header() untuk mengarahkan halaman---------------------------------------------
-                        header('location:'.base_url().'index.php/login');
+                        header('location:'.base_url().'login');
                 }
             }
         // Membuat fungsi logout() untuk keluar akun
@@ -58,7 +58,7 @@
                 // Memanggil fungsi session_destroy() untuk mengahapus data login--------------------------------------
                     $this->session->sess_destroy();
                 // Memanggil fungsi header() untuk mengarahkan halaman---------------------------------------------
-                    header('location:'.base_url().'index.php/login');
+                    header('location:'.base_url().'login');
             }
     }
 ?>

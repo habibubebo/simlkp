@@ -12,7 +12,7 @@ class lulusan  extends CI_Controller {
         $this->load->view('layout/sidebar_menu',$data);
         $this->load->view('layout/navbar');
         if($this->session->userdata('status') == ""){
-            redirect(base_url("index.php/login"));
+            redirect(base_url("login"));
         }
     }
     // form-tambah
@@ -46,7 +46,7 @@ class lulusan  extends CI_Controller {
             'n5' => $n5
         );
         $this->Model_APS->simpan_data($data,'lulusan');
-        redirect('index.php/pages/lulusan');
+        redirect('pages/lulusan');
     }
     // from-Ubah
     function form_ubah($Id){
@@ -83,13 +83,13 @@ class lulusan  extends CI_Controller {
         );
         $where = array('Id' => $Id);
         $this->Model_APS->proses_update($where,$data,'lulusan');
-        redirect('index.php/pages/lulusan');
+        redirect('pages/lulusan');
     }
     // hapus
     function hapus($Id){
         $where = array('Id' => $Id);
         $this->Model_APS->hapus_data($where,'lulusan');
-        redirect('index.php/pages/lulusan');
+        redirect('pages/lulusan');
     }
     function cetak($Id){
         $this->load->library('pdf');

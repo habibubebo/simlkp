@@ -2,7 +2,7 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Ubah Presensi</h1>
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="<?php echo base_url("index.php/pages/presensi") ?>">Presensi</a></li>
+        <li class="breadcrumb-item"><a href="<?php echo base_url("pages/presensi") ?>">Presensi</a></li>
         <li class="breadcrumb-item active" aria-current="page">Ubah Presensi</li>
     </ol>
 </div>
@@ -12,7 +12,7 @@
     <div class="card mb-4">
         <div class="card-body">
             <?php foreach ($presensi as $tp); ?>
-            <form action="<?php echo base_url() . 'index.php/presensi/ubah'; ?>" method="POST">
+            <form action="<?php echo base_url() . 'presensi/ubah'; ?>" method="POST">
                 <div class="row">
                     <div class="form-group col-md-12">
                         <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" hidden name="Id" value="<?php echo $tp->Id ?>">
@@ -42,7 +42,7 @@
                     </div>
                     <div class="form-group col-md-12">
                         <select type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="Instruktur" maxlength=20 required>
-                            <option selected value="<?php echo $tp->Id ?>"><?php echo $tp->Instruktur ?></option>
+                            <option selected value="<?php echo $tp->Id ?>"><?php echo $tp->NamaInstruktur ?></option>
                             <?php
                             $data = $this->db->query("SELECT Id,NamaInstruktur FROM instruktur")->result();
                             foreach ($data as $row) { ?>
@@ -57,7 +57,7 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Simpan</button>
-                <a href="<?php echo base_url("index.php/pages/presensi") ?>" class="btn btn-secondary" role="button">Batal</a>
+                <a href="<?php echo base_url("pages/presensi") ?>" class="btn btn-secondary" role="button">Batal</a>
             </form>
         </div>
     </div>

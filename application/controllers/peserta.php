@@ -12,7 +12,7 @@ class peserta  extends CI_Controller {
         $this->load->view('layout/sidebar_menu',$data);
         $this->load->view('layout/navbar');
         if($this->session->userdata('status') == ""){
-            redirect(base_url("index.php/login"));
+            redirect(base_url("login"));
         }
     }
     // form-tambah
@@ -47,7 +47,7 @@ class peserta  extends CI_Controller {
             'Status' => $stat
         );
         $this->Model_APS->simpan_data($data,'peserta');
-        redirect('index.php/pages/peserta');
+        redirect('pages/peserta');
     }
     // from-Ubah
     function form_ubah($Id){
@@ -84,13 +84,13 @@ class peserta  extends CI_Controller {
         );
         $where = array('Id' => $Id);
         $this->Model_APS->proses_update($where,$data,'peserta');
-        redirect('index.php/pages/peserta');
+        redirect('pages/peserta');
     }
     // hapus
     function hapus($Id){
         $where = array('Id' => $Id);
         $this->Model_APS->hapus_data($where,'peserta');
-        redirect('index.php/pages/peserta');
+        redirect('pages/peserta');
 
     }
 }

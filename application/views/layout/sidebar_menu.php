@@ -11,7 +11,7 @@
       <!-- body menu -->
       <hr class="sidebar-divider my-0">
       <li class="nav-item active">
-        <a class="nav-link" href="<?php echo base_url("index.php/pages/dashboard") ?>">
+        <a class="nav-link" href="<?php echo base_url("pages/dashboard") ?>">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
@@ -20,55 +20,55 @@
         Menu
       </div>
       <li class="nav-item">
-        <a class="nav-link" href="<?php echo base_url("index.php/pages/lembaga") ?>">
+        <a class="nav-link" href="<?php echo base_url("pages/lembaga") ?>">
           <i class="fas fa-fw fa-university"></i>
           <span>Lembaga</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="<?php echo base_url("index.php/pages/sapras") ?>">
+        <a class="nav-link" href="<?php echo base_url("pages/sapras") ?>">
           <i class="fas fa-fw fa-cogs"></i>
           <span>Sarana Prasarana</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="<?php echo base_url("index.php/pages/instruktur") ?>">
+        <a class="nav-link" href="<?php echo base_url("pages/instruktur") ?>">
           <i class="fas fa-fw fa-users"></i>
           <span>Instruktur</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="<?php echo base_url("index.php/pages/rombel") ?>">
+        <a class="nav-link" href="<?php echo base_url("pages/rombel") ?>">
           <i class="fas fa-fw fa-th-list"></i>
           <span>Rombongan Belajar</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="<?php echo base_url("index.php/pages/uk") ?>">
+        <a class="nav-link" href="<?php echo base_url("pages/uk") ?>">
           <i class="fas fa-fw fa-archive"></i>
           <span>Unit Kompetensi</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="<?php echo base_url("index.php/pages/peserta") ?>">
+        <a class="nav-link" href="<?php echo base_url("pages/peserta") ?>">
           <i class="fas fa-fw fa-users"></i>
           <span>Peserta</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="<?php echo base_url("index.php/pages/lulusan") ?>">
+        <a class="nav-link" href="<?php echo base_url("pages/lulusan") ?>">
           <i class="fas fa-fw fa-graduation-cap"></i>
           <span>Lulusan</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="<?php echo base_url("index.php/pages/presensi") ?>">
+        <a class="nav-link" href="<?php echo base_url("pages/presensi") ?>">
           <i class="fas fa-fw fa-archive"></i>
           <span>Presensi</span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="<?php echo base_url('index.php/Laporan/form'); ?>">
+        <a class="nav-link" href="<?php echo base_url('Laporan/form'); ?>">
           <i class="fas fa-fw fa-file"></i>
           <span>Formulir Pendaftaran</span>
         </a>

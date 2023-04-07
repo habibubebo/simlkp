@@ -12,7 +12,7 @@ class sapras  extends CI_Controller {
         $this->load->view('layout/sidebar_menu',$data);
         $this->load->view('layout/navbar');
         if($this->session->userdata('status') == ""){
-            redirect(base_url("index.php/login"));
+            redirect(base_url("login"));
         }
     }
     // form-tambah
@@ -42,7 +42,7 @@ class sapras  extends CI_Controller {
             'Banyaknya' => $Banyak
         );
         $this->Model_APS->simpan_data($data,'sapras');
-        redirect('index.php/pages/sapras');
+        redirect('pages/sapras');
     }
     // from-Ubah
     function form_ubah($Id){
@@ -75,13 +75,13 @@ class sapras  extends CI_Controller {
         );
         $where = array('Id' => $Id);
         $this->Model_APS->proses_update($where,$data,'sapras');
-        redirect('index.php/pages/sapras');
+        redirect('pages/sapras');
     }
     // hapus
     function hapus($Id){
         $where = array('Id' => $Id);
         $this->Model_APS->hapus_data($where,'sapras');
-        redirect('index.php/pages/sapras');
+        redirect('pages/sapras');
 
     }
 }

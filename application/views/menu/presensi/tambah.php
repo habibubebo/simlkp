@@ -2,7 +2,7 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Tambah Presensi</h1>
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="<?php echo base_url("index.php/pages/presensi") ?>">Presensi</a></li>
+        <li class="breadcrumb-item"><a href="<?php echo base_url("pages/presensi") ?>">Presensi</a></li>
         <li class="breadcrumb-item active" aria-current="page">Tambah Presensi</li>
     </ol>
 </div>
@@ -10,7 +10,7 @@
     <!-- Form Basic -->
     <div class="card mb-4">
         <div class="card-body">
-            <form action="<?php echo base_url() . 'index.php/presensi/tambah'; ?>" method="POST">
+            <form action="<?php echo base_url() . 'presensi/tambah'; ?>" method="POST">
                 <div class="row">
                     <div class="form-group col-md-12" id="simple-date1">
                         <div class="input-group date">
@@ -24,7 +24,7 @@
                         <select class="form-control" id="nama" aria-describedby="emailHelp" name="nama" maxlength=50 required>
                             <option selected value="">Nama Peserta</option>
                             <?php
-                            $data = $this->db->query("SELECT Nama,Nipd FROM peserta")->result();
+                            $data = $this->db->query("SELECT Nama,Nipd FROM peserta WHERE Status=1")->result();
                             foreach ($data as $row) { ?>
                                 <option value="<?php echo $row->Nipd ?>">
                                     <?php echo $row->Nama ?>
@@ -52,7 +52,7 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Simpan</button>
-                <a href="<?php echo base_url("index.php/pages/presensi") ?>" class="btn btn-secondary" role="button">Batal</a>
+                <a href="<?php echo base_url("pages/presensi") ?>" class="btn btn-secondary" role="button">Batal</a>
             </form>
         </div>
     </div>

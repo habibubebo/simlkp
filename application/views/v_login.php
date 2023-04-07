@@ -31,7 +31,7 @@
                     <h1 class="h4 text-gray-900 mb-4"><b>SIM</b> LKP</h1>
                   </div>
 
-                  <form class="user" action="<?php echo base_url("index.php/login/auth") ?>" method="POST">
+                  <form class="user" action="<?php echo base_url("login/auth") ?>" method="POST">
                     <div class="form-group">
                       <input type="text" name="user" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Username">
                     </div>

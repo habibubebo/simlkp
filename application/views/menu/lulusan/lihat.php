@@ -12,19 +12,19 @@
   <div class="col-lg-12">
     <div class="card mb-4">
       <div class="card-header py-3 flex-row align-items-center justify-content-between">
-        <a href="<?php echo base_url('index.php/lulusan/form'); ?>" class="btn btn-primary btn-icon-split">
+        <a href="<?php echo base_url('lulusan/form'); ?>" class="btn btn-primary btn-icon-split">
           <span class="icon text-white-50">
             <i class="fas fa-plus"></i>
           </span>
           <span class="text">Tambah</span>
         </a>
-        <a href="<?php echo base_url('index.php/Laporan/lulusan'); ?>" class="btn btn-success btn-icon-split">
+        <a href="<?php echo base_url('Laporan/lulusan'); ?>" class="btn btn-success btn-icon-split">
           <span class="icon text-white-50">
             <i class="fas fa-download"></i>
           </span>
           <span class="text">Unduh</span>
         </a>
-        <a href="<?php echo base_url('index.php/cetak'); ?>" class="btn btn-secondary btn-icon-split">
+        <a href="<?php echo base_url('cetak'); ?>" class="btn btn-secondary btn-icon-split">
           <span class="icon text-white-50">
             <i class="fas fa-print"></i>
           </span>
@@ -66,10 +66,10 @@
                 <td><?php echo $tp->NamaInstruktur ?></td>
                 <td><?php echo $tp->n1.'-'.$tp->n2.'-'.$tp->n3.'-'.$tp->n4.'-'.$tp->n5 ?></td>
                 <td>
-                  <a href="<?= base_url("index.php/lulusan/form_ubah/$tp->Idl") ?>" class="btn btn-warning btn-sm" title="Klik untuk merubah data.">
+                  <a href="<?= base_url("lulusan/form_ubah/$tp->Idl") ?>" class="btn btn-warning btn-sm" title="Klik untuk merubah data.">
                     <i class="fas fa-pen-alt"></i>
                   </a>
-                  <a href="<?= base_url("index.php/sertifikat?Id=$tp->Idl") ?>" class="btn btn-success btn-sm" disabled title="Klik untuk mencetak pdf.">
+                  <a href="<?= base_url("sertifikat?Id=$tp->Idl") ?>" class="btn btn-success btn-sm" disabled title="Klik untuk mencetak pdf.">
                     <i class="fas fa-print"></i>
                   </a>
                   <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteuser<?php echo $tp->Idl; ?>" title="Klik untuk menghapus data.">
@@ -88,7 +88,7 @@
                             <h6 align="center">Apakah anda yakin ingin menghapus data <?php echo $tp->Nama; ?><strong><span class="grt"></span></strong> ?</h6>
                           </div>
                           <div class="modal-footer">
-                            <a href="<?= base_url('index.php/lulusan/hapus/' . $tp->Idl) ?>" class="btn btn-danger"><i class="fa fa-trash"> </i> Hapus</a>
+                            <a href="<?= base_url('lulusan/hapus/' . $tp->Idl) ?>" class="btn btn-danger"><i class="fa fa-trash"> </i> Hapus</a>
                           </div>
                         </div>
                       </div>

@@ -2,7 +2,7 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Tambah Lulusan</h1>
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="<?php echo base_url("index.php/pages/lulusan") ?>">Lulusan</a></li>
+        <li class="breadcrumb-item"><a href="<?php echo base_url("pages/lulusan") ?>">Lulusan</a></li>
         <li class="breadcrumb-item active" aria-current="page">Tambah Lulusan</li>
     </ol>
 </div>
@@ -10,7 +10,7 @@
     <!-- Form Basic -->
     <div class="card mb-4">
         <div class="card-body">
-            <form action="<?php echo base_url() . 'index.php/lulusan/tambah'; ?>" method="POST">
+            <form action="<?php echo base_url() . 'lulusan/tambah'; ?>" method="POST">
                 <div class="row">
                     <div class="form-group col-md-4">
                         <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nomor Induk" name="nipd" maxlength=20 required onkeyup="GetDetail(this.value)">
@@ -91,7 +91,7 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Simpan</button>
-                <a href="<?php echo base_url("index.php/pages/lulusan") ?>" class="btn btn-secondary" role="button">Batal</a>
+                <a href="<?php echo base_url("pages/lulusan") ?>" class="btn btn-secondary" role="button">Batal</a>
             </form>
         </div>
     </div>
@@ -130,7 +130,7 @@
                 }
             };
 
-            xmlhttp.open("POST", "<?= base_url() ?>index.php/pesertas/nipd", true);
+            xmlhttp.open("POST", "<?= base_url() ?>pesertas/nipd", true);
             xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
             xmlhttp.send("Nipd=" + str);
         }
