@@ -2,7 +2,7 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Tambah Instruktur</h1>
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="<?php echo base_url("index.php/pages/instruktur") ?>">Instruktur</a></li>
+        <li class="breadcrumb-item"><a href="<?php echo base_url("pages/instruktur") ?>">Instruktur</a></li>
         <li class="breadcrumb-item active" aria-current="page">Tambah Instruktur</li>
     </ol>
 </div>
@@ -10,7 +10,7 @@
     <!-- Form Basic -->
     <div class="card mb-4">
         <div class="card-body">
-            <form action="<?php echo base_url() . 'index.php/instruktur/tambah'; ?>" method="POST">
+            <form action="<?php echo base_url() . 'instruktur/tambah'; ?>" method="POST">
                 <div class="row">
                     <div class="form-group col-md-12">
                         <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nama Instruktur" name="ni" maxlength=100 required>
@@ -44,7 +44,7 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Simpan</button>
-                <a href="<?php echo base_url("index.php/pages/instruktur") ?>" class="btn btn-secondary" role="button">Batal</a>
+                <a href="<?php echo base_url("pages/instruktur") ?>" class="btn btn-secondary" role="button">Batal</a>
             </form>
         </div>
     </div>

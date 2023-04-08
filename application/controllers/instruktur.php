@@ -12,7 +12,7 @@ class instruktur  extends CI_Controller {
         $this->load->view('layout/sidebar_menu',$data);
         $this->load->view('layout/navbar');
         if($this->session->userdata('status') == ""){
-            redirect(base_url("index.php/login"));
+            redirect(base_url("login"));
         }
     }
     // form-tambah
@@ -40,7 +40,7 @@ class instruktur  extends CI_Controller {
             'Email' => $email
         );
         $this->Model_APS->simpan_data($data,'instruktur');
-        redirect('index.php/pages/instruktur');
+        redirect('pages/instruktur');
     }
     // from-Ubah
     function form_ubah($Id){
@@ -71,13 +71,13 @@ class instruktur  extends CI_Controller {
         );
         $where = array('Id' => $Id);
         $this->Model_APS->proses_update($where,$data,'instruktur');
-        redirect('index.php/pages/instruktur');
+        redirect('pages/instruktur');
     }
     // hapus
     function hapus($Id){
         $where = array('Id' => $Id);
         $this->Model_APS->hapus_data($where,'instruktur');
-        redirect('index.php/pages/instruktur');
+        redirect('pages/instruktur');
 
     }
 }

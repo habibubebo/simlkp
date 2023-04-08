@@ -5,7 +5,7 @@
             <?php
             foreach ($profil as $pr);
             ?>
-            <form action="<?php echo base_url() . 'index.php/pages/ubahdata'; ?>" method="POST">
+            <form action="<?php echo base_url() . 'pages/ubahdata'; ?>" method="POST">
                 <div class="row mt-3 mx-1">
                     <label for="npsn" class="col-3 mr-5">NPSN</label>
                     <label for="nl" class="col-8 ml-2">Nama Lembaga </label>

@@ -5,7 +5,7 @@ Class sertifikat extends CI_Controller{
         $this->load->library('pdf');
         $this->load->model('Model_APS');
         if($this->session->userdata('status') == ""){
-            redirect(base_url("index.php/login"));
+            redirect(base_url("login"));
         }
     }
 	

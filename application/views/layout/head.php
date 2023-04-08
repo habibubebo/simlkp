@@ -8,7 +8,7 @@
   <meta name="description" content="">
   <meta name="author" content="habibubebo">
   <link href="<?php echo base_url("asset/img/logo/logo.png") ?>" rel="icon">
-  <title>Dashboard - <?php echo $this->session->userdata('nama') ?></title>
+  <title><?php echo 'LKP Cenditama - '.$this->session->userdata('nama') ?></title>
   <link href="<?php echo base_url("asset/vendor/fontawesome-free/css/all.min.css") ?>" rel="stylesheet" type="text/css">
   <link href="<?php echo base_url("asset/vendor/bootstrap/css/bootstrap.min.css") ?>" rel="stylesheet" type="text/css">
   <link href="<?php echo base_url("asset/css/ruang-admin.min.css") ?>" rel="stylesheet">

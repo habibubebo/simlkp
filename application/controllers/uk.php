@@ -12,7 +12,7 @@ class uk extends CI_Controller {
         $this->load->view('layout/sidebar_menu',$data);
         $this->load->view('layout/navbar');
         if($this->session->userdata('status') == ""){
-            redirect(base_url("index.php/login"));
+            redirect(base_url("login"));
         }
     }
     // form-tambah
@@ -50,7 +50,7 @@ class uk extends CI_Controller {
             'Jptotal' => $jptot
    );
         $this->Model_APS->simpan_data($data,'unitkompetensi');
-        redirect('index.php/pages/uk');
+        redirect('pages/uk');
     }
     // from-Ubah
     function form_ubah($Id){
@@ -91,13 +91,13 @@ class uk extends CI_Controller {
         );
         $where = array('Id' => $Id);
         $this->Model_APS->proses_update($where,$data,'unitkompetensi');
-        redirect('index.php/pages/uk');
+        redirect('pages/uk');
     }
     // hapus
     function hapus($Id){
         $where = array('Id' => $Id);
         $this->Model_APS->hapus_data($where,'unitkompetensi');
-        redirect('index.php/pages/uk');
+        redirect('pages/uk');
 
     }
 }

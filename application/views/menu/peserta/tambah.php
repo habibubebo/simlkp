@@ -2,7 +2,7 @@
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Tambah Peserta</h1>
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="<?php echo base_url("index.php/pages/peserta") ?>">Peserta</a></li>
+        <li class="breadcrumb-item"><a href="<?php echo base_url("pages/peserta") ?>">Peserta</a></li>
         <li class="breadcrumb-item active" aria-current="page">Tambah Peserta</li>
     </ol>
 </div>
@@ -10,7 +10,7 @@
     <!-- Form Basic -->
     <div class="card mb-4">
         <div class="card-body">
-            <form action="<?php echo base_url() . 'index.php/peserta/tambah'; ?>" method="POST">
+            <form action="<?php echo base_url() . 'peserta/tambah'; ?>" method="POST">
                 <div class="row">
                     <div class="form-group col-md-6">
                         <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nomor Induk" name="Nipd" maxlength=20 required>
@@ -77,7 +77,7 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Simpan</button>
-                <a href="<?php echo base_url("index.php/pages/peserta") ?>" class="btn btn-secondary" role="button">Batal</a>
+                <a href="<?php echo base_url("pages/peserta") ?>" class="btn btn-secondary" role="button">Batal</a>
             </form>
         </div>
     </div>

@@ -12,13 +12,13 @@
   <div class="col-lg-12">
     <div class="card mb-4">
       <div class="card-header py-3 flex-row align-items-center justify-content-between">
-        <a href="<?php echo base_url('index.php/rombel/form'); ?>" class="btn btn-primary btn-icon-split">
+        <a href="<?php echo base_url('rombel/form'); ?>" class="btn btn-primary btn-icon-split">
           <span class="icon text-white-50">
             <i class="fas fa-plus"></i>
           </span>
           <span class="text">Tambah</span>
         </a>
-        <a href="<?php echo base_url('index.php/Laporan/rombel'); ?>" class="btn btn-success btn-icon-split">
+        <a href="<?php echo base_url('Laporan/rombel'); ?>" class="btn btn-success btn-icon-split">
           <span class="icon text-white-50">
             <i class="fas fa-download"></i>
           </span>
@@ -46,7 +46,7 @@
                 <td><?php echo $tp->Jumlahpeserta ?></td>
                 <td><?php echo $tp->Ruangan ?></td>
                 <td>
-                  <a href="<?= base_url("index.php/rombel/form_ubah/$tp->Id") ?>" class="btn btn-warning btn-sm" title="Klik untuk merubah data.">
+                  <a href="<?= base_url("rombel/form_ubah/$tp->Id") ?>" class="btn btn-warning btn-sm" title="Klik untuk merubah data.">
                     <i class="fas fa-pen-alt"></i>
                   </a>
                   <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteuser<?php echo $tp->Id; ?>" title="Klik untuk menghapus data.">
@@ -65,7 +65,7 @@
                             <h6 align="center">Apakah anda yakin ingin menghapus data <?php echo $tp->Namarombel; ?><strong><span class="grt"></span></strong> ?</h6>
                           </div>
                           <div class="modal-footer">
-                            <a href="<?= base_url('index.php/rombel/hapus/' . $tp->Id) ?>" class="btn btn-danger"><i class="fa fa-trash"> </i> Hapus</a>
+                            <a href="<?= base_url('rombel/hapus/' . $tp->Id) ?>" class="btn btn-danger"><i class="fa fa-trash"> </i> Hapus</a>
                           </div>
                         </div>
                       </div>

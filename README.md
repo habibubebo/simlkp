@@ -20,7 +20,11 @@ Dikembangkan dengan suasana hati gembira, tapi kode belum DRY masih basah kuyup
 - [ ] Import & export Excel
 - [ ] Request ?
 
-### Special Thanks to :
+### Notes 
+
+Allow mode_rewrite in apache
+
+### Special Thanks to 
 
 - [@Nurjaman2409](https://github.com/Nurjaman2409/Sistem-Informasi-Lembaga-Kursus-dan-Pelatihan-SIM-LKP)
 

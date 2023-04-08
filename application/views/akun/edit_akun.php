@@ -2,7 +2,7 @@
     <!-- Form Basic -->
     <div class="card">
         <div class="card-body">
-            <form action="<?php echo base_url() . 'index.php/utama/ubah_akun'; ?>" method="POST">
+            <form action="<?php echo base_url() . 'utama/ubah_akun'; ?>" method="POST">
                 <div class="row">
                     <div class="form-group col-md-6">
                         <input type="text" class="form-control" id="exampleInputEmail1" hidden aria-describedby="emailHelp" name="id" value="<?php echo $this->session->userdata('id') ?>">
