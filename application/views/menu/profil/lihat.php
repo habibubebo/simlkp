@@ -114,3 +114,4 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">document.title = "Profil <?php echo $pr->Namalkp ?>";</script>

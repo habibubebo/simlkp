@@ -160,7 +160,7 @@ Class sertifikat extends CI_Controller{
 			$pdf->Cell(60,5,$row->NamaInstruktur,0,0,'C');
 			
 		//jadikan pdf				
-        $pdf->Output('I', 'Sertifikat '.substr($nama,0,5).'.pdf');
+        $pdf->Output('D', 'Sertifikat '.substr($nama,0,5).'.pdf');
 			// $pdf->Output('I', 'Sertifikat.pdf');
 	}
 	}

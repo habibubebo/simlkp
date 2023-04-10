@@ -106,3 +106,4 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">document.title = "Peserta Didik LKP Cenditama";</script>

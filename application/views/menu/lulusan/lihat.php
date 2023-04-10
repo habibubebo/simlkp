@@ -32,7 +32,7 @@
         </a>
       </div>
       <div class="table-responsive p-3">
-        <table class="table align-items-center table-flush table-hover" id="dataTableHover">
+        <table class="table align-items-center table-flush table-hover" id="tabellulusan">
           <thead class="thead-light">
             <tr>
               <th>No</th>
@@ -104,3 +104,4 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">document.title = "Lulusan LKP Cenditama";</script>

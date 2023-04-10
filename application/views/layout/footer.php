@@ -55,13 +55,74 @@
     <!-- Page level plugins -->
     <script src="<?php echo base_url("asset/vendor/datatables/jquery.dataTables.min.js") ?>"></script>
     <script src="<?php echo base_url("asset/vendor/datatables/dataTables.bootstrap4.min.js") ?>"></script>
+    <!-- pdfmake -->
+    <script src="<?php echo base_url("asset/vendor/datatables/pdfmake.min.js") ?>"></script>
+    <script src="<?php echo base_url("asset/vendor/datatables/vfs_fonts.js") ?>"></script>
+    <!-- Buttons -->
+    <script src="<?php echo base_url("asset/vendor/Buttons/js/dataTables.buttons.min.js") ?>"></script>
+    <script src="<?php echo base_url("asset/vendor/Buttons/js/buttons.bootstrap4.min.js") ?>"></script>
+    <script src="<?php echo base_url("asset/vendor/Buttons/js/buttons.colVis.min.js") ?>"></script>
+    <script src="<?php echo base_url("asset/vendor/Buttons/js/buttons.html5.min.js") ?>"></script>
+    <script src="<?php echo base_url("asset/vendor/Buttons/js/buttons.print.min.js") ?>"></script>
+    <!-- Export Excel -->
+    <script src="<?php echo base_url("asset/vendor/JSZip/jszip.min.js") ?>"></script>
     <!-- Bootstrap Datepicker -->
     <script src="<?php echo base_url("asset/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js") ?>"></script>
     <!-- Page level custom scripts -->
     <script>
       $(document).ready(function() {
-        $('#dataTableHover').DataTable(); // ID From dataTable with Hover
-        // Bootstrap Date Picker
+        $('#dataTableHover').DataTable(); 
+        $('#tabelpresensipeserta').DataTable({
+           dom: 'Bfrtip',
+            searching: false,
+            paging: false,
+            ordering: false,
+            info: false,
+            buttons: [
+            {
+               extend: 'excel',
+               exportOptions: {
+               columns: [0,1,2]
+                }
+                    },
+            {
+               extend: 'pdfHtml5',
+               exportOptions: {
+               columns: [0,1,2]
+                }
+                    },
+            {
+               extend: 'print',
+               exportOptions: {
+               columns: [0,1,2]
+                }
+                    }
+        ]
+        });
+        $('#tabellulusan').DataTable({
+           dom: 'Bfrtip',
+           ordering: false,
+            buttons: [
+            {
+               extend: 'excel',
+               exportOptions: {
+               columns: [0,1,2,3,4,5,6,7,8]
+                }
+                    },
+            {
+               extend: 'pdfHtml5',
+               exportOptions: {
+               columns: [0,1,2,3,4,5,6,7,8]
+                }
+                    },
+            {
+               extend: 'print',
+               exportOptions: {
+               columns: [0,1,2,3,4,5,6,7,8]
+                }
+                    }
+        ]
+        });
         $('#simple-date1 .input-group.date').datepicker({
           format: 'yyyy-mm-dd',
           todayBtn: 'linked',

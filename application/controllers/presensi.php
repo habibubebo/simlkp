@@ -73,4 +73,11 @@ class presensi extends CI_Controller {
         redirect('pages/presensi');
 
     }
+     function peserta($Id = null){
+        $Id = $_REQUEST['Id'];
+        $data['presensi'] = $this->db->query("SELECT *,presensi.Id AS Idpr,peserta.Id AS Idp FROM presensi JOIN peserta JOIN instruktur JOIN rombel ON presensi.Nipd=peserta.Nipd AND presensi.Instruktur=instruktur.Id AND presensi.Jeniskursus=rombel.Id WHERE peserta.Id=$Id")->result();
+        
+        $this->load->view('menu/presensi/peserta',$data);
+        $this->load->view('layout/footer');
+    }
 }
