@@ -79,14 +79,30 @@
             ordering: false,
             info: false,
             buttons: [
-            {
+              {
+                text: 'Tambah',
+                className: 'btn btn-info',
+                action: function() {
+                    location.href = '<?php echo base_url("pages/form") ?>';}      
+                    },
+              {
+                
+                text: 'Export',
+                buttons: ['excel', 'pdfHtml5' ],
+                
+              },
+              {
                extend: 'excel',
+               text: 'Export Excel',
+               className: 'btn btn-success',
                exportOptions: {
                columns: [0,1,2]
                 }
                     },
             {
                extend: 'pdfHtml5',
+               text: 'Export PDF',
+               className: 'btn btn-danger',
                exportOptions: {
                columns: [0,1,2]
                 }
@@ -102,24 +118,32 @@
         $('#tabellulusan').DataTable({
            dom: 'Bfrtip',
            ordering: false,
+           searching: false,
             buttons: [
+              {
+                text: 'Tambah',
+                className: 'btn btn-info',
+                action: function() {
+                    location.href = '<?php echo base_url('lulusan/form'); ?>';}      
+                    },
             {
-               extend: 'excel',
+               extend: 'excelHtml5',
+               text: 'Export Excel',
+               className: 'btn btn-success',
                exportOptions: {
-               columns: [0,1,2,3,4,5,6,7,8]
-                }
+               columns: [0,1,2,3,4,5,6,7,8]}
                     },
             {
                extend: 'pdfHtml5',
+               text: 'Export PDF',
+               className: 'btn btn-danger',
                exportOptions: {
-               columns: [0,1,2,3,4,5,6,7,8]
-                }
+               columns: [0,1,2,3,4,5,6,7,8]}
                     },
             {
                extend: 'print',
                exportOptions: {
-               columns: [0,1,2,3,4,5,6,7,8]
-                }
+               columns: [0,1,2,3,4,5,6,7,8]}
                     }
         ]
         });

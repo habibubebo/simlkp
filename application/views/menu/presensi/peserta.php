@@ -11,15 +11,7 @@
   <!-- DataTable with Hover -->
   <div class="col-lg-12">
     <div class="card mb-4">
-      <div class="card-header d-md-flex justify-content-md-end">
-                <a href="<?php echo base_url("pages/presensi") ?>" class="btn btn-secondary" role="button">Batal</a>
-                <a href="<?php echo base_url('presensi/form'); ?>" class="btn btn-primary btn-icon-split">
-                  <span class="icon text-white-50">
-                    <i class="fas fa-plus"></i>
-                  </span>
-                  <span class="text">Tambah</span>
-                </a> 
-              </div> 
+      
       <table class="table table-borderless">
         <thead>
           <tr>
