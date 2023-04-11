@@ -43,7 +43,7 @@
             ?>
               <tr>
                 <td><?php echo $tp->Tgl ?></td>
-                <td><?php echo $tp->Nama ?></td>
+                <td><a class="btn" href="<?= base_url("presensi/peserta?Id=$tp->Idp") ?>"><?php echo $tp->Nama ?></td>
                 <td><?php echo $tp->Namarombel ?></td>
                 <td><?php echo $tp->NamaInstruktur ?></td>
                 <td><?php echo $tp->Materi ?></td>
@@ -83,3 +83,4 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">document.title = "Presensi LKP Cenditama";</script>

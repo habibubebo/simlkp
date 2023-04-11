@@ -11,28 +11,9 @@
   <!-- DataTable with Hover -->
   <div class="col-lg-12">
     <div class="card mb-4">
-      <div class="card-header py-3 flex-row align-items-center justify-content-between">
-        <a href="<?php echo base_url('lulusan/form'); ?>" class="btn btn-primary btn-icon-split">
-          <span class="icon text-white-50">
-            <i class="fas fa-plus"></i>
-          </span>
-          <span class="text">Tambah</span>
-        </a>
-        <a href="<?php echo base_url('Laporan/lulusan'); ?>" class="btn btn-success btn-icon-split">
-          <span class="icon text-white-50">
-            <i class="fas fa-download"></i>
-          </span>
-          <span class="text">Unduh</span>
-        </a>
-        <a href="<?php echo base_url('cetak'); ?>" class="btn btn-secondary btn-icon-split">
-          <span class="icon text-white-50">
-            <i class="fas fa-print"></i>
-          </span>
-          <span class="text">Cetak PDF</span>
-        </a>
-      </div>
+      
       <div class="table-responsive p-3">
-        <table class="table align-items-center table-flush table-hover" id="dataTableHover">
+        <table class="table align-items-center table-flush table-hover" id="tabellulusan">
           <thead class="thead-light">
             <tr>
               <th>No</th>
@@ -104,3 +85,4 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">document.title = "Lulusan LKP Cenditama";</script>

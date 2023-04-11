@@ -13,6 +13,7 @@
   <link href="<?php echo base_url("asset/vendor/bootstrap/css/bootstrap.min.css") ?>" rel="stylesheet" type="text/css">
   <link href="<?php echo base_url("asset/css/ruang-admin.min.css") ?>" rel="stylesheet">
   <link href="<?php echo base_url("asset/vendor/datatables/dataTables.bootstrap4.min.css") ?>" rel="stylesheet">
+  <link href="<?php echo base_url("asset/vendor/datatables/jquery.dataTables.min.css") ?>" rel="stylesheet">
   <link href="<?php echo base_url("asset/vendor/bootstrap-datepicker/css/bootstrap-datepicker.min.css") ?>" rel="stylesheet">
 </head>
 

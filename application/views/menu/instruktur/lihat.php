@@ -87,3 +87,4 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">document.title = "Instruktur LKP Cenditama";</script>

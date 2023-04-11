@@ -137,20 +137,21 @@ Class sertifikat extends CI_Controller{
             $pdf->Cell(73,10,$row->Uk3,1,0,'L');
             $pdf->Cell(44,10,$row->Jp3,1,0,'C');
             $pdf->Cell(44,10,$row->n3,1,1,'C');
-            if ($row->Idr=2) {} else {
+            if ($row->Idr==2) {} else {
             $pdf->Cell(23,10,'',0,0,'C');
             $pdf->Cell(17,10,'4.',1,0,'C');
             $pdf->Cell(73,10,$row->Uk4,1,0,'L');
             $pdf->Cell(44,10,$row->Jp4,1,0,'C');
             $pdf->Cell(44,10,$row->n4,1,1,'C');
-            }
+            };
             $pdf->Cell(23,10,'',0,0,'C');
             $pdf->Cell(17,10,'',1,0,'C');
             $pdf->Cell(73,10,'JUMLAH',1,0,'C');
             $pdf->Cell(44,10,$row->Jptotal,1,0,'C');
             $pdf->Cell(44,10,'',1,1,'C');
 
-            $pdf->ln(30);
+             if ($row->Idr==2) {$pdf->ln(30);} 
+             else {$pdf->ln(20);};
             $pdf->SetFont('arialbd','',12);
             $pdf->Cell(190,5,'',0,0,'R');
 			$pdf->Cell(60,5,'Instruktur / Penguji',0,1,'C');
@@ -159,7 +160,7 @@ Class sertifikat extends CI_Controller{
 			$pdf->Cell(60,5,$row->NamaInstruktur,0,0,'C');
 			
 		//jadikan pdf				
-        $pdf->Output('I', 'Sertifikat '.substr($nama,0,5).'.pdf');
+        $pdf->Output('D', 'Sertifikat '.substr($nama,0,5).'.pdf');
 			// $pdf->Output('I', 'Sertifikat.pdf');
 	}
 	}

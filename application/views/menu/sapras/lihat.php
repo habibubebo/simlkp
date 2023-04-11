@@ -89,3 +89,4 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">document.title = "Sarana Prasarana";</script>
