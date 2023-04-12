@@ -11,22 +11,8 @@
   <!-- DataTable with Hover -->
   <div class="col-lg-12">
     <div class="card mb-4">
-      <div class="card-header py-3 flex-row align-items-center justify-content-between">
-        <a href="<?php echo base_url('presensi/form'); ?>" class="btn btn-primary btn-icon-split">
-          <span class="icon text-white-50">
-            <i class="fas fa-plus"></i>
-          </span>
-          <span class="text">Tambah</span>
-        </a>
-        <a href="<?php echo base_url('Laporan/presensi'); ?>" class="btn btn-success btn-icon-split">
-          <span class="icon text-white-50">
-            <i class="fas fa-download"></i>
-          </span>
-          <span class="text">Unduh</span>
-        </a>
-      </div>
       <div class="table-responsive p-3">
-        <table class="table align-items-center table-flush table-hover" id="dataTableHover">
+        <table class="table align-items-center table-flush table-hover" id="tabelpresensi">
           <thead class="thead-light">
             <tr>
               <th>Tanggal</th>
@@ -42,7 +28,7 @@
             foreach ($presensi as $tp) {
             ?>
               <tr>
-                <td><?php echo $tp->Tgl ?></td>
+                <td><?php $this->Model_APS->Gethari($tp->Tgl) ?></td>
                 <td><a class="btn" href="<?= base_url("presensi/peserta?Id=$tp->Idp") ?>"><?php echo $tp->Nama ?></td>
                 <td><?php echo $tp->Namarombel ?></td>
                 <td><?php echo $tp->NamaInstruktur ?></td>

@@ -47,7 +47,7 @@
             ?>
               <tr>
                 <td><?php echo $no++ ?></td>
-                <td><?php echo $tp->Tgl ?></td>
+                <td><?php $this->Model_APS->Gethari($tp->Tgl) ?></td>
                 <td><?php echo $tp->Materi ?></td>
                 <td>
                   <a href="<?= base_url("presensi/form_ubah/$tp->Idpr") ?>" class="btn btn-warning btn-sm" title="Klik untuk merubah data.">

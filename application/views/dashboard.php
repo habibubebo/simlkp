@@ -121,7 +121,7 @@
                       <div class="text-xs font-weight-bold text-uppercase mb-1">Peserta</div>
                       <div class="h5 mb-0 font-weight-bold">
                         <?php
-                        $data = $this->db->query("SELECT * FROM peserta")->result();
+                        $data = $this->db->query("SELECT * FROM peserta WHERE Status=1")->result();
                         $pes = 0;
                         foreach ($data as $row) {
                           $pes += 1;
