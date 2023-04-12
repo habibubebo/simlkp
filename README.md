@@ -16,8 +16,8 @@ Dikembangkan dengan suasana hati gembira, tapi kode belum DRY masih basah kuyup
 - [x] Manajemen Presensi Harian
 - [x] Formulir Pendaftaran
 - [x] Export Sertifikat
+- [x] Export Excel dan PDF
 - [ ] Leveling akun
-- [ ] Import & export Excel
 - [ ] Request ?
 
 ### Notes 
