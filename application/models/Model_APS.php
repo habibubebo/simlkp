@@ -15,8 +15,8 @@
                     $this->db->order_by($field, $order);
                     return $this->db->get();
             }
-            function tampil_data_join($nm_tabel, $nm_tabel_join, $kondisi,$field,$order){
-                $this->db->select('*');
+            function tampil_data_join($sel, $nm_tabel, $nm_tabel_join, $kondisi,$field,$order){
+                $this->db->select($sel);
                 $this->db->from($nm_tabel);
                 $this->db->join($nm_tabel_join, $kondisi);
                 $this->db->order_by($field, $order);

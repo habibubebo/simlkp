@@ -84,7 +84,7 @@ class pages  extends CI_Controller {
         $this->load->view('layout/footer');
     }
     function peserta(){
-        $data['peserta'] = $this->Model_APS->tampil_data_join('peserta','rombel', 'peserta.Jeniskursus=rombel.Id', 'peserta.Id','ASC')->result();
+        $data['peserta'] = $this->Model_APS->tampil_data_join('*,peserta.Id AS Idp','peserta','rombel', 'peserta.Jeniskursus=rombel.Id', 'peserta.Id','ASC')->result();
         
         $this->load->view('menu/peserta/lihat',$data);
         $this->load->view('layout/footer');
@@ -108,7 +108,7 @@ class pages  extends CI_Controller {
         $this->load->view('layout/footer');
     }
     function presensi(){
-        $data['presensi'] = $this->db->query("SELECT presensi.Id,presensi.Tgl,peserta.Nama,rombel.Namarombel,presensi.Materi,instruktur.NamaInstruktur,peserta.Id AS Idp FROM presensi JOIN peserta JOIN instruktur JOIN rombel ON presensi.Nipd=peserta.Nipd AND presensi.Instruktur=instruktur.Id AND presensi.Jeniskursus=rombel.Id")->result();
+        $data['presensi'] = $this->db->query("SELECT presensi.Id,presensi.Tgl,peserta.Nama,rombel.Namarombel,presensi.Materi,instruktur.NamaInstruktur,peserta.Id AS Idp FROM presensi JOIN peserta JOIN instruktur JOIN rombel ON presensi.Nipd=peserta.Nipd AND presensi.Instruktur=instruktur.Id AND presensi.Jeniskursus=rombel.Id order by presensi.Id DESC")->result();
         
         $this->load->view('menu/presensi/lihat',$data);
         $this->load->view('layout/footer');
