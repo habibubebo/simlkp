@@ -13,7 +13,7 @@
         <div class="card-body">
             <?php 
             $status = "";
-            foreach ($peserta as $tp); 
+            foreach ($peserta as $tp);
               if ($tp->Status == "0") {
                 $status = "Nonaktif";
               } elseif ($tp->Status == "1") {

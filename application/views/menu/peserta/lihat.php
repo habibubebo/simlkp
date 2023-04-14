@@ -11,22 +11,8 @@
   <!-- DataTable with Hover -->
   <div class="col-lg-12">
     <div class="card mb-4">
-      <div class="card-header py-3 flex-row align-items-center justify-content-between">
-        <a href="<?php echo base_url('peserta/form'); ?>" class="btn btn-primary btn-icon-split">
-          <span class="icon text-white-50">
-            <i class="fas fa-plus"></i>
-          </span>
-          <span class="text">Tambah</span>
-        </a>
-        <a href="<?php echo base_url('Laporan/peserta'); ?>" class="btn btn-success btn-icon-split">
-          <span class="icon text-white-50">
-            <i class="fas fa-download"></i>
-          </span>
-          <span class="text">Unduh</span>
-        </a>
-      </div>
       <div class="table-responsive p-3">
-        <table class="table align-items-center table-flush table-hover" id="dataTableHover">
+        <table class="table align-items-center table-flush table-hover" id="tabelpeserta">
           <thead class="thead-light">
             <tr>
               <th>NIPD</th>
@@ -71,7 +57,7 @@
 
                 <td><?php echo $tp->Tglmasuk ?></td>
                 <td>
-                  <a href="<?= base_url("peserta/form_ubah/$tp->Id") ?>" class="btn btn-warning btn-sm" title="Klik untuk merubah data.">
+                  <a href="<?= base_url("peserta/form_ubah/$tp->Idp") ?>" class="btn btn-warning btn-sm" title="Klik untuk merubah data.">
                     <i class="fas fa-pen-alt"></i>
                   </a>
                   <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteuser<?php echo $tp->Id; ?>" title="Klik untuk menghapus data.">

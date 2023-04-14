@@ -16,7 +16,6 @@
         <table class="table align-items-center table-flush table-hover" id="tabellulusan">
           <thead class="thead-light">
             <tr>
-              <th>No</th>
               <th>Nama</th>
               <th>No Induk</th>
               <th>Tanggal Lahir</th>
@@ -31,12 +30,10 @@
           </thead>
           <tbody>
             <?php
-            $no = 0;
             foreach ($lulusan as $tp) {
-              $no += 1;
+              
             ?>
               <tr>
-                <td><?php echo $no ?></td>
                 <td><?php echo $tp->Nama ?></td>
                 <td><?php echo $tp->Nipd ?></td>
                 <td><?php echo $tp->Ttl ?></td>
@@ -45,7 +42,7 @@
                 <td><?php echo $tp->Tgllulus ?></td>
                 <td><?php echo $tp->Tglcetak ?></td>
                 <td><?php echo $tp->NamaInstruktur ?></td>
-                <td><?php echo $tp->n1.'-'.$tp->n2.'-'.$tp->n3.'-'.$tp->n4.'-'.$tp->n5 ?></td>
+                <td><?php echo $tp->n1.','.$tp->n2.','.$tp->n3.','.$tp->n4.','.$tp->n5 ?></td>
                 <td>
                   <a href="<?= base_url("lulusan/form_ubah/$tp->Idl") ?>" class="btn btn-warning btn-sm" title="Klik untuk merubah data.">
                     <i class="fas fa-pen-alt"></i>

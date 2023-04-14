@@ -11,22 +11,8 @@
   <!-- DataTable with Hover -->
   <div class="col-lg-12">
     <div class="card mb-4">
-      <div class="card-header py-3 flex-row align-items-center justify-content-between">
-        <a href="<?php echo base_url('instruktur/form'); ?>" class="btn btn-primary btn-icon-split">
-          <span class="icon text-white-50">
-            <i class="fas fa-plus"></i>
-          </span>
-          <span class="text">Tambah</span>
-        </a>
-        <a href="<?php echo base_url('Laporan/instruktur'); ?>" class="btn btn-success btn-icon-split">
-          <span class="icon text-white-50">
-            <i class="fas fa-download"></i>
-          </span>
-          <span class="text">Unduh</span>
-        </a>
-      </div>
       <div class="table-responsive p-3">
-        <table class="table align-items-center table-flush table-hover" id="dataTableHover">
+        <table class="table align-items-center table-flush table-hover" id="tabelinstruktur">
           <thead class="thead-light">
             <tr>
               <th>Nama Instruktur</th>
