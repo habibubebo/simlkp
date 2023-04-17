@@ -97,7 +97,7 @@ class pages  extends CI_Controller {
     }
     function uk(){
         $on = "unitkompetensi.Rombel=rombel.Id";
-        $data['uks'] = $this->Model_APS->tampil_data_join('unitkompetensi', 'rombel',$on,'unitkompetensi.Id','ASC')->result();
+        $data['uks'] = $this->Model_APS->tampil_data_join('*','unitkompetensi', 'rombel',$on,'unitkompetensi.Id','ASC')->result();
         
         $this->load->view('menu/uk/lihat',$data);
         $this->load->view('layout/footer');

@@ -188,7 +188,9 @@
         $('#tabelpeserta').DataTable({
            dom: 'Bfrtip',
            ordering: false,
-
+           "search": {
+                        "search": "Aktif"
+                      },
             buttons: [
               {
                 text: '<i class="fas fa-plus"></i> Tambah',
