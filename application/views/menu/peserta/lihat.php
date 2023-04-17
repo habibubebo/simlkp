@@ -35,17 +35,17 @@
                 $jk = "P";
               };
               if ($tp->Status == "0") {
-                $status = "Nonaktif";
+                $status = '<span class="badge bg-danger text-white">Nonaktif</span>';
               } elseif ($tp->Status == "1") {
-                  $status = "Aktif";
+                  $status = '<span class="badge bg-success text-white">Aktif</span>';
               }
               else {
-                $status = "Lulus";
+                $status = '<span class="badge bg-secondary text-white">Lulus</span>';
               }
 
             ?>
               <tr>
-                <td><?php echo $tp->Nipd ?><br><?php echo $status ?></td>
+                <td><?php echo $tp->Nipd ?></td>
                 <td><?php echo $tp->Nokk ?><br>
                   /<br><?php echo $tp->Nik ?></td>
                 <td><?php echo $tp->Nama ?></td>
@@ -57,6 +57,7 @@
 
                 <td><?php echo $tp->Tglmasuk ?></td>
                 <td>
+                  <?php echo $status ?><br>
                   <a href="<?= base_url("peserta/form_ubah/$tp->Idp") ?>" class="btn btn-warning btn-sm" title="Klik untuk merubah data.">
                     <i class="fas fa-pen-alt"></i>
                   </a>
