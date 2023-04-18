@@ -21,7 +21,7 @@ Dikembangkan dengan suasana hati gembira, tapi kode belum DRY masih basah kuyup
 - [ ] Request ?
 
 ### Notes 
-
+Codeigniter v3
 Allow mode_rewrite in apache
 
 ### Special Thanks to 
