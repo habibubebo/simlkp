@@ -15,7 +15,7 @@
             <form action="<?php echo base_url() . 'presensi/ubah'; ?>" method="POST">
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" hidden name="Id" value="<?php echo $tp->Id ?>">
+                        <input type="text" class="form-control" id="Id" aria-describedby="emailHelp"  name="Id" hidden value="<?php echo $tp->PrId ?>">
                     </div>
                     <div class="form-group col-md-12" id="simple-date1">
                         <div class="input-group date">
@@ -25,11 +25,11 @@
                             <input type="text" name="tgl" class="form-control" placeholder="Tanggal Hadir" id="simpleDataInput" maxlength=20 required value="<?php echo $tp->Tgl ?>">
                         </div>
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-12">
                         <select class="form-control" id="nama" aria-describedby="emailHelp" name="nama" maxlength=50 required>
                             <option selected value="<?php echo $tp->Nipd ?>"><?php echo $tp->Nama ?></option>
                             <?php
-                            $data = $this->db->query("SELECT Nama,Nipd FROM peserta")->result();
+                            $data = $this->db->query("SELECT Nama,Nipd FROM peserta WHERE Status=1")->result();
                             foreach ($data as $row) { ?>
                                 <option value="<?php echo $row->Nipd ?>">
                                     <?php echo $row->Nama ?>
@@ -38,11 +38,11 @@
                         </select>
                     </div>
                     <div class="form-group col-md-6">
-                        <input type="text" class="form-control" id="jks" aria-describedby="emailHelp" placeholder="Jenis Kursus" name="jks" maxlength="50" required value="<?php echo $tp->Jeniskursus ?>">
+                        <input type="text" class="form-control" id="jks" aria-describedby="emailHelp" placeholder="Jenis Kursus" name="jks" maxlength="50" required hidden value="<?php echo $tp->Jeniskursus ?>">
                     </div>
                     <div class="form-group col-md-12">
-                        <select type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="Instruktur" maxlength=20 required>
-                            <option selected value="<?php echo $tp->Id ?>"><?php echo $tp->NamaInstruktur ?></option>
+                        <select type="text" class="form-control" id="Instruktur" aria-describedby="emailHelp" name="Instruktur" maxlength=20 required>
+                            <option selected value="<?php echo $tp->InsId ?>"><?php echo $tp->NamaInstruktur ?></option>
                             <?php
                             $data = $this->db->query("SELECT Id,NamaInstruktur FROM instruktur")->result();
                             foreach ($data as $row) { ?>
@@ -53,11 +53,12 @@
                         </select>
                     </div>
                     <div class="form-group col-md-12">
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Materi" name="materi" maxlength="50" required value="<?php echo $tp->Materi ?>">
+                        <input type="text" class="form-control" id="materi" aria-describedby="emailHelp" placeholder="Materi" name="materi" maxlength="50" required value="<?php echo $tp->Materi ?>">
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Simpan</button>
                 <a href="<?php echo base_url("pages/presensi") ?>" class="btn btn-secondary" role="button">Batal</a>
+                <a href="<?= base_url('presensi/hapus/' . $tp->Id) ?>" class="btn btn-danger" role="button">Hapus</a>
             </form>
         </div>
     </div>

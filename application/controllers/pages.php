@@ -108,7 +108,7 @@ class pages  extends CI_Controller {
         $this->load->view('layout/footer');
     }
     function presensi(){
-        $data['presensi'] = $this->db->query("SELECT presensi.Id,presensi.Tgl,peserta.Nama,rombel.Namarombel,presensi.Materi,instruktur.NamaInstruktur,peserta.Id AS Idp FROM presensi JOIN peserta JOIN instruktur JOIN rombel ON presensi.Nipd=peserta.Nipd AND presensi.Instruktur=instruktur.Id AND presensi.Jeniskursus=rombel.Id order by presensi.Tgl DESC")->result();
+        $data['presensi'] = $this->db->query("SELECT presensi.Id,presensi.Tgl,peserta.Nama,rombel.Namarombel,presensi.Materi,instruktur.NamaInstruktur,peserta.Id AS Idp FROM presensi JOIN peserta JOIN instruktur JOIN rombel ON presensi.Nipd=peserta.Nipd AND presensi.Instruktur=instruktur.Id AND presensi.Jeniskursus=rombel.Id order by presensi.Id DESC")->result();
         
         $this->load->view('menu/presensi/lihat',$data);
         $this->load->view('layout/footer');

@@ -53,12 +53,12 @@
                   <a href="<?= base_url("presensi/form_ubah/$tp->Idpr") ?>" class="btn btn-warning btn-sm" title="Klik untuk merubah data.">
                     <i class="fas fa-pen-alt"></i>
                   </a>
-                  <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteuser<?php echo $tp->Id; ?>" title="Klik untuk menghapus data.">
+                  <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteuser" title="Klik untuk menghapus data.">
                     <i class="fas fa-trash-alt"></i>
                   </a>
                   <!-- modal delete -->
                   <div class="example-modal">
-                    <div id="deleteuser<?php echo $tp->Idpr; ?>" class="modal fade" role="dialog" style="display:none;">
+                    <div id="deleteuser" class="modal fade" role="dialog" style="display:none;">
                       <div class="modal-dialog">
                         <div class="modal-content">
                           <div class="modal-header">
@@ -85,4 +85,4 @@
     </div>
   </div>
 </div>
-<script type="text/javascript">document.title = "Presensi Kursus <?= $presensi[0]->Nama ?>";</script>
+<script type="text/javascript">document.title = "Presensi Kursus <?= $presensi[0]->Nama ?>,<br>Program <?= $presensi[0]->Namarombel ?>";</script>
