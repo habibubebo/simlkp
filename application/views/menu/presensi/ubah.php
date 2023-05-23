@@ -15,7 +15,7 @@
             <form action="<?php echo base_url() . 'presensi/ubah'; ?>" method="POST">
                 <div class="row">
                     <div class="form-group col-md-12">
-                        <input type="text" class="form-control" id="Id" aria-describedby="emailHelp"  name="Id" hidden value="<?php echo $tp->PrId ?>">
+                        <input type="text" class="form-control" id="Id" aria-describedby="emailHelp" name="Id" hidden value="<?php echo $tp->PrId ?>">
                     </div>
                     <div class="form-group col-md-12" id="simple-date1">
                         <div class="input-group date">
@@ -37,8 +37,8 @@
                             <?php } ?>
                         </select>
                     </div>
-                    <div class="form-group col-md-6">
-                        <input type="text" class="form-control" id="jks" aria-describedby="emailHelp" placeholder="Jenis Kursus" name="jks" maxlength="50" required hidden value="<?php echo $tp->Jeniskursus ?>">
+                    <div class="form-group col-md-6" hidden>
+                        <input type="text" class="form-control" id="jks" aria-describedby="emailHelp" placeholder="Jenis Kursus" name="jks" maxlength="50" required value="<?php echo $tp->Jeniskursus ?>">
                     </div>
                     <div class="form-group col-md-12">
                         <select type="text" class="form-control" id="Instruktur" aria-describedby="emailHelp" name="Instruktur" maxlength=20 required>

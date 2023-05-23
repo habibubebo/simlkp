@@ -56,15 +56,15 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="<?php echo base_url("pages/lulusan") ?>">
-          <i class="fas fa-fw fa-graduation-cap"></i>
-          <span>Lulusan</span>
-        </a>
-      </li>
-      <li class="nav-item">
         <a class="nav-link" href="<?php echo base_url("pages/presensi") ?>">
           <i class="fas fa-fw fa-archive"></i>
           <span>Presensi</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="<?php echo base_url("pages/lulusan") ?>">
+          <i class="fas fa-fw fa-graduation-cap"></i>
+          <span>Lulusan</span>
         </a>
       </li>
       <li class="nav-item">

@@ -11,17 +11,16 @@
     <!-- Form Basic -->
     <div class="card mb-4">
         <div class="card-body">
-            <?php 
+            <?php
             $status = "";
             foreach ($peserta as $tp);
-              if ($tp->Status == "0") {
+            if ($tp->Status == "0") {
                 $status = "Nonaktif";
-              } elseif ($tp->Status == "1") {
-                  $status = "Aktif";
-              }
-              else {
+            } elseif ($tp->Status == "1") {
+                $status = "Aktif";
+            } else {
                 $status = "Lulus";
-              }
+            }
             ?>
             <form action="<?php echo base_url() . 'peserta/ubah'; ?>" method="POST">
                 <div class="row">
@@ -91,6 +90,10 @@
                             </div>
                             <input type="text" name="Tglmasuk" class="form-control" placeholder="Tanggal Masuk" id="simpleDataInput" maxlength=20 required value="<?php echo $tp->Tglmasuk ?>">
                         </div>
+                    </div>
+                    <div class="form-group col-md-12">
+                        <label for="foto">Foto</label>
+                        <input name="foto" type="file">
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Simpan</button>

@@ -20,7 +20,7 @@
                             <input type="text" name="tgl" class="form-control" placeholder="Tanggal Hadir" id="simpleDataInput" maxlength=20 required value="<?php echo date('Y-m-d') ?>">
                         </div>
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-12">
                         <select class="form-control" id="nama" aria-describedby="emailHelp" name="nama" maxlength=50 required>
                             <option selected value="">Nama Peserta</option>
                             <?php
@@ -32,7 +32,7 @@
                             <?php } ?>
                         </select>
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6" hidden>
                         <input type="text" class="form-control" id="jks" aria-describedby="emailHelp" placeholder="Jenis Kursus" name="jks" maxlength="50" required>
                     </div>
                     <div class="form-group col-md-12">

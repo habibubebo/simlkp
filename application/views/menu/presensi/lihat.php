@@ -29,7 +29,7 @@
             ?>
               <tr>
                 <td><?php $this->Model_APS->Gethari($tp->Tgl) ?></td>
-                <td><a class="btn" href="<?= base_url("presensi/peserta?Id=$tp->Idp") ?>"><?php echo $tp->Nama ?></td>
+                <td><a class="btn" style="width:max-content" href="<?= base_url("presensi/peserta?Id=$tp->Idp") ?>"><?php echo $tp->Nama ?></td>
                 <td><?php echo $tp->Namarombel ?></td>
                 <td><?php echo $tp->NamaInstruktur ?></td>
                 <td><?php echo $tp->Materi ?></td>
@@ -50,7 +50,7 @@
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                           </div>
                           <div class="modal-body">
-                            <h6 align="center">Apakah anda yakin ingin menghapus data <?php echo $tp->Nama.' tanggal '.$tp->Tgl; ?><strong><span class="grt"></span></strong> ?</h6>
+                            <h6 align="center">Apakah anda yakin ingin menghapus data <?php echo $tp->Nama . ' tanggal ' . $tp->Tgl; ?><strong><span class="grt"></span></strong> ?</h6>
                           </div>
                           <div class="modal-footer">
                             <a href="<?= base_url('presensi/hapus/' . $tp->Id) ?>" class="btn btn-danger"><i class="fa fa-trash"> </i> Hapus</a>
@@ -69,4 +69,6 @@
     </div>
   </div>
 </div>
-<script type="text/javascript">document.title = "Presensi LKP Cenditama";</script>
+<script type="text/javascript">
+  document.title = "Presensi LKP Cenditama";
+</script>
