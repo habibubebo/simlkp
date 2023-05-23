@@ -29,15 +29,7 @@
                         <input type="text" class="form-control" id="ttl" aria-describedby="emailHelp" placeholder="Tempat Tanggal Lahir" name="ttl" maxlength="30" disabled>
                     </div>
                     <div class="form-group col-md-6">
-                        <select class="form-control" id="jks" aria-describedby="emailHelp" name="jks" maxlength=50 disabled>
-                            <option disabled selected value="">Jenis Kursus</option>
-                            <?php
-                            $data = $this->db->query("SELECT * FROM rombel")->result();
-                            foreach ($data as $row) { ?>
-                                <option value="<?php echo $row->Namarombel ?>">
-                                    <?php echo $row->Namarombel ?>
-                                </option>
-                            <?php } ?>
+                        <input type="text" class="form-control" id="jks" aria-describedby="emailHelp" placeholder="Jenis Kursus" name="jks" maxlength="30" disabled>
                         </select>
                     </div>
                     <div class="form-group col-md-6">
@@ -78,16 +70,16 @@
                     </div>
 
                     <div class="form-group col-md-3">
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nilai 1" name="n1" maxlength="1" >
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nilai 1" name="n1" maxlength="1">
                     </div>
                     <div class="form-group col-md-3">
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nilai 2" name="n2" maxlength="1" >
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nilai 2" name="n2" maxlength="1">
                     </div>
                     <div class="form-group col-md-3">
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nilai 3" name="n3" maxlength="1" >
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nilai 3" name="n3" maxlength="1">
                     </div>
                     <div class="form-group col-md-3">
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nilai 4" name="n4" maxlength="1" >
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nilai 4" name="n4" maxlength="1">
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Simpan</button>

@@ -33,9 +33,9 @@
             </script> - developed by
             <b><a href="https://instagram.com/habibubebo" target="_blank">Habibubebo</a></b>
             <div class=" ml-2">
-          <small>(Version 0.5 Beta)<br><?= date("Y-m-d h:m:s") ?></small>
+              <small>(Version 0.5 Beta)<br><?= date("Y-m-d h:m:s") ?></small>
 
-        </div>
+            </div>
           </span>
         </div>
       </div>
@@ -72,279 +72,290 @@
     <!-- Page level custom scripts -->
     <script>
       $(document).ready(function() {
-        $('#dataTableHover').DataTable(); 
+        $('#dataTableHover').DataTable();
         $('#tabelpresensi').DataTable({
-           dom: 'Bfrtip',
-            ordering: false,
-            buttons: [
-              {
-                text: '<i class="fas fa-plus"></i> Tambah',
-                className: 'btn btn-info',
-                action: function() {
-                    location.href = '<?php echo base_url("presensi/form") ?>';}      
-                    },
-              {
-               extend: 'excel',
-               text: '<i class="fas fa-file-excel"></i> Export Excel',
-               className: 'btn btn-success',
-               exportOptions: {
-               columns: [0,1,2,3,4,5,6,7,8]
-                }
-                    },
+          dom: 'Bfrtip',
+          ordering: false,
+          "pagingType": "simple",
+          buttons: [{
+              text: '<i class="fas fa-plus"></i> Tambah',
+              className: 'btn btn-info',
+              action: function() {
+                location.href = '<?php echo base_url("presensi/form") ?>';
+              }
+            },
             {
-               extend: 'pdfHtml5',
-               text: '<i class="fas fa-file-pdf"></i> Export PDF',
-               className: 'btn btn-danger',
-               exportOptions: {
-               columns: [0,1,2,3,4,5,6,7,8]
-                }
-                    },
+              extend: 'excel',
+              text: '<i class="fas fa-file-excel"></i> Export Excel',
+              className: 'btn btn-success',
+              exportOptions: {
+                columns: [0, 1, 2, 3, 4]
+              }
+            },
             {
-               extend: 'print',
-               text: '<i class="fas fa-print"></i> Print',
-               exportOptions: {
-               columns: [0,1,2,3,4,5,6,7,8]
-                }
-                    },
-                {
-                text: '<i class="fas fa-download"></i> Unduh',
-                className: 'btn btn-dark',
-                action: function() {
-                    location.href = '<?php echo base_url('Laporan/presensi'); ?>';}      
-                    },
-        ]
+              extend: 'pdfHtml5',
+              text: '<i class="fas fa-file-pdf"></i> Export PDF',
+              className: 'btn btn-danger',
+              exportOptions: {
+                columns: [0, 1, 2, 3, 4]
+              }
+            },
+            {
+              extend: 'print',
+              text: '<i class="fas fa-print"></i> Print',
+              exportOptions: {
+                columns: [0, 1, 2, 3, 4]
+              }
+            },
+            {
+              text: '<i class="fas fa-download"></i> Unduh',
+              className: 'btn btn-dark',
+              action: function() {
+                location.href = '<?php echo base_url('Laporan/presensi'); ?>';
+              }
+            },
+          ]
         });
         $('#tabelpresensipeserta').DataTable({
-           dom: 'Bfrtip',
-            searching: false,
-            paging: false,
-            ordering: false,
-            info: false,
-            buttons: [
-              {
-                text: '<i class="fas fa-plus"></i> Tambah',
-                className: 'btn btn-info',
-                action: function() {
-                    location.href = '<?php echo base_url("presensi/form") ?>';}      
-                    },
-              {
-               extend: 'excel',
-               text: '<i class="fas fa-file-excel"></i> Export Excel',
-               className: 'btn btn-success',
-               exportOptions: {
-               columns: [0,1,2]
-                }
-                    },
+          dom: 'Bfrtip',
+          searching: false,
+          paging: false,
+          ordering: false,
+          info: false,
+          buttons: [{
+              text: '<i class="fas fa-plus"></i> Tambah',
+              className: 'btn btn-info',
+              action: function() {
+                location.href = '<?php echo base_url("presensi/form") ?>';
+              }
+            },
             {
-               extend: 'pdfHtml5',
-               text: '<i class="fas fa-file-pdf"></i> Export PDF',
-               className: 'btn btn-danger',
-               exportOptions: {
-               columns: [0,1,2]
-                }
-                    },
+              extend: 'excel',
+              text: '<i class="fas fa-file-excel"></i> Export Excel',
+              className: 'btn btn-success',
+              exportOptions: {
+                columns: [0, 1, 2]
+              }
+            },
             {
-               extend: 'print',
-               text: '<i class="fas fa-print"></i> Print',
-               exportOptions: {
-               columns: [0,1,2]
-                }
-                    }
-        ]
+              extend: 'pdfHtml5',
+              text: '<i class="fas fa-file-pdf"></i> Export PDF',
+              className: 'btn btn-danger',
+              exportOptions: {
+                columns: [0, 1, 2]
+              }
+            },
+            {
+              extend: 'print',
+              text: '<i class="fas fa-print"></i> Print',
+              exportOptions: {
+                columns: [0, 1, 2]
+              }
+            }
+          ]
         });
         $('#tabellulusan').DataTable({
-           dom: 'Bfrtip',
-           ordering: false,
+          dom: 'Bfrtip',
+          ordering: false,
 
-            buttons: [
-              {
-                text: '<i class="fas fa-plus"></i> Tambah',
-                className: 'btn btn-info',
-                action: function() {
-                    location.href = '<?php echo base_url('lulusan/form'); ?>';}      
-                    },
+          buttons: [{
+              text: '<i class="fas fa-plus"></i> Tambah',
+              className: 'btn btn-info',
+              action: function() {
+                location.href = '<?php echo base_url('lulusan/form'); ?>';
+              }
+            },
             {
-               extend: 'excelHtml5',
-               text: '<i class="fas fa-file-excel"></i> Export Excel',
-               className: 'btn btn-success',
-               exportOptions: {
-               columns: [0,1,2,3,4,5,6,7,8]}
-                    },
+              extend: 'excelHtml5',
+              text: '<i class="fas fa-file-excel"></i> Export Excel',
+              className: 'btn btn-success',
+              exportOptions: {
+                columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+              }
+            },
             {
-               extend: 'pdfHtml5',
-               text: '<i class="fas fa-file-pdf"></i> Export PDF',
-               className: 'btn btn-danger',
-               exportOptions: {
-               columns: [0,1,2,3,4,5,6,7,8]}
-                    },
+              extend: 'pdfHtml5',
+              text: '<i class="fas fa-file-pdf"></i> Export PDF',
+              className: 'btn btn-danger',
+              exportOptions: {
+                columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+              }
+            },
             {
-               extend: 'print',
-               text: '<i class="fas fa-print"></i> Print',
-               exportOptions: {
-               columns: [0,1,2,3,4,5,6,7,8]}
-                    }
-        ]
+              extend: 'print',
+              text: '<i class="fas fa-print"></i> Print',
+              exportOptions: {
+                columns: [0, 1, 2, 3, 4, 5, 6, 7, 8]
+              }
+            }
+          ]
         });
         $('#tabelpeserta').DataTable({
-           dom: 'Bfrtip',
-           ordering: false,
-           "search": {
-                        "search": "Aktif"
-                      },
-            buttons: [
-              {
-                text: '<i class="fas fa-plus"></i> Tambah',
-                className: 'btn btn-info',
-                action: function() {
-                    location.href = '<?php echo base_url('peserta/form'); ?>';}      
-                    },
+          dom: 'Bfrtip',
+          ordering: false,
+          "search": {
+            "search": "Aktif"
+          },
+          buttons: [{
+              text: '<i class="fas fa-plus"></i> Tambah',
+              className: 'btn btn-info',
+              action: function() {
+                location.href = '<?php echo base_url('peserta/form'); ?>';
+              }
+            },
             {
-               extend: 'excelHtml5',
-               text: '<i class="fas fa-file-excel"></i> Export Excel',
-               className: 'btn btn-success',
-               exportOptions: {
-               columns: [0,1,2,3,4,5,6]}
-                    },
+              extend: 'excelHtml5',
+              text: '<i class="fas fa-file-excel"></i> Export Excel',
+              className: 'btn btn-success',
+              exportOptions: {
+                columns: [0, 1, 2, 3, 4, 5, 6]
+              }
+            },
             {
-               extend: 'pdfHtml5',
-               text: '<i class="fas fa-file-pdf"></i> Export PDF',
-               className: 'btn btn-danger',
-               exportOptions: {
-               columns: [0,1,2,3,4,5,6]}
-                    },
+              extend: 'pdfHtml5',
+              text: '<i class="fas fa-file-pdf"></i> Export PDF',
+              className: 'btn btn-danger',
+              exportOptions: {
+                columns: [0, 1, 2, 3, 4, 5, 6]
+              }
+            },
             {
-               extend: 'print',
-               text: '<i class="fas fa-print"></i> Print',
-               exportOptions: {
-               columns: [0,1,2,3,4,5,6]}
-                    }
-        ]
+              extend: 'print',
+              text: '<i class="fas fa-print"></i> Print',
+              exportOptions: {
+                columns: [0, 1, 2, 3, 4, 5, 6]
+              }
+            }
+          ]
         });
         $('#tabelinstruktur').DataTable({
-           dom: 'Bfrtip',
-            paging: false,
-            ordering: false,
-            buttons: [
-              {
-                text: '<i class="fas fa-plus"></i> Tambah',
-                className: 'btn btn-info',
-                action: function() {
-                    location.href = '<?php echo base_url("instruktur/form") ?>';}      
-                    },
-              {
-               extend: 'excel',
-               text: '<i class="fas fa-file-excel"></i> Export Excel',
-               className: 'btn btn-success',
-               exportOptions: {
-               columns: [0,1,2,3,4,5,6]
-                }
-                    },
+          dom: 'Bfrtip',
+          paging: false,
+          ordering: false,
+          buttons: [{
+              text: '<i class="fas fa-plus"></i> Tambah',
+              className: 'btn btn-info',
+              action: function() {
+                location.href = '<?php echo base_url("instruktur/form") ?>';
+              }
+            },
             {
-               extend: 'pdfHtml5',
-               text: '<i class="fas fa-file-pdf"></i> Export PDF',
-               className: 'btn btn-danger',
-               exportOptions: {
-               columns: [0,1,2,3,4,5,6]
-                }
-                    },
+              extend: 'excel',
+              text: '<i class="fas fa-file-excel"></i> Export Excel',
+              className: 'btn btn-success',
+              exportOptions: {
+                columns: [0, 1, 2, 3, 4, 5, 6]
+              }
+            },
             {
-               extend: 'print',
-               text: '<i class="fas fa-print"></i> Print',
-               exportOptions: {
-               columns: [0,1,2,3,4,5,6]
-                }
-                    },
-                {
-                text: '<i class="fas fa-download"></i> Unduh',
-                className: 'btn btn-dark',
-                action: function() {
-                    location.href = '<?php echo base_url('Laporan/instruktur'); ?>';}      
-                    },
-        ]
+              extend: 'pdfHtml5',
+              text: '<i class="fas fa-file-pdf"></i> Export PDF',
+              className: 'btn btn-danger',
+              exportOptions: {
+                columns: [0, 1, 2, 3, 4, 5, 6]
+              }
+            },
+            {
+              extend: 'print',
+              text: '<i class="fas fa-print"></i> Print',
+              exportOptions: {
+                columns: [0, 1, 2, 3, 4, 5, 6]
+              }
+            },
+            {
+              text: '<i class="fas fa-download"></i> Unduh',
+              className: 'btn btn-dark',
+              action: function() {
+                location.href = '<?php echo base_url('Laporan/instruktur'); ?>';
+              }
+            },
+          ]
         });
         $('#tabelrombel').DataTable({
-           dom: 'Bfrtip',
-            paging: false,
-            ordering: false,
-            buttons: [
-              {
-                text: '<i class="fas fa-plus"></i> Tambah',
-                className: 'btn btn-info',
-                action: function() {
-                    location.href = '<?php echo base_url("rombel/form") ?>';}      
-                    },
-              {
-               extend: 'excel',
-               text: '<i class="fas fa-file-excel"></i> Export Excel',
-               className: 'btn btn-success',
-               exportOptions: {
-               columns: [0,1,2,3]
-                }
-                    },
+          dom: 'Bfrtip',
+          paging: false,
+          ordering: false,
+          buttons: [{
+              text: '<i class="fas fa-plus"></i> Tambah',
+              className: 'btn btn-info',
+              action: function() {
+                location.href = '<?php echo base_url("rombel/form") ?>';
+              }
+            },
             {
-               extend: 'pdfHtml5',
-               text: '<i class="fas fa-file-pdf"></i> Export PDF',
-               className: 'btn btn-danger',
-               exportOptions: {
-               columns: [0,1,2,3]
-                }
-                    },
+              extend: 'excel',
+              text: '<i class="fas fa-file-excel"></i> Export Excel',
+              className: 'btn btn-success',
+              exportOptions: {
+                columns: [0, 1, 2, 3]
+              }
+            },
             {
-               extend: 'print',
-               text: '<i class="fas fa-print"></i> Print',
-               exportOptions: {
-               columns: [0,1,2,3]
-                }
-                    },
-                {
-                text: '<i class="fas fa-download"></i> Unduh',
-                className: 'btn btn-dark',
-                action: function() {
-                    location.href = '<?php echo base_url('Laporan/rombel'); ?>';}      
-                    },
-        ]
+              extend: 'pdfHtml5',
+              text: '<i class="fas fa-file-pdf"></i> Export PDF',
+              className: 'btn btn-danger',
+              exportOptions: {
+                columns: [0, 1, 2, 3]
+              }
+            },
+            {
+              extend: 'print',
+              text: '<i class="fas fa-print"></i> Print',
+              exportOptions: {
+                columns: [0, 1, 2, 3]
+              }
+            },
+            {
+              text: '<i class="fas fa-download"></i> Unduh',
+              className: 'btn btn-dark',
+              action: function() {
+                location.href = '<?php echo base_url('Laporan/rombel'); ?>';
+              }
+            },
+          ]
         });
         $('#tabeluk').DataTable({
-           dom: 'Bfrtip',
-            paging: false,
-            ordering: false,
-            buttons: [
-              {
-                text: '<i class="fas fa-plus"></i> Tambah',
-                className: 'btn btn-info',
-                action: function() {
-                    location.href = '<?php echo base_url("uk/form") ?>';}      
-                    },
-              {
-               extend: 'excel',
-               text: '<i class="fas fa-file-excel"></i> Export Excel',
-               className: 'btn btn-success',
-               exportOptions: {
-               columns: [0,1,2,3,4,5,6]
-                }
-                    },
+          dom: 'Bfrtip',
+          paging: false,
+          ordering: false,
+          buttons: [{
+              text: '<i class="fas fa-plus"></i> Tambah',
+              className: 'btn btn-info',
+              action: function() {
+                location.href = '<?php echo base_url("uk/form") ?>';
+              }
+            },
             {
-               extend: 'pdfHtml5',
-               text: '<i class="fas fa-file-pdf"></i> Export PDF',
-               className: 'btn btn-danger',
-               exportOptions: {
-               columns: [0,1,2,3,4,5,6]
-                }
-                    },
+              extend: 'excel',
+              text: '<i class="fas fa-file-excel"></i> Export Excel',
+              className: 'btn btn-success',
+              exportOptions: {
+                columns: [0, 1, 2, 3, 4, 5, 6]
+              }
+            },
             {
-               extend: 'print',
-               text: '<i class="fas fa-print"></i> Print',
-               exportOptions: {
-               columns: [0,1,2,3,4,5,6]
-                }
-                    },
-                {
-                text: '<i class="fas fa-download"></i> Unduh',
-                className: 'btn btn-dark',
-                action: function() {
-                    location.href = '<?php echo base_url('Laporan/rombel'); ?>';}      
-                    },
-        ]
+              extend: 'pdfHtml5',
+              text: '<i class="fas fa-file-pdf"></i> Export PDF',
+              className: 'btn btn-danger',
+              exportOptions: {
+                columns: [0, 1, 2, 3, 4, 5, 6]
+              }
+            },
+            {
+              extend: 'print',
+              text: '<i class="fas fa-print"></i> Print',
+              exportOptions: {
+                columns: [0, 1, 2, 3, 4, 5, 6]
+              }
+            },
+            {
+              text: '<i class="fas fa-download"></i> Unduh',
+              className: 'btn btn-dark',
+              action: function() {
+                location.href = '<?php echo base_url('Laporan/rombel'); ?>';
+              }
+            },
+          ]
         });
         $('#simple-date1 .input-group.date').datepicker({
           format: 'yyyy-mm-dd',
@@ -376,12 +387,12 @@
           todayBtn: 'linked',
         });
         $('#nama').change(function() {
-          var username = $(this).val();
+          var isian = $(this).val();
           $.ajax({
             url: '<?= base_url() ?>index.php/pesertas/nipd',
             method: 'post',
             data: {
-              Nipd: username
+              Nipd: isian
             },
             dataType: 'json',
             success: function(response) {

@@ -42,12 +42,12 @@ class presensi extends CI_Controller {
     function form_ubah($Id){
         $where = array('presensi.Id' => $Id);
         $on = "presensi.Nipd=peserta.Nipd";
-        $data['presensi'] = $this->Model_APS->edit_data_join2('*','presensi','peserta',$on, 'instruktur', 'presensi.Instruktur=instruktur.Id', $where)->result();
+        $data['presensi'] = $this->Model_APS->edit_data_join2('*, presensi.Id AS PrId, instruktur.Id AS InsId','presensi','peserta',$on, 'instruktur', 'presensi.Instruktur=instruktur.Id', $where)->result();
         $this->load->view('menu/presensi/ubah',$data);
         $this->load->view('layout/footer');
     }
     // ubah
-    function ubah($Id = null){
+    function ubah(){
         $Id = $this->input->post('Id');
         $tgl = $this->input->post('tgl');
         $nipd = $this->input->post('nama');
@@ -60,7 +60,7 @@ class presensi extends CI_Controller {
             'Nipd' => $nipd,
             'Jeniskursus' => $jks,
             'Instruktur' => $ins,
-            'Materi' => $materi
+            'Materi' => $materi,
         );
         $where = array('Id' => $Id);
         $this->Model_APS->proses_update($where,$data,'presensi');
