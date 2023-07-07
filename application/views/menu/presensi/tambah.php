@@ -10,7 +10,7 @@
     <!-- Form Basic -->
     <div class="card mb-4">
         <div class="card-body">
-            <form action="<?php echo base_url() . 'presensi/tambah'; ?>" method="POST">
+            <form action="<?php echo base_url() . 'index.php/presensi/tambah'; ?>" method="POST">
                 <div class="row">
                     <div class="form-group col-md-12" id="simple-date1">
                         <div class="input-group date">

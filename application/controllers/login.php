@@ -11,7 +11,11 @@
         // Fungsi Index() Untuk menjalankan baris kode secara otomatis ketika program berjalan-------------------------
             function index(){
                 // Menambahkan/memanggil file view (v_login.php)-------------------------------------------------------
+                if($this->session->userdata('status')=="masuk"){ 
+                    redirect(base_url('pages/dashboard'));
+                } else {
                     $this->load->view('V_login.php');
+                };
             }
         // Fungsi Auth() Untuk memeriksa / memproses inputan yang dikirim dari form login (v_login.php)----------------
             function auth(){
