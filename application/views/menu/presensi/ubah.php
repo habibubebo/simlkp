@@ -12,7 +12,7 @@
     <div class="card mb-4">
         <div class="card-body">
             <?php foreach ($presensi as $tp); ?>
-            <form action="<?php echo base_url() . 'presensi/ubah'; ?>" method="POST">
+            <form action="<?php echo base_url() . 'index.php/presensi/ubah'; ?>" method="POST">
                 <div class="row">
                     <div class="form-group col-md-12">
                         <input type="text" class="form-control" id="Id" aria-describedby="emailHelp" name="Id" hidden value="<?php echo $tp->PrId ?>">

@@ -17,14 +17,14 @@
       <div class="card-header py-4 bg-primary d-flex flex-row align-items-center justify-content-between">
         <h6 class="m-0 font-weight-bold text-light">
           <i class="fas fa-fw fa-school"></i>
-          <?php echo $pr->Namalkp ?>
+          <?= $pr->Namalkp ?>
         </h6>
       </div>
 
       <div class="card-body">
         <div class="row">
           <div class="col-xl-4 col-lg-7">
-            <img class="" style="margin-left:0%;margin-top:0%;" src="<?php echo base_url("asset/img/logo/logo.png") ?>" width="100%">
+            <img class="" style="margin-left:0%;margin-top:0%;" src="<?= base_url("asset/img/logo/logo.png") ?>" width="100%">
           </div>
           <div class="col-xl-7 col-lg-7">
             <table border="0" width="100%" class="">
@@ -32,73 +32,73 @@
                 <tr>
                   <th>NPSN</th>
                   <th>&nbsp;:&nbsp;</th>
-                  <th><?php echo $pr->Npsn ?></th>
+                  <th><?= $pr->Npsn ?></th>
                 </tr>
                 <tr>
                   <th width="28%">Nama Lembaga</th>
                   <th>&nbsp;: </th>
-                  <th><?php echo $pr->Namalkp ?></th>
+                  <th><?= $pr->Namalkp ?></th>
                 </tr>
                 <tr>
                   <th>Jalan</th>
                   <th>&nbsp;: </th>
-                  <th><?php echo $pr->Alamat ?></th>
+                  <th><?= $pr->Alamat ?></th>
                 </tr>
                 <tr>
                   <th>RT/RW</th>
                   <th>&nbsp;: </th>
-                  <th><?php echo $pr->Rt . "/" . $pr->Rw ?></th>
+                  <th><?= $pr->Rt . "/" . $pr->Rw ?></th>
                 </tr>
                 <tr>
                   <th>Kelurahan</th>
                   <th>&nbsp;: </th>
-                  <th><?php echo $pr->Kelurahan ?></th>
+                  <th><?= $pr->Kelurahan ?></th>
                 </tr>
                 <tr>
                   <th>Kecamatan</th>
                   <th>&nbsp;: </th>
-                  <th><?php echo $pr->Kecamatan ?></th>
+                  <th><?= $pr->Kecamatan ?></th>
                 </tr>
                 <tr>
                   <th>Kota</th>
                   <th>&nbsp;: </th>
-                  <th><?php echo $pr->Kota ?></th>
+                  <th><?= $pr->Kota ?></th>
                 </tr>
                 <tr>
                   <th>Provinsi</th>
                   <th>&nbsp;: </th>
-                  <th><?php echo $pr->Provinsi ?></th>
+                  <th><?= $pr->Provinsi ?></th>
                 </tr>
                 <tr>
                   <th>Kode Pos</th>
                   <th>&nbsp;: </th>
-                  <th><?php echo $pr->Kodepos ?></th>
+                  <th><?= $pr->Kodepos ?></th>
                 </tr>
                 <tr>
                   <th>Yayasan</th>
                   <th>&nbsp;: </th>
-                  <th><?php echo $pr->Namayayasan ?></th>
+                  <th><?= $pr->Namayayasan ?></th>
                 </tr>
                 <tr>
                   <th>Telepon</th>
                   <th>&nbsp;: </th>
-                  <th><?php echo $pr->Telepon ?></th>
+                  <th><?= $pr->Telepon ?></th>
                 </tr>
                 <tr>
                   <th>No Fax</th>
                   <th>&nbsp;: </th>
-                  <th><?php echo $pr->Nofax ?></th>
+                  <th><?= $pr->Nofax ?></th>
                 </tr>
                 <tr>
                   <th>Email</th>
                   <th>&nbsp;: </th>
-                  <th><?php echo $pr->Email ?></th>
+                  <th><?= $pr->Email ?></th>
                 </tr>
               </thead>
             </table>
           </div>
           <div class="col-xl-12 col-lg-12 text-right">
-            <a href="<?php echo base_url('pages/lembaga_edit'); ?>" class="btn btn-warning btn-icon-split">
+            <a href="<?= base_url('pages/lembaga_edit'); ?>" class="btn btn-warning btn-icon-split">
               <span class="icon text-white-50">
                 <i class="fas fa-plus"></i>
               </span>
@@ -114,4 +114,6 @@
     </div>
   </div>
 </div>
-<script type="text/javascript">document.title = "Profil <?php echo $pr->Namalkp ?>";</script>
+<script type="text/javascript">
+  document.title = "Profil <?= $pr->Namalkp ?>";
+</script>

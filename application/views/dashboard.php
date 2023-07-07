@@ -2,24 +2,27 @@
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="<?php echo base_url("pages/dashboard") ?>">Home</a></li>
+              <li class="breadcrumb-item"><a href="<?= base_url("pages/dashboard") ?>">Home</a></li>
               <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
             </ol>
           </div>
           <div class="alert alert-info alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                    <h6><i class="fas fa-info"></i><b> Informasi</b></h6>
-                    <strong>
-                    <?php
-                        $today = date("Y-m-d");
-                        $data = $this->db->query("SELECT * FROM presensi WHERE Tgl='$today'")->result();
-                        $presensi = 0;
-                        foreach ($data as $row) {$presensi += 1;} echo $presensi
-                        ?></strong> Peserta telah presensi hari ini.
-                  </div>
-          
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            <h6><i class="fas fa-info"></i><b> Informasi</b></h6>
+            <strong>
+              <?php
+              $today = date("Y-m-d");
+              $data = $this->db->query("SELECT * FROM presensi WHERE Tgl='$today'")->result();
+              $presensi = 0;
+              foreach ($data as $row) {
+                $presensi += 1;
+              }
+              echo $presensi
+              ?></strong> Peserta telah presensi hari ini.
+          </div>
+
           <!-- Content -->
           <div class="row mb-3">
             <!-- Sapras -->
@@ -37,10 +40,10 @@
                           $sapras += count($row->Jenissarana);
                         }
                         ?>
-                        <span><?php echo $sapras; ?> Sarana</span>
+                        <span><?= $sapras; ?> Sarana</span>
                       </div>
                       <div class="mt-2 mb-0 text-muted text-md">
-                        <a class="badge badge-primary" href="<?php echo base_url("pages/sapras") ?>">
+                        <a class="badge badge-primary" href="<?= base_url("pages/sapras") ?>">
                           Lihat Data
                         </a>
                       </div>
@@ -67,10 +70,10 @@
                           $ins += 1;
                         }
                         ?>
-                        <span><?php echo $ins; ?> Instruktur</span>
+                        <span><?= $ins; ?> Instruktur</span>
                       </div>
                       <div class="mt-2 mb-0 text-muted text-md">
-                        <a class="badge badge-warning" href="<?php echo base_url("pages/instruktur") ?>">
+                        <a class="badge badge-warning" href="<?= base_url("pages/instruktur") ?>">
                           Lihat Data
                         </a>
                       </div>
@@ -97,10 +100,10 @@
                           $rom += 1;
                         }
                         ?>
-                        <span><?php echo $rom; ?> RomBel</span>
+                        <span><?= $rom; ?> RomBel</span>
                       </div>
                       <div class="mt-2 mb-0 text-muted text-md">
-                        <a class="badge badge-info" href="<?php echo base_url("pages/rombel") ?>">
+                        <a class="badge badge-info" href="<?= base_url("pages/rombel") ?>">
                           Lihat Data
                         </a>
                       </div>
@@ -127,10 +130,10 @@
                           $pes += 1;
                         }
                         ?>
-                        <span><?php echo $pes; ?> Peserta</span>
+                        <span><?= $pes; ?> Peserta</span>
                       </div>
                       <div class="mt-2 mb-0 text-muted text-md">
-                        <a class="badge badge-success" href="<?php echo base_url("pages/peserta") ?>">
+                        <a class="badge badge-success" href="<?= base_url("pages/peserta") ?>">
                           Lihat Data
                         </a>
                       </div>
@@ -157,10 +160,10 @@
                           $lus += 1;
                         }
                         ?>
-                        <span><?php echo $lus; ?> Lulusan</span>
+                        <span><?= $lus; ?> Lulusan</span>
                       </div>
                       <div class="mt-2 mb-0 text-muted text-md">
-                        <a class="badge badge-danger" href="<?php echo base_url("pages/lulusan") ?>">
+                        <a class="badge badge-danger" href="<?= base_url("pages/lulusan") ?>">
                           Lihat Data
                         </a>
                       </div>

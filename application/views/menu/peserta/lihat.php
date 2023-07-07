@@ -37,36 +37,35 @@
               if ($tp->Status == "0") {
                 $status = '<span class="badge bg-danger text-white">Nonaktif</span>';
               } elseif ($tp->Status == "1") {
-                  $status = '<span class="badge bg-success text-white">Aktif</span>';
-              }
-              else {
+                $status = '<span class="badge bg-success text-white">Aktif</span>';
+              } else {
                 $status = '<span class="badge bg-secondary text-white">Lulus</span>';
               }
 
             ?>
               <tr>
-                <td><?php echo $tp->Nipd ?></td>
-                <td><?php echo $tp->Nokk ?><br>
-                  /<br><?php echo $tp->Nik ?></td>
-                <td><?php echo $tp->Nama ?></td>
-                <td><?php echo $jk; ?></td>
-                <td><?php echo $tp->Ttl ?></td>
-                <td><?php echo $tp->Namarombel ?><br>
-                  <?php echo "/" . $tp->Kelas ?>
+                <td><?= $tp->Nipd ?></td>
+                <td><?= $tp->Nokk ?><br>
+                  /<br><?= $tp->Nik ?></td>
+                <td><?= $tp->Nama ?></td>
+                <td><?= $jk; ?></td>
+                <td><?= $tp->Ttl ?></td>
+                <td><?= $tp->Namarombel ?><br>
+                  <?= "/" . $tp->Kelas ?>
                 </td>
 
-                <td><?php echo $tp->Tglmasuk ?></td>
+                <td><?= $tp->Tglmasuk ?></td>
                 <td>
-                  <?php echo $status ?><br>
+                  <?= $status ?><br>
                   <a href="<?= base_url("peserta/form_ubah/$tp->Idp") ?>" class="btn btn-warning btn-sm" title="Klik untuk merubah data.">
                     <i class="fas fa-pen-alt"></i>
                   </a>
-                  <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteuser<?php echo $tp->Id; ?>" title="Klik untuk menghapus data.">
+                  <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteuser<?= $tp->Id; ?>" title="Klik untuk menghapus data.">
                     <i class="fas fa-trash-alt"></i>
                   </a>
                   <!-- modal delete -->
                   <div class="example-modal">
-                    <div id="deleteuser<?php echo $tp->Id; ?>" class="modal fade" role="dialog" style="display:none;">
+                    <div id="deleteuser<?= $tp->Id; ?>" class="modal fade" role="dialog" style="display:none;">
                       <div class="modal-dialog">
                         <div class="modal-content">
                           <div class="modal-header">
@@ -74,7 +73,7 @@
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                           </div>
                           <div class="modal-body">
-                            <h6 align="center">Apakah anda yakin ingin menghapus data <?php echo $tp->Nama; ?><strong><span class="grt"></span></strong> ?</h6>
+                            <h6 align="center">Apakah anda yakin ingin menghapus data <?= $tp->Nama; ?><strong><span class="grt"></span></strong> ?</h6>
                           </div>
                           <div class="modal-footer">
                             <a href="<?= base_url('peserta/hapus/' . $tp->Id) ?>" class="btn btn-danger"><i class="fa fa-trash"> </i> Hapus</a>
@@ -93,4 +92,6 @@
     </div>
   </div>
 </div>
-<script type="text/javascript">document.title = "Peserta Didik LKP Cenditama";</script>
+<script type="text/javascript">
+  document.title = "Peserta Didik LKP Cenditama";
+</script>

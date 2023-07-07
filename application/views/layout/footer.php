@@ -15,7 +15,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-danger" data-dismiss="modal">Batal</button>
-            <a href="<?php echo base_url('index.php/login/logout'); ?>" class="btn btn-danger">Keluar</a>
+            <a href="<?= base_url('index.php/login/logout'); ?>" class="btn btn-danger">Keluar</a>
           </div>
         </div>
       </div>
@@ -47,28 +47,28 @@
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fas fa-angle-up"></i>
     </a>
-    <script src="<?php echo base_url("asset/vendor/jquery/jquery.min.js") ?>"></script>
-    <script src="<?php echo base_url("asset/vendor/bootstrap/js/bootstrap.bundle.min.js") ?>"></script>
-    <script src="<?php echo base_url("asset/vendor/jquery-easing/jquery.easing.min.js") ?>"></script>
-    <script src="<?php echo base_url("asset/js/ruang-admin.min.js") ?>"></script>
-    <!-- <script src="<?php echo base_url("asset/vendor/chart.js/Chart.min.js") ?>"></script>
-  <script src="<?php echo base_url("asset/js/demo/chart-area-demo.js") ?>"></script> -->
+    <script src="<?= base_url("asset/vendor/jquery/jquery.min.js") ?>"></script>
+    <script src="<?= base_url("asset/vendor/bootstrap/js/bootstrap.bundle.min.js") ?>"></script>
+    <script src="<?= base_url("asset/vendor/jquery-easing/jquery.easing.min.js") ?>"></script>
+    <script src="<?= base_url("asset/js/ruang-admin.min.js") ?>"></script>
+    <!-- <script src="<?= base_url("asset/vendor/chart.js/Chart.min.js") ?>"></script>
+  <script src="<?= base_url("asset/js/demo/chart-area-demo.js") ?>"></script> -->
     <!-- Page level plugins -->
-    <script src="<?php echo base_url("asset/vendor/datatables/jquery.dataTables.min.js") ?>"></script>
-    <script src="<?php echo base_url("asset/vendor/datatables/dataTables.bootstrap4.min.js") ?>"></script>
+    <script src="<?= base_url("asset/vendor/datatables/jquery.dataTables.min.js") ?>"></script>
+    <script src="<?= base_url("asset/vendor/datatables/dataTables.bootstrap4.min.js") ?>"></script>
     <!-- pdfmake -->
-    <script src="<?php echo base_url("asset/vendor/datatables/pdfmake.min.js") ?>"></script>
-    <script src="<?php echo base_url("asset/vendor/datatables/vfs_fonts.js") ?>"></script>
+    <script src="<?= base_url("asset/vendor/datatables/pdfmake.min.js") ?>"></script>
+    <script src="<?= base_url("asset/vendor/datatables/vfs_fonts.js") ?>"></script>
     <!-- Buttons -->
-    <script src="<?php echo base_url("asset/vendor/Buttons/js/dataTables.buttons.min.js") ?>"></script>
-    <script src="<?php echo base_url("asset/vendor/Buttons/js/buttons.bootstrap4.min.js") ?>"></script>
-    <script src="<?php echo base_url("asset/vendor/Buttons/js/buttons.colVis.min.js") ?>"></script>
-    <script src="<?php echo base_url("asset/vendor/Buttons/js/buttons.html5.min.js") ?>"></script>
-    <script src="<?php echo base_url("asset/vendor/Buttons/js/buttons.print.min.js") ?>"></script>
+    <script src="<?= base_url("asset/vendor/Buttons/js/dataTables.buttons.min.js") ?>"></script>
+    <script src="<?= base_url("asset/vendor/Buttons/js/buttons.bootstrap4.min.js") ?>"></script>
+    <script src="<?= base_url("asset/vendor/Buttons/js/buttons.colVis.min.js") ?>"></script>
+    <script src="<?= base_url("asset/vendor/Buttons/js/buttons.html5.min.js") ?>"></script>
+    <script src="<?= base_url("asset/vendor/Buttons/js/buttons.print.min.js") ?>"></script>
     <!-- Export Excel -->
-    <script src="<?php echo base_url("asset/vendor/JSZip/jszip.min.js") ?>"></script>
+    <script src="<?= base_url("asset/vendor/JSZip/jszip.min.js") ?>"></script>
     <!-- Bootstrap Datepicker -->
-    <script src="<?php echo base_url("asset/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js") ?>"></script>
+    <script src="<?= base_url("asset/vendor/bootstrap-datepicker/js/bootstrap-datepicker.min.js") ?>"></script>
     <!-- Page level custom scripts -->
     <script>
       $(document).ready(function() {
@@ -76,45 +76,69 @@
         $('#tabelpresensi').DataTable({
           dom: 'Bfrtip',
           ordering: false,
-          "pagingType": "simple",
+          "pagingType": "numbers",
+           language: { searchPlaceholder: "Pencarian",search: "" },
           buttons: [{
-              text: '<i class="fas fa-plus"></i> Tambah',
-              className: 'btn btn-info',
-              action: function() {
-                location.href = '<?php echo base_url("presensi/form") ?>';
+            text: '<i class="fas fa-plus"></i> Tambah',
+            className: 'btn btn-info',
+            action: function() {
+              $("#exampleModalCenter").modal();
+            }
+          }, {
+            extend: "collection",
+            className: "btn btn-label-primary dropdown-toggle me-2",
+            text: '<i class="bx bx-export me-sm-1"></i> <span class="d-none d-sm-inline-block">Export</span>',
+            buttons: [{
+                extend: "print",
+                text: '<i class="bx bx-printer me-1" ></i>Print',
+                className: "dropdown-item",
+                exportOptions: {
+                  columns: ':visible:not(.noExport)',
+                  format: {
+                    body: function(e, t, a) {
+                      var s;
+                      return e.length <= 0 ? e : (e = $.parseHTML(e), s = "", $.each(e, function(e, t) {
+                        void 0 !== t.classList && t.classList.contains("user-name") ? s += t.lastChild.firstChild.textContent : void 0 === t.innerText ? s += t.textContent : s += t.innerText
+                      }), s)
+                    }
+                  }
+                },
+                customize: function(e) {
+                  $(e.document.body).css("color", config.colors.headingColor).css("border-color", config.colors.borderColor).css("background-color", config.colors.bodyBg), $(e.document.body).find("table").addClass("compact").css("color", "inherit").css("border-color", "inherit").css("background-color", "inherit")
+                }
+              },
+              {
+                extend: 'excel',
+                text: '<i class="fas fa-file-excel"></i> Export Excel',
+                className: 'btn btn-success',
+                exportOptions: {
+                  columns: [0, 1, 2, 3, 4]
+                }
+              },
+              {
+                extend: 'pdfHtml5',
+                text: '<i class="fas fa-file-pdf"></i> Export PDF',
+                className: 'btn btn-danger',
+                exportOptions: {
+                  columns: [0, 1, 2, 3, 4]
+                }
+              },
+              {
+                extend: 'print',
+                text: '<i class="fas fa-print"></i> Print',
+                exportOptions: {
+                  columns: [0, 1, 2, 3, 4]
+                }
+              },
+              {
+                text: '<i class="fas fa-download"></i> Unduh',
+                className: 'btn btn-dark',
+                action: function() {
+                  location.href = '<?= base_url('Laporan/presensi'); ?>';
+                }
               }
-            },
-            {
-              extend: 'excel',
-              text: '<i class="fas fa-file-excel"></i> Export Excel',
-              className: 'btn btn-success',
-              exportOptions: {
-                columns: [0, 1, 2, 3, 4]
-              }
-            },
-            {
-              extend: 'pdfHtml5',
-              text: '<i class="fas fa-file-pdf"></i> Export PDF',
-              className: 'btn btn-danger',
-              exportOptions: {
-                columns: [0, 1, 2, 3, 4]
-              }
-            },
-            {
-              extend: 'print',
-              text: '<i class="fas fa-print"></i> Print',
-              exportOptions: {
-                columns: [0, 1, 2, 3, 4]
-              }
-            },
-            {
-              text: '<i class="fas fa-download"></i> Unduh',
-              className: 'btn btn-dark',
-              action: function() {
-                location.href = '<?php echo base_url('Laporan/presensi'); ?>';
-              }
-            },
-          ]
+            ]
+          }]
         });
         $('#tabelpresensipeserta').DataTable({
           dom: 'Bfrtip',
@@ -126,7 +150,7 @@
               text: '<i class="fas fa-plus"></i> Tambah',
               className: 'btn btn-info',
               action: function() {
-                location.href = '<?php echo base_url("presensi/form") ?>';
+                location.href = '<?= base_url("index.php/presensi/form") ?>';
               }
             },
             {
@@ -162,7 +186,7 @@
               text: '<i class="fas fa-plus"></i> Tambah',
               className: 'btn btn-info',
               action: function() {
-                location.href = '<?php echo base_url('lulusan/form'); ?>';
+                location.href = '<?= base_url('lulusan/form'); ?>';
               }
             },
             {
@@ -200,7 +224,7 @@
               text: '<i class="fas fa-plus"></i> Tambah',
               className: 'btn btn-info',
               action: function() {
-                location.href = '<?php echo base_url('peserta/form'); ?>';
+                location.href = '<?= base_url('peserta/form'); ?>';
               }
             },
             {
@@ -236,7 +260,7 @@
               text: '<i class="fas fa-plus"></i> Tambah',
               className: 'btn btn-info',
               action: function() {
-                location.href = '<?php echo base_url("instruktur/form") ?>';
+                location.href = '<?= base_url("instruktur/form") ?>';
               }
             },
             {
@@ -266,7 +290,7 @@
               text: '<i class="fas fa-download"></i> Unduh',
               className: 'btn btn-dark',
               action: function() {
-                location.href = '<?php echo base_url('Laporan/instruktur'); ?>';
+                location.href = '<?= base_url('Laporan/instruktur'); ?>';
               }
             },
           ]
@@ -279,7 +303,7 @@
               text: '<i class="fas fa-plus"></i> Tambah',
               className: 'btn btn-info',
               action: function() {
-                location.href = '<?php echo base_url("rombel/form") ?>';
+                location.href = '<?= base_url("rombel/form") ?>';
               }
             },
             {
@@ -309,7 +333,7 @@
               text: '<i class="fas fa-download"></i> Unduh',
               className: 'btn btn-dark',
               action: function() {
-                location.href = '<?php echo base_url('Laporan/rombel'); ?>';
+                location.href = '<?= base_url('Laporan/rombel'); ?>';
               }
             },
           ]
@@ -322,7 +346,7 @@
               text: '<i class="fas fa-plus"></i> Tambah',
               className: 'btn btn-info',
               action: function() {
-                location.href = '<?php echo base_url("uk/form") ?>';
+                location.href = '<?= base_url("uk/form") ?>';
               }
             },
             {
@@ -352,7 +376,7 @@
               text: '<i class="fas fa-download"></i> Unduh',
               className: 'btn btn-dark',
               action: function() {
-                location.href = '<?php echo base_url('Laporan/rombel'); ?>';
+                location.href = '<?= base_url('Laporan/rombel'); ?>';
               }
             },
           ]
