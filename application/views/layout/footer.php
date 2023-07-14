@@ -33,7 +33,7 @@
             </script> - developed by
             <b><a href="https://instagram.com/habibubebo" target="_blank">Habibubebo</a></b>
             <div class=" ml-2">
-              <small>(Version 0.5 Beta)<br><?= date("Y-m-d h:m:s") ?></small>
+              <a href="<?= base_url('index.php/pages/log'); ?>"><small>(Version 0.5 Beta)<br><?= date("Y-m-d h:m:s") ?></small></a>
 
             </div>
           </span>
@@ -77,7 +77,10 @@
           dom: 'Bfrtip',
           ordering: false,
           "pagingType": "numbers",
-           language: { searchPlaceholder: "Pencarian",search: "" },
+          language: {
+            searchPlaceholder: "Pencarian",
+            search: ""
+          },
           buttons: [{
             text: '<i class="fas fa-plus"></i> Tambah',
             className: 'btn btn-info',
