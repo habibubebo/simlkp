@@ -141,6 +141,12 @@
                 }
               }
             ]
+          }, {
+            text: 'Tombol',
+            action: function(e, dt, node, config) {
+              var cari = `Senin`;
+              dt.column(0).search(cari, true, false, false).draw(false);
+            }
           }]
         });
         $('#tabelpresensipeserta').DataTable({
