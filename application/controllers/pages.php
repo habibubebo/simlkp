@@ -121,7 +121,7 @@ class pages  extends CI_Controller
     }
     function presensi()
     {
-        $data['presensi'] = $this->db->query("SELECT presensi.Id,presensi.Tgl,peserta.Nama,rombel.Namarombel,presensi.Materi,instruktur.NamaInstruktur,peserta.Id AS Idp FROM presensi JOIN peserta JOIN instruktur JOIN rombel ON presensi.Nipd=peserta.Nipd AND presensi.Instruktur=instruktur.Id AND presensi.Jeniskursus=rombel.Id order by presensi.Id DESC limit 50")->result();
+        $data['presensi'] = $this->db->query("SELECT presensi.Id,presensi.Tgl,peserta.Nama,rombel.Namarombel,presensi.Materi,instruktur.NamaInstruktur,peserta.Id AS Idp FROM presensi JOIN peserta JOIN instruktur JOIN rombel ON presensi.Nipd=peserta.Nipd AND presensi.Instruktur=instruktur.Id AND presensi.Jeniskursus=rombel.Id order by Tgl DESC limit 50")->result();
 
         $this->load->view('menu/presensi/lihat', $data);
         $this->load->view('layout/footer');
