@@ -11,8 +11,9 @@
     <span aria-hidden="true">×</span>
   </button>
   <?php
-  $today = date("Y-m-d");
-  $data = $this->db->query("SELECT * FROM presensi WHERE Tgl='$today'")->result();
+  $today = date("Y-m-d 00:00:00");
+  $todays = date("Y-m-d H:i:s");
+  $data = $this->db->query("SELECT * FROM presensi WHERE Tgl between '$today' and '$todays'")->result();
   $total = 0;
   foreach ($data as $row) {
     $total += 1;
@@ -105,7 +106,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                 </div>
-                <input type="text" name="tgl" class="form-control" placeholder="Tanggal Hadir" id="simpleDataInput" maxlength=20 required value="<?php echo date('Y-m-d') ?>">
+                <input type="text" name="tgl" class="form-control" placeholder="Tanggal Hadir" id="simpleDataInput" maxlength=20 required value="<?php echo date('Y-m-d H:i:s') ?>">
               </div>
             </div>
             <div class="form-group col-md-12">

@@ -60,12 +60,12 @@
                   <a href="<?= base_url("peserta/form_ubah/$tp->Idp") ?>" class="btn btn-warning btn-sm" title="Klik untuk merubah data.">
                     <i class="fas fa-pen-alt"></i>
                   </a>
-                  <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteuser<?= $tp->Id; ?>" title="Klik untuk menghapus data.">
+                  <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteuser<?= $tp->Idp; ?>" title="Klik untuk menghapus data.">
                     <i class="fas fa-trash-alt"></i>
                   </a>
                   <!-- modal delete -->
                   <div class="example-modal">
-                    <div id="deleteuser<?= $tp->Id; ?>" class="modal fade" role="dialog" style="display:none;">
+                    <div id="deleteuser<?= $tp->Idp; ?>" class="modal fade" role="dialog" style="display:none;">
                       <div class="modal-dialog">
                         <div class="modal-content">
                           <div class="modal-header">
@@ -76,7 +76,7 @@
                             <h6 align="center">Apakah anda yakin ingin menghapus data <?= $tp->Nama; ?><strong><span class="grt"></span></strong> ?</h6>
                           </div>
                           <div class="modal-footer">
-                            <a href="<?= base_url('peserta/hapus/' . $tp->Id) ?>" class="btn btn-danger"><i class="fa fa-trash"> </i> Hapus</a>
+                            <a href="<?= base_url('peserta/hapus/' . $tp->Idp) ?>" class="btn btn-danger"><i class="fa fa-trash"> </i> Hapus</a>
                           </div>
                         </div>
                       </div>

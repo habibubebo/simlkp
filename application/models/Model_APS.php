@@ -146,6 +146,6 @@ class Model_APS extends CI_Model
         );
         $pecahkan = explode('-', $tanggal);
 
-        echo $dayList[$day] . ', ' . $pecahkan[2] . ' ' . $bulan[(int)$pecahkan[1]] . ' ' . $pecahkan[0];
+        echo $dayList[$day] . ', ' . $pecahkan[0] . ' ' . $bulan[(int)$pecahkan[1]] . ' ' . $pecahkan[2];
     }
 }

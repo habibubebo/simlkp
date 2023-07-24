@@ -6,22 +6,25 @@
               <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
             </ol>
           </div>
-          <div class="alert alert-info alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <h6><i class="fas fa-info"></i><b> Informasi</b></h6>
-            <strong>
-              <?php
-              $today = date("Y-m-d");
-              $data = $this->db->query("SELECT * FROM presensi WHERE Tgl='$today'")->result();
-              $presensi = 0;
-              foreach ($data as $row) {
-                $presensi += 1;
-              }
-              echo $presensi
-              ?></strong> Peserta telah presensi hari ini.
-          </div>
+          <a href="<?= base_url("pages/presensi") ?>" class="text-decoration-none">
+            <div class="alert alert-info alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h6><i class="fas fa-info"></i><b> Informasi</b></h6>
+              <strong>
+                <?php
+                $today = date("Y-m-d 00:00:00");
+                $todays = date("Y-m-d H:i:s");
+                $data = $this->db->query("SELECT * FROM presensi WHERE Tgl between '$today' and '$todays'")->result();
+                $total = 0;
+                foreach ($data as $row) {
+                  $total += 1;
+                };
+                echo "<b>$total</b> Peserta telah presensi hari ini.";
+                ?>
+            </div>
+          </a>
 
           <!-- Content -->
           <div class="row mb-3">
