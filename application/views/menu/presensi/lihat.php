@@ -101,7 +101,7 @@
       <div class="modal-body">
         <form action="<?php echo base_url() . 'index.php/presensi/tambah'; ?>" method="POST">
           <div class="row">
-            <div class="form-group col-md-12" id="simple-date1">
+            <div class="form-group col-md-10" id="simple-date1">
               <div class="input-group date">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="fas fa-calendar"></i></span>
@@ -109,6 +109,13 @@
                 <input type="text" name="tgl" class="form-control" placeholder="Tanggal Hadir" id="simpleDataInput" maxlength=20 required value="<?php echo date('Y-m-d H:i:s') ?>">
               </div>
             </div>
+            <div class="form-group col-md-2">
+              <select class="form-control" id="jumlah" aria-describedby="emailHelp" name="jumlah" maxlength=2>
+                <option value="1">1 Pertemuan</option>
+                <option value="2">2 Pertemuan</option>
+                <option value="3">3 Pertemuan</option>
+              </select> 
+            </div> 
             <div class="form-group col-md-12">
               <select class="form-control" id="nama" aria-describedby="emailHelp" name="nama" maxlength=50 required>
                 <option selected value="">Nama Peserta</option>

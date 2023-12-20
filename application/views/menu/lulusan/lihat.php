@@ -1,4 +1,10 @@
 <!-- Header -->
+<style type="text/css">
+    .txtedit {
+      display: none;
+      width: 100%;
+    }
+  </style>
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
   <h1 class="h3 mb-0 text-gray-800">Lulusan</h1>
   <ol class="breadcrumb">
@@ -7,6 +13,42 @@
   </ol>
 </div>
 <!-- Content -->
+<div class="row">
+  <div class="col-xl mb-3">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between">
+                        <h5 class="my-auto">Catatan</h5>
+                        <span class="text-warning">Klik pada teks untuk edit</span>
+                    </div>
+                    <div class="table-responsive text-nowrap">
+                        <table class="table table-hover">
+                            <thead hidden>
+                                <tr>
+                                    <th></th>
+                                    <th width='10%'></th>
+                                    <th width='90%'></th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-border-bottom-0">
+                                <?php foreach ($notes as $tp) { ?>
+                                    <tr>
+                                        <td hidden><a class="text-danger" href="<?= base_url('admin/deletemaster/pk/' . $tp->id) ?>">Del</a></td>
+                                        <td><b class="text-info">
+                                            <span class='edit'><?= $tp->jenis ?></span>
+                                            <input type='text' class='txtedit pk' data-id='<?= $tp->id ?>' data-field='jenis' id='jenistxt_<?= $tp->id ?>' value='<?= $tp->jenis ?>'></b>
+                                        </td>
+                                        <td>
+                                            <span class='edit'><?= $tp->data ?></span>
+                                            <input type='text' class='txtedit pk' data-id='<?= $tp->id ?>' data-field='data' id='datatxt_<?= $tp->id ?>' value='<?= $tp->data ?>'>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+</div>
 <div class="row">
   <!-- DataTable with Hover -->
   <div class="col-lg-12">
@@ -85,3 +127,48 @@
 <script type="text/javascript">
   document.title = "Lulusan LKP Cenditama";
 </script>
+<script type="text/javascript">
+            $(document).ready(function() {
+
+                // On text click
+                $('.edit').click(function() {
+
+                    // Hide input element
+                    $('.txtedit').hide();
+
+                    // Show next input element
+                    $(this).next('.txtedit').show().focus();
+
+                    // Hide clicked element
+                    $(this).hide();
+                });
+                 $('.txtedit.pk').focusout(function() {
+                    // Get edit id, field name and value
+                    var edit_id = $(this).data('id');
+                    var fieldname = $(this).data('field');
+                    var value = $(this).val();
+
+                    // Hide Input element
+                    $(this).hide();
+
+                    // Update viewing value and display it
+                    $(this).prev('.edit').show();
+                    $(this).prev('.edit').text(value);
+
+                    // Send AJAX request
+                    $.ajax({
+                        url: '<?= base_url() ?>lulusan/notes/update',
+                        type: 'post',
+                        data: {
+                            field: fieldname,
+                            value: value,
+                            id: edit_id
+                        },
+                        success: function(response) {
+                            console.log(response);
+
+                        }
+                    });
+                });
+                 });
+               </script>

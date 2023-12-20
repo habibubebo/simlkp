@@ -93,7 +93,7 @@ class pages  extends CI_Controller
     }
     function peserta()
     {
-        $data['peserta'] = $this->Model_APS->tampil_data_join('*,peserta.Id AS Idp', 'peserta', 'rombel', 'peserta.Jeniskursus=rombel.Id', 'peserta.Id', 'DESC')->result();
+        $data['peserta'] = $this->Model_APS->tampil_data_join('*,peserta.Id AS Idp', 'peserta', 'rombel', 'peserta.Jeniskursus=rombel.Id', 'peserta.Nipd', 'DESC')->result();
 
         $this->load->view('menu/peserta/lihat', $data);
         $this->load->view('layout/footer');
@@ -115,7 +115,8 @@ class pages  extends CI_Controller
     }
     function lulusan()
     {
-        $data['lulusan'] = $this->db->query("SELECT *,lulusan.Id AS Idl FROM lulusan JOIN instruktur JOIN peserta JOIN rombel JOIN unitkompetensi on lulusan.Instruktur=instruktur.Id AND lulusan.Nipd=peserta.Nipd AND peserta.Jeniskursus=rombel.Id AND unitkompetensi.Rombel=rombel.Id ORDER BY Tgllulus desc")->result();
+        $data['notes'] = $this->Model_APS->tampil_data('notes', 'Id', 'ASC')->result();
+        $data['lulusan'] = $this->db->query("SELECT *,lulusan.Id AS Idl FROM lulusan JOIN instruktur JOIN peserta JOIN rombel JOIN unitkompetensi on lulusan.Instruktur=instruktur.Id AND lulusan.Nipd=peserta.Nipd AND peserta.Jeniskursus=rombel.Id AND unitkompetensi.Rombel=rombel.Id ORDER BY lulusan.Id desc")->result();
         $this->load->view('menu/lulusan/lihat', $data);
         $this->load->view('layout/footer');
     }
@@ -128,7 +129,7 @@ class pages  extends CI_Controller
     }
     function log()
     {
-        $data['logs'] = $this->Model_APS->tampil_data('log', 'log_tgl', 'DESC')->result();
+        $data['logs'] = $this->db->query("SELECT * FROM log ORDER BY log_tgl DESC LIMIT 200")->result();
         $this->load->view('menu/log', $data);
         $this->load->view('layout/footer');
     }

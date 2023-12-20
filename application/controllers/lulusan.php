@@ -107,4 +107,22 @@ class lulusan  extends CI_Controller
         $this->load->model('Model_APS');
         $this->load->view('menu/lulusan/cetak');
     }
+
+    function notes($aksi)
+    {
+        switch ($aksi) {
+            case 'update':
+                $id = $this->input->post('id');
+                $field = $this->input->post('field');
+                $value = $this->input->post('value');
+                if ($field=="") {$field = "Note";};
+                if ($value=="") {$value = "kosong";};
+                $this->Model_APS->update_notes('notes', $id, $field, $value);
+                break;
+            
+            default:
+                // code...
+                break;
+        };
+    }
 }

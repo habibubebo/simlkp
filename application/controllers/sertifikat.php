@@ -69,7 +69,7 @@ class sertifikat extends CI_Controller
 
         //halaman pertama
         $pdf->ln(7);
-        $pdf->Image(base_url('asset/img/certi.png'), 0, 0, $pdf->GetPageWidth(), $pdf->GetPageHeight());
+        $pdf->Image(base_url('asset/img/certia.png'), 0, 0, $pdf->GetPageWidth(), $pdf->GetPageHeight());
         $pdf->SetTextColor(31, 31, 31);
         $pdf->SetFont('ebrima', '', 9.5);
         $pdf->Cell(0, 55, '', 0, 1, 'C');
@@ -181,5 +181,6 @@ class sertifikat extends CI_Controller
         //jadikan pdf				
         $pdf->Output('D', 'Sertifikat ' . substr($nama, 0, 5) . '.pdf');
         // $pdf->Output('I', 'Sertifikat.pdf');
+        helper_log("add", "mencetak sertifikat $nama");
     }
 }

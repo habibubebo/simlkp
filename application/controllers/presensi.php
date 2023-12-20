@@ -31,6 +31,7 @@ class presensi extends CI_Controller
         $jks = $this->input->post('jks');
         $ins = $this->input->post('Instruktur');
         $materi = $this->input->post('materi');
+        $jml = $this->input->post('jumlah');
 
         $data = array(
             'Tgl' => $tgl,
@@ -39,8 +40,10 @@ class presensi extends CI_Controller
             'Instruktur' => $ins,
             'Materi' => $materi
         );
-        $this->Model_APS->simpan_data($data, 'presensi');
-        helper_log("add", "menambahkan presensi $nipd");
+        for ($x = 0; $x < $jml; $x++) {
+            $this->Model_APS->simpan_data($data, 'presensi');
+            helper_log("add", "menambahkan presensi $nipd"); 
+        };
         redirect('pages/presensi');
     }
     // from-Ubah
@@ -85,8 +88,13 @@ class presensi extends CI_Controller
     function peserta($Id = null)
     {
         $Id = $_REQUEST['Id'];
-        $data['presensi'] = $this->db->query("SELECT *,presensi.Id AS Idpr,peserta.Id AS Idp FROM presensi JOIN peserta JOIN instruktur JOIN rombel ON presensi.Nipd=peserta.Nipd AND presensi.Instruktur=instruktur.Id AND presensi.Jeniskursus=rombel.Id WHERE peserta.Id=$Id order by presensi.Tgl ASC")->result();
-
+        $query = $this->db->query("SELECT *,presensi.Id AS Idpr,peserta.Id AS Idp FROM presensi JOIN peserta JOIN instruktur JOIN rombel ON presensi.Nipd=peserta.Nipd AND presensi.Instruktur=instruktur.Id AND presensi.Jeniskursus=rombel.Id WHERE peserta.Id=$Id order by presensi.Tgl ASC");
+        
+            if ($query->num_rows() == 0) {
+                $this->session->set_flashdata('alert', 'Data presensi kosong');
+                redirect($_SERVER['HTTP_REFERER']);
+            };
+        $data['presensi'] = $query->result();
         $this->load->view('menu/presensi/peserta', $data);
         $this->load->view('layout/footer');
     }

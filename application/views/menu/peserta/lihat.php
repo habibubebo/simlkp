@@ -7,6 +7,18 @@
   </ol>
 </div>
 <!-- Content -->
+<?php
+      $alert = $this->session->flashdata('alert');
+      if (isset($alert)) {
+  echo '<div class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <h6><i class="fas fa-exclamation-triangle"></i><b> Informasi</b></h6>
+    <strong>'.$alert.'</strong>
+  </div>';
+   };
+?>
 <div class="row">
   <!-- DataTable with Hover -->
   <div class="col-lg-12">
@@ -47,7 +59,7 @@
                 <td><?= $tp->Nipd ?></td>
                 <td><?= $tp->Nokk ?><br>
                   /<br><?= $tp->Nik ?></td>
-                <td><?= $tp->Nama ?></td>
+                <td><a class="btn" style="width:max-content" href="<?= base_url("index.php/presensi/peserta?Id=$tp->Idp") ?>"><?= $tp->Nama ?></td>
                 <td><?= $jk; ?></td>
                 <td><?= $tp->Ttl ?></td>
                 <td><?= $tp->Namarombel ?><br>

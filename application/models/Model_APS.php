@@ -148,4 +148,10 @@ class Model_APS extends CI_Model
 
         echo $dayList[$day] . ', ' . $pecahkan[0] . ' ' . $bulan[(int)$pecahkan[1]] . ' ' . $pecahkan[2];
     }
+    function update_notes($tabel, $id, $field, $value)
+    {
+        $data = array($field => $value);
+        $this->db->where('id', $id);
+        $this->db->update($tabel, $data);
+    }
 }

@@ -53,7 +53,8 @@ class login extends CI_Controller
             );
             // Membuat Session untuk mengatur data user yang login---------------------------------------------
             $this->session->set_userdata($datalogin);
-            helper_log("login", "login ke sistem");
+            $ip = $_SERVER["HTTP_CF_CONNECTING_IP"] ?? $_SERVER['REMOTE_ADDR'];
+            helper_log("login", "login ke sistem dari $ip");
             // Memanggil fungsi header() untuk mengarahkan halaman---------------------------------------------
             header('location:' . base_url() . 'pages/dashboard');
         } else {
