@@ -28,12 +28,12 @@
     <footer class="sticky-footer bg-white">
       <div class="container my-auto">
         <div class="copyright text-center my-auto">
-          <span>copyright &copy; <script>
+          <span>Waktu render : {elapsed_time} <br>copyright &copy; <script>
               document.write(new Date().getFullYear());
             </script> - developed by
             <b><a href="https://instagram.com/habibubebo" target="_blank">Habibubebo</a></b>
             <div class=" ml-2">
-              <small>(Version 0.5 Beta)<br><?= date("Y-m-d h:m:s") ?></small>
+              <a href="<?= base_url('index.php/pages/log'); ?>"><small>(Version 0.5 Beta)<br><?= date("Y-m-d h:m:s") ?></small></a>
 
             </div>
           </span>
@@ -47,7 +47,7 @@
     <a class="scroll-to-top rounded" href="#page-top">
       <i class="fas fa-angle-up"></i>
     </a>
-    <script src="<?= base_url("asset/vendor/jquery/jquery.min.js") ?>"></script>
+    
     <script src="<?= base_url("asset/vendor/bootstrap/js/bootstrap.bundle.min.js") ?>"></script>
     <script src="<?= base_url("asset/vendor/jquery-easing/jquery.easing.min.js") ?>"></script>
     <script src="<?= base_url("asset/js/ruang-admin.min.js") ?>"></script>
@@ -77,7 +77,10 @@
           dom: 'Bfrtip',
           ordering: false,
           "pagingType": "numbers",
-           language: { searchPlaceholder: "Pencarian",search: "" },
+          language: {
+            searchPlaceholder: "Pencarian",
+            search: ""
+          },
           buttons: [{
             text: '<i class="fas fa-plus"></i> Tambah',
             className: 'btn btn-info',
@@ -138,6 +141,12 @@
                 }
               }
             ]
+          }, {
+            text: 'Tombol',
+            action: function(e, dt, node, config) {
+              var cari = `Senin`;
+              dt.column(0).search(cari, true, false, false).draw(false);
+            }
           }]
         });
         $('#tabelpresensipeserta').DataTable({
