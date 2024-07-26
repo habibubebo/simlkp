@@ -1,9 +1,9 @@
 <!-- Header -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-  <h1 class="h3 mb-0 text-gray-800">Presensi Peserta</h1>
+  <h1 class="h3 mb-0 text-gray-800">Presensi Instruktur</h1>
   <ol class="breadcrumb">
     <li class="breadcrumb-item">Menu</li>
-    <li class="breadcrumb-item active" aria-current="page">Presensi Peserta</li>
+    <li class="breadcrumb-item active" aria-current="page">Presensi Instruktur</li>
   </ol>
 </div>
 <!-- Content -->
@@ -16,25 +16,21 @@
         <thead>
           <tr>
             <th scope="col">Nama</th>
-            <th scope="col"><?php echo $presensi[0]->Nama; ?></th>
+            <th scope="col"><?php echo $presensi[0]->NamaInstruktur; ?></th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <th scope="col">Jenis Kursus</th>
-            <td><?php echo $presensi[0]->Namarombel ?></td>
+            <th scope="col">Jenis Kelamin</th>
+            <td><?php echo $presensi[0]->Kelamin ?></td>
           </tr>
           <tr>
-            <th scope="col">Instruktur</th>
-            <td><a href="<?= base_url("").'presensi/instruktur?Id='.$presensi[0]->IdI ?>" title="Melihat presensi instruktur"><?= $presensi[0]->NamaInstruktur ?></a></td>
+            <th scope="col">Alamat</th>
+            <td><?php echo $presensi[0]->Alamat ?></td>
           </tr>
           <tr>
-            <th scope="col">Status</th>
-            <td><?php 
-            $n = $presensi[0]->Nipd;
-            $q = $this->db->query("SELECT Tgllulus FROM lulusan WHERE Nipd=$n");
-            if ($q->num_rows() == 0) { echo "Belum Lulus";} else
-            echo "Lulus Tanggal ".$q->result()[0]->Tgllulus; ?></td>
+            <th scope="col">Jumlah Data</th>
+            <td><?php echo count($presensi) ?> Sesi Pelatihan</td>
           </tr>
         </tbody>
       </table>
@@ -44,7 +40,7 @@
             <tr>
               <th>No</th>
               <th>Tanggal</th> 
-              <th>Instruktur</th>
+              <th>Nama Peserta</th>
               <th>Materi</th>
               <th>Aksi</th>
             </tr>
@@ -57,15 +53,12 @@
               <tr>
                 <td><?php echo $no++ ?></td>
                 <td><?php $this->Model_APS->Gethari($tp->Tgl) ?></td>
-                <td><?php echo $tp->NamaInstruktur ?></td>
+                <td><?php echo $tp->Nama ?></td>
                 <td><?php echo $tp->Materi ?></td>
                 <td>
-                  <a href="<?= base_url("index.php/presensi/form_ubah/$tp->Idpr") ?>" class="btn btn-warning btn-sm" title="Klik untuk merubah data.">
+                  <a target="_blank" href="<?= base_url("index.php/presensi/form_ubah/$tp->Idpr") ?>" class="btn btn-warning btn-sm" title="Klik untuk merubah data.">
                     <i class="fas fa-pen-alt"></i>
                   </a>
-                  <!-- <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteuser" title="Klik untuk menghapus data.">
-                    <i class="fas fa-trash-alt"></i>
-                  </a> -->
                   <!-- modal delete -->
                   <div class="example-modal">
                     <div id="deleteuser" class="modal fade" role="dialog" style="display:none;">
@@ -95,4 +88,4 @@
     </div>
   </div>
 </div>
-<script type="text/javascript">document.title = "Presensi Kursus <?= $presensi[0]->Nama ?>,<br>Program <?= $presensi[0]->Namarombel ?>";</script>
+<script type="text/javascript">document.title = "Presensi Instruktur <?= $presensi[0]->NamaInstruktur ?>";</script>

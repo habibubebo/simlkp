@@ -13,7 +13,16 @@
             <form action="<?php echo base_url() . 'lulusan/tambah'; ?>" method="POST">
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nomor Induk" name="nipd" maxlength=20 required onkeyup="GetDetail(this.value)">
+                        <select type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nomor Induk" name="nipd" maxlength=20 required onchange="GetDetail(this.value)">
+                            <option value="">Pilih</option>
+                            <?php
+                            $data = $this->db->query("SELECT Nipd FROM peserta AS td WHERE STATUS=2 AND NOT EXISTS (SELECT Nipd FROM lulusan AS d WHERE Nipd=td.Nipd) order by Nipd DESC")->result();
+                            foreach ($data as $row) { ?>
+                                <option value="<?php echo $row->Nipd ?>">
+                                    <?php echo $row->Nipd ?>
+                                </option>
+                            <?php } ?>
+                        </select>
                     </div>
                     <div class="form-group col-md-8">
                         <input class="form-control" id="nama" aria-describedby="emailHelp" placeholder="Nama" name="nmlulusan" maxlength=50 disabled>

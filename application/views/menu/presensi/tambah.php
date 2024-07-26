@@ -48,7 +48,7 @@
                         </select>
                     </div>
                     <div class="form-group col-md-12">
-                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Materi" name="materi" maxlength="50" required>
+                        <input type="text" class="form-control" id="materi" aria-describedby="emailHelp" placeholder="Materi" name="materi" maxlength="50" required>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Simpan</button>

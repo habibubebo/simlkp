@@ -92,8 +92,10 @@
                         </div>
                     </div>
                     <div class="form-group col-md-12">
-                        <label for="foto">Foto</label>
-                        <input name="foto" type="file">
+                      <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="customFile">
+                        <label class="custom-file-label" for="customFile">Foto siswa</label>
+                      </div>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Simpan</button>
