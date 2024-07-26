@@ -38,24 +38,12 @@
                 <td><?= $tp->Alamat ?></td>
                 <td><?= $tp->Email ?></td>
                 <td>
-                <div class="btn-group btn-group-toggle">
-                  <label class="btn btn-info btn-sm">
-                  <a class="text-white" href="<?= base_url("presensi/instruktur?Id=$tp->Id") ?>" title="Melihat presensi">
-                    <i class="fas fa-newspaper"></i>
-                  </a>
-                  </label>
-                  <label class="btn btn-warning btn-sm">
-                  <a class="text-white" href="<?= base_url("instruktur/form_ubah/$tp->Id") ?>" title="Klik untuk merubah data.">
+                  <a href="<?= base_url("instruktur/form_ubah/$tp->Id") ?>" class="btn btn-warning btn-sm" title="Klik untuk merubah data.">
                     <i class="fas fa-pen-alt"></i>
                   </a>
-                  </label>
-                  <label class="btn btn-danger btn-sm">
-                  <a class="text-white" href="#" data-toggle="modal" data-target="#deleteuser<?= $tp->Id; ?>" title="Klik untuk menghapus data.">
+                  <a href="#" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteuser<?= $tp->Id; ?>" title="Klik untuk menghapus data.">
                     <i class="fas fa-trash-alt"></i>
                   </a>
-                  </label>
-                </div>
-                 
                   <!-- modal delete -->
                   <div class="example-modal">
                     <div id="deleteuser<?= $tp->Id; ?>" class="modal fade" role="dialog" style="display:none;">
@@ -86,5 +74,5 @@
   </div>
 </div>
 <script type="text/javascript">
-  document.title = "Instruktur <?= $profil[0]->Namalkp?>";
+  document.title = "Instruktur LKP Cenditama";
 </script>

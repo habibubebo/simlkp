@@ -26,15 +26,7 @@
           </tr>
           <tr>
             <th scope="col">Instruktur</th>
-            <td><a href="<?= base_url("").'presensi/instruktur?Id='.$presensi[0]->IdI ?>" title="Melihat presensi instruktur"><?= $presensi[0]->NamaInstruktur ?></a></td>
-          </tr>
-          <tr>
-            <th scope="col">Status</th>
-            <td><?php 
-            $n = $presensi[0]->Nipd;
-            $q = $this->db->query("SELECT Tgllulus FROM lulusan WHERE Nipd=$n");
-            if ($q->num_rows() == 0) { echo "Belum Lulus";} else
-            echo "Lulus Tanggal ".$q->result()[0]->Tgllulus; ?></td>
+            <td><?php echo $presensi[0]->NamaInstruktur ?></td>
           </tr>
         </tbody>
       </table>
@@ -44,7 +36,6 @@
             <tr>
               <th>No</th>
               <th>Tanggal</th> 
-              <th>Instruktur</th>
               <th>Materi</th>
               <th>Aksi</th>
             </tr>
@@ -57,7 +48,6 @@
               <tr>
                 <td><?php echo $no++ ?></td>
                 <td><?php $this->Model_APS->Gethari($tp->Tgl) ?></td>
-                <td><?php echo $tp->NamaInstruktur ?></td>
                 <td><?php echo $tp->Materi ?></td>
                 <td>
                   <a href="<?= base_url("index.php/presensi/form_ubah/$tp->Idpr") ?>" class="btn btn-warning btn-sm" title="Klik untuk merubah data.">
