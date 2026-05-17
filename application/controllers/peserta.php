@@ -17,6 +17,7 @@ class peserta  extends CI_Controller
             redirect(base_url("login"));
         }
     }
+    
     // form-tambah
     function form()
     {

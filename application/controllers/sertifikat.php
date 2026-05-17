@@ -141,8 +141,7 @@ class sertifikat extends CI_Controller
         $pdf->Cell(73, 10, $row->Uk3, 1, 0, 'L');
         $pdf->Cell(44, 10, $row->Jp3, 1, 0, 'C');
         $pdf->Cell(44, 10, $row->n3, 1, 1, 'C');
-        if ($row->Idr == 2) {
-        } else if ($row->Idr == 3) {
+        if ($row->Uk5 !== '-') {
             $pdf->Cell(23, 10, '', 0, 0, 'C');
             $pdf->Cell(17, 10, '4.', 1, 0, 'C');
             $pdf->Cell(73, 10, $row->Uk4, 1, 0, 'L');
@@ -153,13 +152,14 @@ class sertifikat extends CI_Controller
             $pdf->Cell(73, 10, $row->Uk5, 1, 0, 'L');
             $pdf->Cell(44, 10, $row->Jp5, 1, 0, 'C');
             $pdf->Cell(44, 10, $row->n5, 1, 1, 'C');
-        } else {
+        } else if ($row->Uk4 !== '-') {
             $pdf->Cell(23, 10, '', 0, 0, 'C');
             $pdf->Cell(17, 10, '4.', 1, 0, 'C');
             $pdf->Cell(73, 10, $row->Uk4, 1, 0, 'L');
             $pdf->Cell(44, 10, $row->Jp4, 1, 0, 'C');
             $pdf->Cell(44, 10, $row->n4, 1, 1, 'C');
-        };
+            } else {
+        }; 
         $pdf->Cell(23, 10, '', 0, 0, 'C');
         $pdf->Cell(17, 10, '', 1, 0, 'C');
         $pdf->Cell(73, 10, 'JUMLAH', 1, 0, 'C');

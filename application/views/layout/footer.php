@@ -74,8 +74,8 @@
               document.write(new Date().getFullYear());
             </script> - developed by
             <b><a href="https://instagram.com/habibubebo" target="_blank">Habibubebo</a></b>
-            <div class=" ml-2">
-              <a href="<?= base_url('index.php/pages/log'); ?>"><small>(Version 0.7 Beta)<br><?= date("Y-m-d H:i:s") ?></small></a>
+            <div class="mb-2">
+              <a href="<?= base_url('index.php/pages/log'); ?>"><small>(Version 0.8 Beta)</small></a>
 
             </div>
           </span>
@@ -95,7 +95,7 @@
     <!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
     <script src="<?= base_url("asset/vendor/jquery-easing/jquery.easing.min.js") ?>"></script>
-    <script src="<?= base_url("asset/js/ruang-admin.min.js") ?>"></script>
+    
     <!-- Page level plugins -->
     <script src="<?= base_url("asset/vendor/datatables/jquery.dataTables.min.js") ?>"></script>
     <!-- <script src="<?= base_url("asset/vendor/datatables/dataTables.bootstrap4.min.js") ?>"></script> -->
@@ -128,7 +128,7 @@
             text: '<i class="fas fa-plus"></i> Peserta',
             className: 'btn btn-info',
             action: function() {
-              $("#exampleModalCenter").modal();
+              $("#tambahPresensiSiswa").modal();
             }
           },{
               text: '<i class="fas fa-plus"></i> Pegawai',
@@ -191,7 +191,7 @@
               text: '<i class="fas fa-plus"></i> Tambah',
               className: 'btn btn-info',
               action: function() {
-                location.href = '<?= base_url('lulusan/form'); ?>';
+                $("#modalTambah").modal();
               }
             },
             {
@@ -517,38 +517,77 @@
           todayHighlight: true,
           todayBtn: 'linked',
         });
-        $('#nama').change(function() {
-          var isian = $(this).val();
-          $.ajax({
-            url: '<?= base_url() ?>index.php/pesertas/nipd',
-            method: 'post',
-            data: {
-              Nipd: isian
-            },
-            dataType: 'json',
-            success: function(response) {
-              var len = response.length;
-              document.getElementById("jks").value = '';
-              if (len > 0) {
-                document.getElementById("jks").value = response[0].Jeniskursus;
-              }
-
-            }
-          });
-        });
       });
+    </script>
+    <script src="<?= base_url("asset/vendor/select2/dist/js/select2.min.js") ?>"></script>
+    <script>
+    $(document).ready(function() {
+      $('#nama').select2({
+        placeholder: 'Cari & pilih peserta...',
+        closeOnSelect: false,
+        width: '100%',
+        dropdownParent: $('#tambahPresensiSiswa'),
+        language: {
+          noResults: function() { return 'Peserta tidak ditemukan'; }
+        }
+      });
+    });
     </script>
 
 
-    <script> $(document).ready(function() {  
-      $(".preloader").fadeOut("slow"); 
-      $(".print").click(function(){ 
-        $(".preloader").fadeIn("slow");
-         setTimeout(() => {
-            $(".preloader").fadeOut("slow");
-          }, 15000);});
-         
+    <script>
+    (function(){
+      function showLoader(){ $(".preloader").removeClass("fade"); }
+
+      $(document).on("click","a[href]:not([href^='#']):not([data-toggle])",function(e){
+        var h = this.getAttribute("href");
+        if (h && h !== "#" && !h.match(/^javascript:/)) showLoader();
+      });
+      $(document).on("submit","form",showLoader);
+      $(document).on("click",".print",showLoader);
+
+      $(window).on("beforeunload",function(){ showLoader(); });
+    })();
+
+    $(document).ready(function() {  
+      setTimeout(function(){ $(".preloader").addClass("fade"); }, 200);
+
+      $(document).on("visibilitychange", function() {
+        if (document.visibilityState === "visible") $(".preloader").addClass("fade");
+      });
+
+      $("table.dataTable").each(function(){
+        var h=[];
+        $(this).find("thead th").each(function(){ h.push($(this).text().trim()); });
+        var t=$(this);
+        t.on("draw.dt",function(){
+          t.find("tbody tr").each(function(){
+            $(this).find("td").each(function(i){ if(h[i]) $(this).attr("data-label",h[i]); });
+          });
+        });
+        t.trigger("draw.dt");
+      });
     }); </script>
+<script src="<?= base_url("asset/js/ruang-admin.min.js") ?>"></script>
+
+    <nav class="mobile-bottom-nav">
+      <a class="bottom-nav-item" href="<?= base_url("pages/dashboard") ?>" title="Dashboard"><div class="nav-icon-wrap"><i class="fas fa-tachometer-alt"></i></div><span>Dashboard</span></a>
+      <a class="bottom-nav-item" href="<?= base_url("pages/peserta") ?>" title="Peserta"><div class="nav-icon-wrap"><i class="fas fa-users"></i></div><span>Peserta</span></a>
+      <a class="bottom-nav-item" href="<?= base_url("pages/presensi") ?>" title="Presensi"><div class="nav-icon-wrap"><i class="fas fa-clipboard-list"></i></div><span>Presensi</span></a>
+      <a class="bottom-nav-item" href="<?= base_url("pages/lulusan") ?>" title="Lulusan"><div class="nav-icon-wrap"><i class="fas fa-graduation-cap"></i></div><span>Lulusan</span></a>
+      <a class="bottom-nav-item" href="<?= base_url("pages/rombel") ?>" title="Program"><div class="nav-icon-wrap"><i class="fas fa-th-list"></i></div><span>Program</span></a>
+    </nav>
+    <script>
+    document.addEventListener('DOMContentLoaded', function(){
+      setTimeout(function(){
+        var p = window.location.pathname;
+        document.querySelectorAll('.bottom-nav-item').forEach(function(a){
+          var h = a.pathname;
+          if (h && p.indexOf(h) !== -1) a.classList.add('active');
+        });
+      }, 500);
+    });
+    </script>
     </body>
 
     </html>

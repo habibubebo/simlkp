@@ -58,8 +58,8 @@ class login extends CI_Controller
             // Memanggil fungsi header() untuk mengarahkan halaman---------------------------------------------
             header('location:' . base_url() . 'pages/dashboard');
         } else {
-            // Memanggil fungsi header() untuk mengarahkan halaman---------------------------------------------
-            header('location:' . base_url() . 'login');
+            $this->session->set_flashdata('error', 'Username atau password salah!');
+            redirect('login');
         }
     }
     // Membuat fungsi logout() untuk keluar akun

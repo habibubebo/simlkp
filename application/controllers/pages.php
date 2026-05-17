@@ -97,9 +97,16 @@ class pages  extends CI_Controller
     }
     function peserta()
     {
-        $data['peserta'] = $this->Model_APS->tampil_data_join('*,peserta.Id AS Idp', 'peserta', 'rombel', 'peserta.Jeniskursus=rombel.Id', 'peserta.Nipd', 'DESC')->result();
+        // $data['peserta'] = $this->Model_APS->tampil_data_join('*,peserta.Id AS Idp', 'peserta', 'rombel', 'peserta.Jeniskursus=rombel.Id', 'peserta.Nipd', 'DESC')->result();
         $data['rombel'] = $this->db->query("SELECT Namarombel,Kelas FROM rombel")->result();
-        $this->load->view('menu/peserta/lihat', $data);
+        $this->load->view('menu/peserta/lihat-serverside', $data);
+        $this->load->view('layout/footer');
+    }
+    function peserta2()
+    {
+        // $data['peserta'] = $this->Model_APS->tampil_data_join('*,peserta.Id AS Idp', 'peserta', 'rombel', 'peserta.Jeniskursus=rombel.Id', 'peserta.Nipd', 'DESC')->result();
+        $data['rombel'] = $this->db->query("SELECT Namarombel,Kelas FROM rombel")->result();
+        $this->load->view('menu/peserta/lihat-serverside', $data);
         $this->load->view('layout/footer');
     }
     function rombel()
@@ -112,7 +119,7 @@ class pages  extends CI_Controller
     function uk()
     {
         $on = "unitkompetensi.Rombel=rombel.Id";
-        $data['uks'] = $this->Model_APS->tampil_data_join('*', 'unitkompetensi', 'rombel', $on, 'unitkompetensi.Id', 'ASC')->result();
+        $data['uks'] = $this->Model_APS->tampil_data_join('*, rombel.Id as Idr, unitkompetensi.Id as Idu', 'unitkompetensi', 'rombel', $on, 'unitkompetensi.Id', 'ASC')->result();
 
         $this->load->view('menu/uk/lihat', $data);
         $this->load->view('layout/footer');

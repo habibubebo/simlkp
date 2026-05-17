@@ -65,7 +65,7 @@
                             <h6 align="center">Apakah anda yakin ingin menghapus data <?= $tp->Namarombel; ?><strong><span class="grt"></span></strong> ?</h6>
                           </div>
                           <div class="modal-footer">
-                            <a href="<?= base_url('uk/hapus/' . $tp->Id) ?>" class="btn btn-danger"><i class="fa fa-trash"> </i> Hapus</a>
+                            <a href="<?= base_url('uk/hapus/' . $tp->Idu) ?>" class="btn btn-danger"><i class="fa fa-trash"> </i> Hapus</a>
                           </div>
                         </div>
                       </div>
