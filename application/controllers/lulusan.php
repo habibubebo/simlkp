@@ -6,13 +6,13 @@ class lulusan  extends CI_Controller
     function __construct()
     {
         parent::__construct();
-        // Menambahkan Model
         $this->load->model('Model_APS');
-        // Menambahkan tampilan dan memanggil tampilan
-        $this->load->view('layout/head');
-        $data['profil'] = $this->Model_APS->tampil_data('profil', 'npsn', 'ASC')->result();
-        $this->load->view('layout/sidebar_menu', $data);
-        $this->load->view('layout/navbar');
+        if (!$this->input->is_ajax_request()) {
+            $this->load->view('layout/head');
+            $data['profil'] = $this->Model_APS->tampil_data('profil', 'npsn', 'ASC')->result();
+            $this->load->view('layout/sidebar_menu', $data);
+            $this->load->view('layout/navbar');
+        }
         if ($this->session->userdata('status') == "") {
             redirect(base_url("login"));
         }
@@ -124,5 +124,18 @@ class lulusan  extends CI_Controller
                 // code...
                 break;
         };
+    }
+
+    function getData()
+    {
+        $id = $this->input->post('id');
+        $this->db->select('lulusan.Id,lulusan.Nipd,lulusan.Tgllulus,lulusan.Tglcetak,lulusan.Instruktur,lulusan.n1,lulusan.n2,lulusan.n3,lulusan.n4,lulusan.n5,peserta.Nama,peserta.Ttl,rombel.Namarombel,unitkompetensi.Uk1,unitkompetensi.Uk2,unitkompetensi.Uk3,unitkompetensi.Uk4,unitkompetensi.Uk5');
+        $this->db->from('lulusan');
+        $this->db->join('peserta', 'lulusan.Nipd=peserta.Nipd');
+        $this->db->join('rombel', 'peserta.Jeniskursus=rombel.Id');
+        $this->db->join('unitkompetensi', 'unitkompetensi.Rombel=rombel.Id');
+        $this->db->where('lulusan.Id', $id);
+        $q = $this->db->get()->row();
+        $this->output->set_content_type('application/json')->set_output(json_encode($q));
     }
 }

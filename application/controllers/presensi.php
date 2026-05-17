@@ -27,23 +27,28 @@ class presensi extends CI_Controller
     function tambah()
     {
         $tgl = $this->input->post('tgl');
-        $nipd = $this->input->post('nama');
-        $jks = $this->input->post('jks');
+        $waktu = $this->input->post('waktu');
+        $nipd_list = $this->input->post('nama');
         $ins = $this->input->post('Instruktur');
         $materi = $this->input->post('materi');
         $jml = $this->input->post('jumlah');
 
-        $data = array(
-            'Tgl' => $tgl,
-            'Nipd' => $nipd,
-            'Jeniskursus' => $jks,
-            'Instruktur' => $ins,
-            'Materi' => $materi
-        );
-        for ($x = 0; $x < $jml; $x++) {
-            $this->Model_APS->simpan_data($data, 'presensi');
-            helper_log("add", "menambahkan presensi $nipd"); 
-        };
+        $datetime = date('Y-m-d', strtotime($tgl)) . ' ' . $waktu . ':00';
+
+        foreach ($nipd_list as $nipd) {
+            $jks = $this->db->query("SELECT Jeniskursus FROM peserta WHERE Nipd='$nipd'")->row()->Jeniskursus;
+            for ($x = 0; $x < $jml; $x++) {
+                $data = array(
+                    'Tgl' => $datetime,
+                    'Nipd' => $nipd,
+                    'Jeniskursus' => $jks,
+                    'Instruktur' => $ins,
+                    'Materi' => isset($materi[$x]) ? $materi[$x] : $materi[0]
+                );
+                $this->Model_APS->simpan_data($data, 'presensi');
+                helper_log("add", "menambahkan presensi $nipd");
+            }
+        }
         redirect('pages/presensi');
     }
     // from-Ubah
@@ -88,7 +93,7 @@ class presensi extends CI_Controller
     function peserta($Id = null)
     {
         $Id = $_REQUEST['Id'];
-        $query = $this->db->query("SELECT *,presensi.Id AS Idpr,peserta.Id AS Idp FROM presensi JOIN peserta JOIN instruktur JOIN rombel ON presensi.Nipd=peserta.Nipd AND presensi.Instruktur=instruktur.Id AND presensi.Jeniskursus=rombel.Id WHERE peserta.Id=$Id order by presensi.Tgl ASC");
+        $query = $this->db->query("SELECT *,presensi.Id AS Idpr,peserta.Id AS Idp,instruktur.Id AS IdI FROM presensi JOIN peserta JOIN instruktur JOIN rombel ON presensi.Nipd=peserta.Nipd AND presensi.Instruktur=instruktur.Id AND presensi.Jeniskursus=rombel.Id WHERE peserta.Id=$Id order by presensi.Tgl ASC");
         
             if ($query->num_rows() == 0) {
                 $this->session->set_flashdata('alert', 'Data presensi kosong');
@@ -97,5 +102,35 @@ class presensi extends CI_Controller
         $data['presensi'] = $query->result();
         $this->load->view('menu/presensi/peserta', $data);
         $this->load->view('layout/footer');
+    }
+    function instruktur($Id = null)
+    {
+        $Id = $_REQUEST['Id'];
+        $query = $this->db->query("SELECT *,presensi.Id AS Idpr FROM presensi JOIN peserta JOIN instruktur JOIN rombel ON presensi.Nipd=peserta.Nipd AND presensi.Instruktur=instruktur.Id AND presensi.Jeniskursus=rombel.Id WHERE Instruktur.Id=$Id order by presensi.Tgl DESC");
+        $data['presensi'] = $query->result();
+        $this->load->view('menu/presensi/instruktur',$data);
+        $this->load->view('layout/footer');
+    }
+    function pegawai($Id = null)
+    {
+        $Id = $_REQUEST['Id'];
+        $query = $this->db->query("SELECT *,presensi.Id AS Idpr FROM presensi JOIN pegawai ON  presensi.Nipd = pegawai.Nipg WHERE Nipg=$Id");
+        $data['presensi'] = $query->result();
+        $this->load->view('menu/presensi/pegawai',$data);
+        $this->load->view('layout/footer');
+    }
+    function tambahpegawai()
+    {
+        $tgl = $this->input->post('tgl');
+        $nipg = $this->input->post('nipg');
+
+        $data = array(
+            'Tgl' => $tgl,
+            'Nipd' => $nipg,
+            'Pegawai' => '1',
+        );
+        $this->Model_APS->simpan_data($data, 'presensi');
+        helper_log("add", "menambahkan presensi pegawai");
+        redirect('pages/pegawai');
     }
 }

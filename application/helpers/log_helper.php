@@ -21,7 +21,7 @@ function helper_log($tipe = "", $str = "")
     $param['log_user'] = $CI->session->userdata('username');
     $param['log_tipe'] = $log_tipe;
     $param['log_desc'] = $str;
-    $param['log_tgl'] = date("Y-m-d h:m:s");
+    $param['log_tgl'] = date("Y-m-d G:i:s");
 
     //load model log
     $CI->load->model('Model_APS');

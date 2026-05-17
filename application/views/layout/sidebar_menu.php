@@ -32,6 +32,12 @@
         </a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" href="<?php echo base_url("pages/pegawai") ?>">
+          <i class="fas fa-fw fa-users"></i>
+          <span>Pegawai </span>
+        </a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="<?php echo base_url("pages/instruktur") ?>">
           <i class="fas fa-fw fa-users"></i>
           <span>Instruktur</span>
@@ -40,7 +46,7 @@
       <li class="nav-item">
         <a class="nav-link" href="<?php echo base_url("pages/rombel") ?>">
           <i class="fas fa-fw fa-th-list"></i>
-          <span>Rombongan Belajar</span>
+          <span>Program Pelatihan</span>
         </a>
       </li>
       <li class="nav-item">
@@ -74,7 +80,6 @@
         </a>
       </li>
       <hr class="sidebar-divider">
-      <!-- <div class="version" id="version-ruangadmin"></div> -->
     </ul>
     <!-- Sidebar -->
     <div id="content-wrapper" class="d-flex flex-column">

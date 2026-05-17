@@ -13,6 +13,34 @@
 
         <!-- User Info -->
         <ul class="navbar-nav ml-auto">
+          <li class="nav-item dropdown no-arrow mx-1">
+              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-bell fa-fw"></i>
+                <span class="badge badge-danger badge-counter">*</span>
+              </a>
+              <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+                <h6 class="dropdown-header">
+                  Logs Center
+                </h6>
+                <?php
+                foreach ($logs as $l) {
+                ?>
+                <a class="dropdown-item d-flex align-items-center" href="#">
+                  <div class="mr-3">
+                    <div class="icon-circle bg-warning">
+                      <i class="fas fa-file-alt text-white"></i>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="small text-gray-500"><?= "$l->log_tgl, <b>$l->log_user</b>" ?></div>
+                    <?= "$l->log_desc" ?>
+                  </div>
+                </a>
+              <?php }; ?>
+                
+                <a class="dropdown-item text-center small text-gray-500" href="<?= base_url('index.php/pages/log'); ?>">Show All logs</a>
+              </div>
+            </li>
           <div class="topbar-divider d-none d-sm-block"></div>
           <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -29,7 +57,7 @@
                 Pengaturan akun
               </a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#logoutModal">
+              <a class="dropdown-item" href="<?= base_url('index.php/login/logout'); ?>">
                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                 Keluar
               </a>

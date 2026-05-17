@@ -6,40 +6,44 @@ class pages  extends CI_Controller
     function __construct()
     {
         parent::__construct();
-        // Menambahkan Model-------------------------------------------------------------------------------------
         $this->load->model('Model_APS');
-        // Menambahkan tampilan dan memanggil tampilan
         $this->load->view('layout/head');
         $data['profil'] = $this->Model_APS->tampil_data('profil', 'npsn', 'ASC')->result();
+        $data['logs'] = $this->db->query("SELECT * FROM log ORDER BY log_tgl DESC LIMIT 3")->result();
         $this->load->view('layout/sidebar_menu', $data);
-        $this->load->view('layout/navbar');
+        $this->load->view('layout/navbar', $data);
         if ($this->session->userdata('status') == "") {
             redirect(base_url("login"));
         }
     }
     function dashboard()
     {
-        $data['profil'] = $this->Model_APS->tampil_data('profil', 'npsn', 'ASC')->result();
         $data['sapras'] = $this->Model_APS->tampil_data('sapras', 'Id', 'ASC')->result();
-
-        $this->load->view('dashboard', $data);
+        $data['lulusan'] = $this->db->query("SELECT * FROM lulusan")->result();
+        $data['peserta'] = $this->db->query("SELECT * FROM peserta WHERE Status=1 or Status=0")->result();
+        $data['rombel'] = $this->db->query("SELECT * FROM rombel")->result();
+        $data['instruktur'] = $this->db->query("SELECT * FROM instruktur")->result();
+		$data['totals'] = $this->db->query("SELECT Namarombel,IFNULL(BelumLulus, 0) AS BL,IFNULL(TotalPeserta, 0) AS TP, ((TotalPeserta - BelumLulus) / TotalPeserta * 100) AS Persen
+        FROM rombel 
+        left JOIN (SELECT Jeniskursus, COUNT(Nipd) AS BelumLulus FROM peserta WHERE Nipd NOT IN (SELECT Nipd FROM lulusan) GROUP BY Jeniskursus
+        ) AS t ON Jeniskursus=rombel.Id 
+        left JOIN (SELECT rombel.Id, COUNT(peserta.Nipd) AS TotalPeserta FROM rombel JOIN peserta ON rombel.Id=peserta.Jeniskursus GROUP BY rombel.Id
+        ) AS t2 ON t2.Id=rombel.Id")->result();
+        $data['chart'] = $this->db->query("SELECT CAST(Tgl AS DATE) AS Hari, count(Nipd) AS Jml FROM presensi WHERE Tgl BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND DATE_SUB(CURDATE(), INTERVAL -1 DAY) GROUP BY Hari")->result();
+		$this->load->view('dashboard', $data);
         $this->load->view('layout/footer');
     }
 
     function lembaga()
     {
-        $data['profil'] = $this->Model_APS->tampil_data('profil', 'npsn', 'ASC')->result();
         $this->load->view('menu/profil/lihat', $data);
         $this->load->view('layout/footer');
     }
-    // from-Ubah lembaga
     function lembaga_edit()
     {
-        $data['profil'] = $this->Model_APS->tampil_data('profil', 'npsn', 'ASC')->result();
         $this->load->view('menu/profil/ubah', $data);
         $this->load->view('layout/footer');
     }
-    // ubah lembaga
     function ubahdata()
     {
         $npsn = $this->input->post('npsn');
@@ -93,9 +97,16 @@ class pages  extends CI_Controller
     }
     function peserta()
     {
-        $data['peserta'] = $this->Model_APS->tampil_data_join('*,peserta.Id AS Idp', 'peserta', 'rombel', 'peserta.Jeniskursus=rombel.Id', 'peserta.Nipd', 'DESC')->result();
-
-        $this->load->view('menu/peserta/lihat', $data);
+        // $data['peserta'] = $this->Model_APS->tampil_data_join('*,peserta.Id AS Idp', 'peserta', 'rombel', 'peserta.Jeniskursus=rombel.Id', 'peserta.Nipd', 'DESC')->result();
+        $data['rombel'] = $this->db->query("SELECT Namarombel,Kelas FROM rombel")->result();
+        $this->load->view('menu/peserta/lihat-serverside', $data);
+        $this->load->view('layout/footer');
+    }
+    function peserta2()
+    {
+        // $data['peserta'] = $this->Model_APS->tampil_data_join('*,peserta.Id AS Idp', 'peserta', 'rombel', 'peserta.Jeniskursus=rombel.Id', 'peserta.Nipd', 'DESC')->result();
+        $data['rombel'] = $this->db->query("SELECT Namarombel,Kelas FROM rombel")->result();
+        $this->load->view('menu/peserta/lihat-serverside', $data);
         $this->load->view('layout/footer');
     }
     function rombel()
@@ -108,7 +119,7 @@ class pages  extends CI_Controller
     function uk()
     {
         $on = "unitkompetensi.Rombel=rombel.Id";
-        $data['uks'] = $this->Model_APS->tampil_data_join('*', 'unitkompetensi', 'rombel', $on, 'unitkompetensi.Id', 'ASC')->result();
+        $data['uks'] = $this->Model_APS->tampil_data_join('*, rombel.Id as Idr, unitkompetensi.Id as Idu', 'unitkompetensi', 'rombel', $on, 'unitkompetensi.Id', 'ASC')->result();
 
         $this->load->view('menu/uk/lihat', $data);
         $this->load->view('layout/footer');
@@ -122,7 +133,7 @@ class pages  extends CI_Controller
     }
     function presensi()
     {
-        $data['presensi'] = $this->db->query("SELECT presensi.Id,presensi.Tgl,peserta.Nama,rombel.Namarombel,presensi.Materi,instruktur.NamaInstruktur,peserta.Id AS Idp FROM presensi JOIN peserta JOIN instruktur JOIN rombel ON presensi.Nipd=peserta.Nipd AND presensi.Instruktur=instruktur.Id AND presensi.Jeniskursus=rombel.Id order by Tgl DESC limit 50")->result();
+        $data['presensi'] = $this->db->query("SELECT presensi.Id,presensi.Tgl,peserta.Nama,rombel.Namarombel,presensi.Materi,instruktur.Id AS IdI,instruktur.NamaInstruktur,peserta.Id AS Idp FROM presensi JOIN peserta JOIN instruktur JOIN rombel ON presensi.Nipd=peserta.Nipd AND presensi.Instruktur=instruktur.Id AND presensi.Jeniskursus=rombel.Id WHERE Tgl BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND DATE_SUB(CURDATE(), INTERVAL -1 DAY) order by Tgl DESC")->result();
 
         $this->load->view('menu/presensi/lihat', $data);
         $this->load->view('layout/footer');
@@ -131,6 +142,12 @@ class pages  extends CI_Controller
     {
         $data['logs'] = $this->db->query("SELECT * FROM log ORDER BY log_tgl DESC LIMIT 200")->result();
         $this->load->view('menu/log', $data);
+        $this->load->view('layout/footer');
+    }
+    function pegawai()
+    {
+        $data['pegawai'] = $this->Model_APS->tampil_data('pegawai', 'Id', 'ASC')->result();
+        $this->load->view('menu/pegawai/lihat', $data);
         $this->load->view('layout/footer');
     }
 }

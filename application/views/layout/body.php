@@ -4,7 +4,7 @@
           <div class="col-xl-12 col-lg-12">
             <div class="card mb-4">
               <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <div class="col-xl-12 col-lg-12 alert alert-primary alert-dismissible" role="alert">
+                <div class="col-xl-12 col-lg-12 alert alert-primary" role="alert">
                   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">×</span>
                   </button>
