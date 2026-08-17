@@ -196,6 +196,7 @@
             <?php endif; ?>
 
             <form class="user" action="<?= base_url("login/auth") ?>" method="POST" id="form-login">
+              <input type="hidden" name="is_pwa" id="isPwa" value="">
               <div class="form-group">
                 <label for="inputUser" class="small font-weight-bold">Username</label>
                 <div class="input-group">
@@ -277,6 +278,11 @@
         const btn = $('#btnLogin');
         btn.addClass('btn-loading').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span> Memproses...');
       });
+
+      var isPwa = window.matchMedia('(display-mode: standalone)').matches;
+      if (isPwa) {
+        $('#isPwa').val('1');
+      }
     });
   </script>
 </body>

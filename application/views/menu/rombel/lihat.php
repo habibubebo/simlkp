@@ -1,6 +1,6 @@
 <!-- Header -->
 <div class="d-sm-flex align-items-center justify-content-between mt-4 mb-2">
-  <h1 class="h3 mb-0 text-gray-800">Program Pelatihan</h1>
+  <h1 class="h3 mb-0 text-gray-800 d-none d-sm-block">Program Pelatihan</h1>
   <ol class="breadcrumb">
     <li class="breadcrumb-item">Menu</li>
     <li class="breadcrumb-item active" aria-current="page">Program Pelatihan</li>
