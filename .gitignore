@@ -17,3 +17,5 @@ application/logs/*
 !application/logs/.htaccess
 /vendor/
 .vscode
+.DS_Store
+*.bat
