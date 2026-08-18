@@ -1,6 +1,17 @@
 <!-- Header -->
+<?php
+function perpendekNama($s) {
+    $p = explode(',', $s, 2);
+    $k = preg_split('/\s+/', trim($p[0]));
+    $n = implode(' ', array_splice($k, 0, 2)) . ($k ? ' ' . implode('', array_map(fn($w) => strtoupper($w[0] ?? ''), $k)) . '.' : '');
+    
+    return trim($n) . (isset($p[1]) ? ', ' . rtrim(trim($p[1]), '.') : '');
+}
+// echo perpendekNama("Haris Dwi Saputra, S.Pi."); 
+// Hasil: Haris DS, S.Pi
+?>
 <div class="d-sm-flex align-items-center justify-content-between mt-4 mb-0">
-  <h1 class="h3 mb-0 text-gray-800">Presensi</h1>
+  <h1 class="h3 mb-0 text-gray-800 d-none d-sm-block">Presensi</h1>
   <ol class="breadcrumb">
     <li class="breadcrumb-item">Menu</li>
     <li class="breadcrumb-item active" aria-current="page">Presensi</li>
@@ -31,8 +42,8 @@
 <!-- Content -->
 <div class="row">
   <!-- DataTable with Hover -->
-  <!-- <div class="col-lg-12"> -->
-    <div class="card mb-4">
+  <div class="col-lg-12">
+    <div class="card mb-0">
       <div class="table-responsive p-3">
         <table class="table align-items-center table-flush table-hover" id="tabelpresensi">
           <thead class="thead-light">
@@ -51,9 +62,9 @@
             ?>
               <tr>
                 <td><?php $this->Model_APS->Gethari($tp->Tgl) ?></td>
-                <td><a class="table-link" href="<?= base_url("index.php/presensi/peserta?Id=$tp->Idp") ?>" title="Melihat seluruh presensi <?= $tp->Nama ?>"><?= $tp->Nama ?></a></td>
+                <td><a class="table-link" href="<?= base_url("index.php/presensi/peserta?Id=$tp->Idp") ?>" title="Melihat seluruh presensi <?= $tp->Nama ?>"><?= perpendekNama($tp->Nama) ?></a></td>
                 <td><?= $tp->Namarombel ?></td>
-                <td><a class="table-link" href="<?= base_url("presensi/instruktur?Id=$tp->IdI") ?>" title="Melihat presensi instruktur"><?= $tp->NamaInstruktur ?></a></td>
+                <td><a class="table-link" href="<?= base_url("presensi/instruktur?Id=$tp->IdI") ?>" title="Melihat presensi instruktur"><?= perpendekNama($tp->NamaInstruktur) ?></a></td>
                 <td><?= $tp->Materi ?></td>
                 <td>
                   <div class="btn-group btn-group-toggle action-group">
@@ -179,7 +190,7 @@
       </form>
     </div>
   </div>
-<!-- </div> -->
+</div>
 
 <style>
 @media (max-width: 576px) {

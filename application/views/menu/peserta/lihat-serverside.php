@@ -1,6 +1,6 @@
 <!-- Header -->
 <div class="d-sm-flex align-items-center justify-content-between mt-4 mb-2">
-  <h1 class="h3 mb-0 text-gray-800">Peserta</h1>
+  <h1 class="h3 mb-0 text-gray-800 d-none d-sm-block">Peserta</h1>
   <ol class="breadcrumb mb-0">
     <li class="breadcrumb-item">Menu</li>
     <li class="breadcrumb-item active" aria-current="page">Peserta</li>

@@ -1,4 +1,5 @@
     <div id="content">
+      
       <!-- TopBar -->
       <nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
         <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
@@ -8,9 +9,12 @@
           <?php
           foreach ($profil as $pr);
           ?>
-          <h5><?= $pr->Namalkp ?></h5>
+          <h5 class="d-none d-sm-block"><?= $pr->Namalkp ?></h5>
+          <h5 id="pageMobile" class="d-block d-sm-none"></h5>
         </div>
-
+       
+        <!-- <img src="/favicon.ico" alt="Logo" class="w-100"> -->
+        
         <!-- User Info -->
         <ul class="navbar-nav ml-auto">
           <li class="nav-item dropdown no-arrow mx-1">

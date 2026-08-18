@@ -6,7 +6,7 @@
     }
   </style>
 <div class="d-sm-flex align-items-center justify-content-between mt-4 mb-2">
-  <h1 class="h3 mb-0 text-gray-800">Lulusan</h1>
+  <h1 class="h3 mb-0 text-gray-800 d-none d-sm-block">Lulusan</h1>
   <ol class="breadcrumb">
     <li class="breadcrumb-item">Menu</li>
     <li class="breadcrumb-item active" aria-current="page">Lulusan</li>

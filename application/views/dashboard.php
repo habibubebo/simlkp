@@ -1,6 +1,6 @@
           <!-- Header -->
           <div class="d-sm-flex align-items-center justify-content-between mt-4 mb-2">
-            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+            <h1 class="h3 mb-0 text-gray-800 d-none d-sm-block">Dashboard</h1>
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="<?= base_url("pages/dashboard") ?>">Home</a></li>
               <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
@@ -33,37 +33,8 @@
           </a>
 
           <!-- Content -->
-          <div class="row mb-3">
-            <!-- Sapras -->
-            <!-- <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card h-100 bg-gradient-primary text-white">
-                <div class="card-body">
-                  <div class="row align-items-center">
-                    <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-uppercase mb-1">Sarana Prasarana</div>
-                      <div class="h5 mb-0 font-weight-bold ">
-                        <?php
-                        $data = $this->db->query("SELECT * FROM sapras")->result();
-                        $sapras = 0;
-                        foreach ($data as $row) {
-                          $sapras += count($row->Jenissarana);
-                        }
-                        ?>
-                        <span><?= $sapras; ?> Sarana</span>
-                      </div>
-                      <div class="mt-2 mb-0 text-muted text-md">
-                        <a class="badge badge-primary" href="<?= base_url("pages/sapras") ?>">
-                          Lihat Data
-                        </a>
-                      </div>
-                    </div>
-                    <div class="col-auto">
-                      <i class="fas fa-cogs fa-2x text-white"></i>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div> -->
+          <div class="row mb-1">
+            
             <!-- Instruktur -->
             <div class="col-xl-3 col-md-6 col-6 mb-4">
               <div class="card stat-card">

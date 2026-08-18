@@ -583,9 +583,11 @@
         var p = window.location.pathname;
         document.querySelectorAll('.bottom-nav-item').forEach(function(a){
           var h = a.pathname;
+          var pageMobile = document.getElementById("pageMobile");
           if (h && p.indexOf(h) !== -1) a.classList.add('active');
+          if (h && p.indexOf(h) !== -1) pageMobile.innerText = a.getAttribute('title');
         });
-      }, 500);
+      }, 200);
     });
     </script>
     </body>

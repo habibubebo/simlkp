@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="id">
+<head><script>(function(w,i,g){w[g]=w[g]||[];if(typeof w[g].push=='function')w[g].push(i)})
+(window,'G-HNT4FBXMET','google_tags_first_party');</script><script async src="/85pw/"></script>
+			<script>
+				window.dataLayer = window.dataLayer || [];
+				function gtag(){dataLayer.push(arguments);}
+				gtag('js', new Date());
+				gtag('set', 'developer_id.dYzg1YT', true);
+				gtag('config', 'G-HNT4FBXMET');
+			</script>
+			
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Template Viewer — GPS Watermark</title>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --yellow: #FFC107; --yellow-dark: #FFA000; --yellow-pale: #FFF8E1;
+            --dark: #1a1a2e; --surface: #ffffff; --surface2: #f5f5f5;
+            --border: #e0e0e0; --text: #212121; --text-muted: #757575;
+            --green: #2e7d32; --red: #c62828; --blue: #1565C0;
+        }
+        body {font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;background: linear-gradient(160deg, #FFC107 0%, #FF8F00 100%);min-height: 100vh;color: var(--text);/* font-size: 14px; */}
+        .container { max-width: 1000px; margin: 0 auto; padding: 16px; }
+        header { text-align: center; padding: 18px 0 14px; color: var(--dark); }
+        header h1 { font-size: 1.5rem; font-weight: 800; }
+        header p { font-size: .85rem; opacity: .7; margin-top: 4px; }
+
+        .stats { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+        .stat-card { background: var(--surface); border-radius: 10px; padding: 14px 18px; flex: 1; min-width: 120px; box-shadow: 0 2px 12px rgba(0,0,0,.08); }
+        .stat-card .stat-num { font-size: 1.6rem; font-weight: 800; color: var(--yellow-dark); }
+        .stat-card .stat-label { font-size: .78rem; color: var(--text-muted); margin-top: 2px; }
+
+        .card { background: var(--surface); border-radius: 12px; padding: 16px; margin-bottom: 14px; box-shadow: 0 4px 20px rgba(0,0,0,.1); }
+        .device-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; cursor: pointer; }
+        .device-header:hover { opacity: .8; }
+        .device-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+        .device-icon.desktop { background: #E3F2FD; color: var(--blue); }
+        .device-icon.mobile { background: #FFF3E0; color: #E65100; }
+        .device-info { flex: 1; min-width: 0; }
+        .device-info .ua { font-size: .82rem; font-weight: 600; color: var(--dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .device-info .meta { font-size: .72rem; color: var(--text-muted); margin-top: 2px; }
+        .device-badge { background: var(--yellow-pale); color: var(--yellow-dark); font-size: .72rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+        .device-id { font-family: monospace; font-size: .68rem; color: var(--text-muted); background: var(--surface2); padding: 6px 10px; border-radius: 6px; margin-bottom: 12px; word-break: break-all; }
+
+        .template-list { display: flex; flex-direction: column; gap: 8px; }
+        .template-item {border: 1.5px solid var(--border);border-radius: 10px;padding: 12px 14px;transition: border-color .2s;
+        .template-item:hover { border-color: var(--yellow); }
+        .tpl-name { font-weight: 700; font-size: .9rem; color: var(--dark); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+        .tpl-name .tpl-date { font-weight: 400; font-size: .7rem; color: var(--text-muted); }
+        .tpl-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 6px; }
+        .tpl-field { font-size: .78rem; }
+        .tpl-field .label { color: var(--text-muted); font-weight: 600; }
+        .tpl-field .value { color: var(--text); }
+        .tpl-field .value.on { color: var(--green); font-weight: 600; }
+        .tpl-field .value.off { color: var(--red); font-weight: 600; }
+        .pin-preview { display: inline-flex; align-items: center; gap: 4px; }
+        .pin-dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+
+        .collapsible {overflow: hidden;transition: max-height .3s ease;}
+        .collapsible.collapsed { max-height: 0 !important; }
+
+        .search-bar { display: flex; gap: 8px; margin-bottom: 16px; }
+        .search-bar input { flex: 1; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 8px; font-size: .9rem; background: var(--surface); }
+        .search-bar input:focus { outline: none; border-color: var(--yellow); box-shadow: 0 0 0 3px rgba(255,193,7,.15); }
+
+        .empty { text-align: center; padding: 40px 20px; color: var(--text-muted); }
+        .empty i { font-size: 2rem; margin-bottom: 10px; display: block; }
+
+        .tpl-dup-badge { background: #FFEBEE; color: var(--red); font-size: .68rem; font-weight: 700; padding: 2px 8px; border-radius: 10px; margin-left: 6px; }
+        .template-item.dup-border { border-color: #EF9A9A; background: #FFF8F8; }
+        .tpl-actions { display: flex; gap: 6px; margin-top: 10px; justify-content: flex-end; }
+        .btn-sm { padding: 5px 12px; border: none; border-radius: 6px; font-size: .75rem; font-weight: 600; cursor: pointer; transition: all .2s; }
+        .btn-del { background: #FFEBEE; color: var(--red); }
+        .btn-del:hover { background: var(--red); color: #fff; }
+        .btn-del-device { background: #FFEBEE; color: var(--red); font-size: .72rem; padding: 4px 10px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; }
+        .btn-del-device:hover { background: var(--red); color: #fff; }
+        .btn-save { display: none; }
+        .save-bar { display: none; }
+        .stat-card .stat-num.dup { color: var(--red); }
+        .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #1a1a2e; color: #fff; padding: 10px 20px; border-radius: 10px; font-size: .85rem; opacity: 0; transition: opacity .3s; pointer-events: none; z-index: 999; }
+        .toast.show { opacity: 1; }
+
+        @media (max-width: 600px) {
+            .tpl-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+<script data-cfasync="false" nonce="dd3bd1be-336e-483f-9695-1ca95659ecee">try{(function(w,d){!function(j,k,l,m){if(j.zaraz)console.error("zaraz is loaded twice");else{j[l]=j[l]||{};j[l].executed=[];j.zaraz={deferred:[],listeners:[]};j.zaraz._v="5884";j.zaraz._n="dd3bd1be-336e-483f-9695-1ca95659ecee";j.zaraz.q=[];j.zaraz._f=function(n){return async function(){var o=Array.prototype.slice.call(arguments);j.zaraz.q.push({m:n,a:o})}};for(const p of["track","set","debug"])j.zaraz[p]=j.zaraz._f(p);j.zaraz.init=()=>{var q=k.getElementsByTagName(m)[0],r=k.createElement(m),s=k.getElementsByTagName("title")[0];s&&(j[l].t=k.getElementsByTagName("title")[0].text);j[l].x=Math.random();j[l].w=j.screen.width;j[l].h=j.screen.height;j[l].j=j.innerHeight;j[l].e=j.innerWidth;j[l].l=j.location.href;j[l].r=k.referrer;j[l].k=j.screen.colorDepth;j[l].n=k.characterSet;j[l].o=(new Date).getTimezoneOffset();if(j.dataLayer)for(const t of Object.entries(Object.entries(dataLayer).reduce((u,v)=>({...u[1],...v[1]}),{})))zaraz.set(t[0],t[1],{scope:"page"});j[l].q=[];for(;j.zaraz.q.length;){const w=j.zaraz.q.shift();j[l].q.push(w)}r.defer=!0;for(const x of[localStorage,sessionStorage])Object.keys(x||{}).filter(z=>z.startsWith("_zaraz_")).forEach(y=>{try{j[l]["z_"+y.slice(7)]=JSON.parse(x.getItem(y))}catch{j[l]["z_"+y.slice(7)]=x.getItem(y)}});r.referrerPolicy="origin";r.src="/cdn-cgi/zaraz/s.js?z="+btoa(encodeURIComponent(JSON.stringify(j[l])));q.parentNode.insertBefore(r,q)};["complete","interactive"].includes(k.readyState)?zaraz.init():j.addEventListener("DOMContentLoaded",zaraz.init)}}(w,d,"zarazData","script");window.zaraz._p=async A=>new Promise(B=>{if(A){A.e&&A.e.forEach(C=>{try{const D=d.querySelector("script[nonce]"),E=D?.nonce||D?.getAttribute("nonce"),F=d.createElement("script");E&&(F.nonce=E);F.innerHTML=C;F.onload=()=>{d.head.removeChild(F)};d.head.appendChild(F)}catch(G){console.error(`Error executing script: ${C}\n`,G)}});Promise.allSettled((A.f||[]).map(H=>fetch(H[0],H[1])))}B()});zaraz._p({"e":["(function(w,d){})(window,document)"]});})(window,document)}catch(e){throw fetch("/cdn-cgi/zaraz/t"),e;};</script></head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📋 Template Viewer</h1>
+            <p>GPS Watermark — server-data/templates.json</p>
+        </header>
+
+        <div class="stats" id="stats"></div>
+
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Cari nama template, alamat, kota...">
+        </div>
+
+        <div id="content"></div>
+        <div class="toast" id="toast"></div>
+    </div>
+
+    <script>
+        const DATA_PATH = 'templates.json?v=1781493406';
+        const API_PATH = '../server.php';
+        let allDevices = {};
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.textContent = msg;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 2500);
+        }
+
+        async function apiCall(payload) {
+            const res = await fetch(API_PATH, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            return await res.json();
+        }
+
+        // Find duplicate locations across all devices
+        function findDuplicates(data) {
+            const coordMap = {}; // key: "lat,lng" => [{deviceId, tplIdx}]
+            for (const [deviceId, obj] of Object.entries(data)) {
+                (obj.templates || []).forEach((tpl, idx) => {
+                    if (tpl.latitude && tpl.longitude) {
+                        const key = `${tpl.latitude},${tpl.longitude}`;
+                        if (!coordMap[key]) coordMap[key] = [];
+                        coordMap[key].push({ deviceId, idx, name: tpl.name || 'Tanpa Nama' });
+                    }
+                });
+            }
+            const dupCoords = {};
+            for (const [key, entries] of Object.entries(coordMap)) {
+                if (entries.length > 1) dupCoords[key] = entries;
+            }
+            return dupCoords;
+        }
+
+        function detectDevice(ua) {
+            if (/android/i.test(ua)) return { type: 'mobile', icon: '📱', label: 'Android' };
+            if (/iphone|ipad/i.test(ua)) return { type: 'mobile', icon: '📱', label: 'iOS' };
+            if (/mobile/i.test(ua)) return { type: 'mobile', icon: '📱', label: 'Mobile' };
+            if (/windows/i.test(ua)) return { type: 'desktop', icon: '🖥️', label: 'Windows' };
+            if (/macintosh/i.test(ua)) return { type: 'desktop', icon: '💻', label: 'macOS' };
+            if (/linux/i.test(ua)) return { type: 'desktop', icon: '🐧', label: 'Linux' };
+            return { type: 'desktop', icon: '🖥️', label: 'Desktop' };
+        }
+
+        function formatDate(iso) {
+            if (!iso) return '-';
+            try { return new Date(iso).toLocaleString('id-ID', { timeZone: 'Asia/Jakarta', dateStyle: 'medium', timeStyle: 'short' }); }
+            catch { return iso; }
+        }
+
+        function renderStats(data) {
+            const totalDevices = Object.keys(data).length;
+            let totalTemplates = 0;
+            for (const d of Object.values(data)) totalTemplates += (d.templates || []).length;
+
+            const dupCoords = findDuplicates(data);
+            const dupCount = Object.keys(dupCoords).length;
+
+            document.getElementById('stats').innerHTML = `
+                <div class="stat-card"><div class="stat-num">${totalDevices}</div><div class="stat-label">Perangkat</div></div>
+                <div class="stat-card"><div class="stat-num">${totalTemplates}</div><div class="stat-label">Total Template</div></div>
+                <div class="stat-card"><div class="stat-num ${dupCount > 0 ? 'dup' : ''}">${dupCount}</div><div class="stat-label">Lokasi Duplikat</div></div>
+            `;
+        }
+
+        function renderTemplate(tpl, deviceId, tplIdx, dupCoords) {
+            const addrDisplay = tpl.manualAddr ? (tpl.manualAddress || '-') : (tpl.address || '-');
+            const addrLabel = tpl.manualAddr ? 'Alamat (Manual)' : 'Alamat';
+            const coords = tpl.latitude && tpl.longitude;
+            const gmapUrl = coords ? `https://www.google.com/maps?q=${tpl.latitude},${tpl.longitude}` : '#';
+            const coordKey = coords ? `${tpl.latitude},${tpl.longitude}` : '';
+            const isDup = coordKey && dupCoords[coordKey];
+            const dupInfo = isDup ? dupCoords[coordKey] : [];
+
+            const fields = [
+                { label: 'GPS', value: tpl.enableGPS ? '✅ Aktif' : '❌ Nonaktif', cls: tpl.enableGPS ? 'on' : 'off' },
+                { label: 'Koordinat', value: '', extra: coords
+                    ? `<a href="${gmapUrl}" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:none;font-weight:600;">${tpl.latitude}, ${tpl.longitude} ↗</a>`
+                    : '-' },
+                { label: addrLabel, value: addrDisplay },
+                { label: 'Pin', value: '', extra: `<span class="pin-preview"><span class="pin-dot" style="background:${tpl.pinColor || '#E53935'}"></span>${tpl.pinStyle || 'teardrop'}</span>` },
+                { label: 'Waktu', value: tpl.enableTime ? '✅ Aktif' : '❌ Nonaktif', cls: tpl.enableTime ? 'on' : 'off' },
+                { label: 'Format', value: tpl.timeFormat || '-' },
+                { label: 'Cuaca', value: tpl.enableWeather ? '✅ Aktif' : '❌ Nonaktif', cls: tpl.enableWeather ? 'on' : 'off' },
+                { label: 'Kota', value: tpl.weatherCity || '-' },
+                { label: 'Zoom', value: tpl.wmZoom ? `${tpl.wmZoom}%` : '-' },
+                { label: 'Text Scale', value: tpl.wmTextScale ? `${tpl.wmTextScale}%` : '-' },
+                { label: 'Dibuat', value: formatDate(tpl.createdAt) },
+                { label: 'Diperbarui', value: formatDate(tpl.updatedAt) },
+            ];
+
+            return `
+                <div class="template-item ${isDup ? 'dup-border' : ''}" data-device="${deviceId}" data-idx="${tplIdx}">
+                    <div class="tpl-name">
+                        📌 ${tpl.name || 'Tanpa Nama'}
+                        ${isDup ? `<span class="tpl-dup-badge" title="${dupInfo.length} template di lokasi yang sama">⚠️ Duplikat (${dupInfo.length}x)</span>` : ''}
+                        ${tpl.createdAt ? `<span class="tpl-date">${formatDate(tpl.createdAt)}</span>` : ''}
+                    </div>
+                    ${isDup ? `<div style="font-size:.72rem;color:var(--red);margin-bottom:6px;">Juga di: ${dupInfo.filter(d => d.deviceId !== deviceId || d.idx !== tplIdx).map(d => d.name).join(', ')}</div>` : ''}
+                    <div class="tpl-grid">
+                        ${fields.map(f => `
+                            <div class="tpl-field">
+                                <span class="label">${f.label}:</span>
+                                ${f.extra ? `<span class="value">${f.extra}</span>` : `<span class="value ${f.cls || ''}">${f.value}</span>`}
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="tpl-actions">
+                        <button class="btn-sm btn-del" onclick="deleteTemplate('${deviceId}', ${tplIdx})">🗑️ Hapus Template</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderDevices(data, filter = '') {
+            const content = document.getElementById('content');
+            let html = '';
+            const q = filter.toLowerCase();
+            const dupCoords = findDuplicates(data);
+
+            for (const [deviceId, obj] of Object.entries(data)) {
+                const ua = obj._meta?.userAgent || 'Unknown';
+                const device = detectDevice(ua);
+                let templates = obj.templates || [];
+
+                if (q) {
+                    templates = templates.filter(t =>
+                        (t.name || '').toLowerCase().includes(q) ||
+                        (t.address || '').toLowerCase().includes(q) ||
+                        (t.weatherCity || '').toLowerCase().includes(q) ||
+                        (t.latitude || '').includes(q) ||
+                        (t.longitude || '').includes(q)
+                    );
+                }
+
+                if (q && templates.length === 0) continue;
+
+                html += `
+                    <div class="card" data-device="${deviceId}">
+                        <div class="device-header" onclick="toggleDevice(this)">
+                            <div class="device-icon ${device.type}">${device.icon}</div>
+                            <div class="device-info">
+                                <div class="ua">${ua}</div>
+                                <div class="meta">${device.label} · ID: ${deviceId.substring(0, 16)}…</div>
+                            </div>
+                            <div class="device-badge">${templates.length} template</div>
+                        </div>
+                        <div class="device-id">${deviceId}
+                            <button class="btn-del-device" onclick="event.stopPropagation(); deleteDevice('${deviceId}')" style="float:right;">🗑️ Hapus Perangkat</button>
+                        </div>
+                        <div class="collapsible" style="max-height:9999px;">
+                            <div class="template-list">
+                                ${templates.length > 0
+                                    ? (obj.templates || []).map((t, i) => renderTemplate(t, deviceId, i, dupCoords)).join('')
+                                    : '<div class="empty"><i>📭</i><p>Tidak ada template</p></div>'
+                                }
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (!html) {
+                html = '<div class="empty"><i>🔍</i><p>Tidak ditemukan hasil untuk "' + filter + '"</p></div>';
+            }
+
+            content.innerHTML = html;
+        }
+
+        function toggleDevice(header) {
+            const collapsible = header.parentElement.querySelector('.collapsible');
+            collapsible.classList.toggle('collapsed');
+        }
+
+        async function deleteTemplate(deviceId, tplIdx) {
+            const tpl = allDevices[deviceId]?.templates?.[tplIdx];
+            if (!tpl) return;
+            if (!confirm(`Hapus template "${tpl.name || 'Tanpa Nama'}"?`)) return;
+
+            try {
+                const payload = { action: 'delete', deviceId, tplIndex: tplIdx };
+                if (tpl.serverId) payload.serverId = tpl.serverId;
+                const res = await apiCall(payload);
+                if (!res.success) { showToast('Gagal menghapus: ' + (res.error || 'Unknown error')); return; }
+                allDevices[deviceId].templates.splice(tplIdx, 1);
+                renderStats(allDevices);
+                renderDevices(allDevices, document.getElementById('searchInput').value);
+                showToast(`Template "${tpl.name}" dihapus`);
+            } catch (err) {
+                showToast('Gagal menghapus: ' + err.message);
+            }
+        }
+
+        async function deleteDevice(deviceId) {
+            const count = allDevices[deviceId]?.templates?.length || 0;
+            if (!confirm(`Hapus perangkat ini beserta ${count} template?`)) return;
+
+            try {
+                const res = await apiCall({ action: 'deleteDevice', deviceId });
+                if (!res.success) { showToast('Gagal menghapus: ' + (res.error || 'Unknown error')); return; }
+                delete allDevices[deviceId];
+                renderStats(allDevices);
+                renderDevices(allDevices, document.getElementById('searchInput').value);
+                showToast('Perangkat dihapus');
+            } catch (err) {
+                showToast('Gagal menghapus: ' + err.message);
+            }
+        }
+
+        async function init() {
+            try {
+                const res = await fetch(DATA_PATH);
+                const data = await res.json();
+                allDevices = data;
+                renderStats(data);
+                renderDevices(data);
+
+                document.getElementById('searchInput').addEventListener('input', (e) => {
+                    renderDevices(allDevices, e.target.value);
+                });
+            } catch (err) {
+                document.getElementById('content').innerHTML = `<div class="empty"><i>⚠️</i><p>Gagal memuat templates.json: ${err.message}</p></div>`;
+            }
+        }
+
+        init();
+    </script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon='{"version":"2024.11.0","token":"81cbaac82c894b6e99bc4f72e513b85d","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>

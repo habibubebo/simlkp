@@ -26,6 +26,7 @@ class login extends CI_Controller
         // Membuat variabel untuk menampung hasil inputan dari form login (v_login.php)------------------------
         $user = $this->input->post('user');
         $pass = $this->input->post('pass');
+        $is_pwa = $this->input->post('is_pwa');
         // Pemeriksaan Antara inputan dengan data yang ada di database-----------------------------------------
         $where = array(
             // 'Field_database' => $var_penampung----------------------------------------------------------
@@ -49,8 +50,14 @@ class login extends CI_Controller
                 'nama' => $data->nama,
                 'username' => $data->username,
                 'password' => $data->password,
-                'status' => "masuk"
+                'status' => "masuk",
+                'is_pwa' => ($is_pwa === '1' ? '1' : '0'),
+                'last_active' => time(),
             );
+            // jika bukan PWA, set batas waktu sesi 2 jam------------------------------------------------------
+            if ($datalogin['is_pwa'] !== '1') {
+                $datalogin['session_expiry'] = time() + 7200;
+            }
             // Membuat Session untuk mengatur data user yang login---------------------------------------------
             $this->session->set_userdata($datalogin);
             $ip = $_SERVER["HTTP_CF_CONNECTING_IP"] ?? $_SERVER['REMOTE_ADDR'];
