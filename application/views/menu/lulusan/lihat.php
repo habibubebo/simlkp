@@ -132,19 +132,27 @@
 </button>
 
 <!-- Modal Tambah Lulusan -->
-<div class="modal fade" id="modalTambah" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen-mobile" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Tambah Lulusan</h5>
-        <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+<div class="modal fade lulusan-app-modal" id="modalTambah" tabindex="-1" role="dialog" aria-labelledby="modalTambahTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content lulusan-content">
+      <div class="modal-header align-items-center">
+        <div class="d-flex align-items-center minw-0">
+          <span class="presensi-icon d-none d-sm-inline-flex"><i class="fas fa-graduation-cap"></i></span>
+          <div class="ml-3 minw-0 presensi-title-wrap">
+            <h5 class="modal-title mb-0" id="modalTambahTitle">Tambah Lulusan</h5>
+            <div class="presensi-subtitle">Catat kelulusan peserta kursus</div>
+          </div>
+        </div>
+        <button type="button" class="close presensi-close" data-dismiss="modal" aria-label="Tutup">
+          <span class="d-none d-sm-inline" aria-hidden="true">&times;</span>
+          <i class="fas fa-arrow-left d-sm-none" aria-hidden="true"></i>
+        </button>
       </div>
-      <div class="modal-body">
-        <form action="<?= base_url('lulusan/tambah') ?>" method="POST">
-          <div class="form-group mb-2">
-            <label class="small text-muted mb-1">Peserta</label>
-            <select class="form-control form-control-sm" id="peserta" name="nipd" required>
-              <option value="">Cari peserta...</option>
+      <form action="<?= base_url('lulusan/tambah') ?>" method="POST" id="formTambahLulusan" class="modal-body px-3 px-sm-4 py-3">
+          <div class="form-group mb-3">
+            <label class="field-label" for="peserta">Peserta <span class="font-weight-normal text-muted">(sudah lulus, belum tercatat)</span></label>
+            <select class="form-control" id="peserta" name="nipd" required>
+              <option value=""></option>
               <?php
               $data = $this->db->query("SELECT Nipd,Nama FROM peserta WHERE Status=2 AND NOT EXISTS (SELECT Nipd FROM lulusan WHERE Nipd=peserta.Nipd) ORDER BY Nama ASC")->result();
               foreach ($data as $row) { ?>
@@ -152,38 +160,43 @@
               <?php } ?>
             </select>
           </div>
-          <div class="form-group mb-2">
-            <label class="small text-muted mb-1">Pelatihan</label>
-            <input type="text" class="form-control form-control-sm" id="pelatihan" disabled>
-          </div>
-          <div class="form-group mb-2">
-            <label class="small text-muted mb-1">Tgl Lahir</label>
-            <input type="text" class="form-control form-control-sm" id="ttl_lulusan" disabled>
-          </div>
-          <div class="row g-2">
-            <div class="col-6 form-group mb-2" id="date-tl">
-              <label class="small text-muted mb-1">Tgl Lulus</label>
-              <div class="input-group input-group-sm date">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                </div>
-                <input type="text" name="tl" class="form-control" id="tl" required>
-              </div>
+
+          <div class="form-row">
+            <div class="form-group col-12 col-sm-6 mb-3">
+              <label class="field-label" for="pelatihan">Pelatihan</label>
+              <input type="text" class="form-control presensi-input input-info" id="pelatihan" disabled>
             </div>
-            <div class="col-6 form-group mb-2" id="date-tc">
-              <label class="small text-muted mb-1">Tgl Cetak</label>
-              <div class="input-group input-group-sm date">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                </div>
-                <input type="text" name="tc" class="form-control" id="tc" value="<?= date('Y-m-d') ?>" required>
-              </div>
+            <div class="form-group col-12 col-sm-6 mb-3">
+              <label class="field-label" for="ttl_lulusan">Tgl Lahir</label>
+              <input type="text" class="form-control presensi-input input-info" id="ttl_lulusan" disabled>
             </div>
           </div>
-          <div class="form-group mb-2">
-            <label class="small text-muted mb-1">Instruktur</label>
-            <select class="form-control form-control-sm" name="Instruktur" required>
-              <option value="">Pilih Instruktur</option>
+
+          <div class="form-row">
+            <div class="form-group col-6 mb-3" id="date-tl">
+              <label class="field-label" for="tl">Tgl Lulus</label>
+              <div class="input-group date">
+                <div class="input-group-prepend">
+                  <span class="input-group-text bg-white"><i class="fas fa-calendar-alt text-primary"></i></span>
+                </div>
+                <input type="text" name="tl" class="form-control presensi-input" id="tl" required readonly autocomplete="off">
+              </div>
+            </div>
+            <div class="form-group col-6 mb-3" id="date-tc">
+              <label class="field-label" for="tc">Tgl Cetak</label>
+              <div class="input-group date">
+                <div class="input-group-prepend">
+                  <span class="input-group-text bg-white"><i class="fas fa-calendar-alt text-primary"></i></span>
+                </div>
+                <input type="text" name="tc" class="form-control presensi-input" id="tc" value="<?= date('Y-m-d') ?>" required readonly autocomplete="off">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group mb-3">
+            <label class="field-label" for="instrukturLulusan">Instruktur</label>
+            <select class="form-control presensi-input" id="instrukturLulusan" name="Instruktur" required>
+              <option value="">Pilih instruktur</option>
               <?php
               $data = $this->db->query("SELECT Id,NamaInstruktur FROM instruktur")->result();
               foreach ($data as $row) { ?>
@@ -191,12 +204,14 @@
               <?php } ?>
             </select>
           </div>
+
           <div id="nilaiContainer" style="display:none">
+            <label class="field-label">Nilai Kompetensi</label>
             <?php for ($i = 1; $i <= 5; $i++) { ?>
-            <div class="form-group mb-1" id="nilaiGroup<?= $i ?>">
-              <div class="d-flex align-items-center">
-                <span class="small" id="labelNilai<?= $i ?>">Unit Kompetensi <?= $i ?></span>
-                <select class="form-control form-control-sm ml-auto" style="width:auto;min-width:72px" name="n<?= $i ?>">
+            <div class="form-group mb-2" id="nilaiGroup<?= $i ?>">
+              <div class="d-flex align-items-center justify-content-between">
+                <span class="nilai-label" id="labelNilai<?= $i ?>">Unit Kompetensi <?= $i ?></span>
+                <select class="form-control presensi-input nilai-select" name="n<?= $i ?>">
                   <option value="">-</option>
                   <option value="A">A</option>
                   <option value="B">B</option>
@@ -207,64 +222,73 @@
             </div>
             <?php } ?>
           </div>
-      </div>
-      <div class="modal-footer pt-2 px-3 pb-3 d-flex flex-nowrap">
-        <button type="button" class="btn btn-secondary flex-fill" data-dismiss="modal">Batal</button>
-        <button type="submit" class="btn btn-primary flex-fill ml-2">Simpan</button>
-      </div>
       </form>
+      <div class="modal-footer px-3 px-sm-4 pt-2 pb-3">
+        <button type="button" class="btn btn-secondary presensi-btn flex-fill" data-dismiss="modal">Batal</button>
+        <button type="submit" form="formTambahLulusan" class="btn btn-primary presensi-btn flex-fill ml-2"><i class="fas fa-save mr-1"></i>Simpan</button>
+      </div>
     </div>
   </div>
 </div>
 
 <!-- Modal Ubah Lulusan -->
-<div class="modal fade" id="modalUbah" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-fullscreen-mobile" role="document">
+<div class="modal fade lulusan-app-modal" id="modalUbah" tabindex="-1" role="dialog" aria-labelledby="modalUbahTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Ubah Lulusan</h5>
-        <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+      <div class="modal-header align-items-center">
+        <div class="d-flex align-items-center minw-0">
+          <span class="presensi-icon d-none d-sm-inline-flex"><i class="fas fa-edit"></i></span>
+          <div class="ml-3 minw-0 presensi-title-wrap">
+            <h5 class="modal-title mb-0" id="modalUbahTitle">Ubah Lulusan</h5>
+            <div class="presensi-subtitle">Perbarui data kelulusan peserta</div>
+          </div>
+        </div>
+        <button type="button" class="close presensi-close" data-dismiss="modal" aria-label="Tutup">
+          <span class="d-none d-sm-inline" aria-hidden="true">&times;</span>
+          <i class="fas fa-arrow-left d-sm-none" aria-hidden="true"></i>
+        </button>
       </div>
-      <div class="modal-body">
-        <form action="<?= base_url('lulusan/ubah') ?>" method="POST">
-          <input type="hidden" name="Id" id="editId">
+      <form action="<?= base_url('lulusan/ubah') ?>" method="POST" id="formUbahLulusan" class="modal-body px-3 px-sm-4 py-3">
+        <input type="hidden" name="Id" id="editId">
           <input type="hidden" name="nipd" id="editNipd">
-          <div class="form-group mb-2">
-            <label class="small text-muted mb-1">Peserta</label>
-            <input type="text" class="form-control form-control-sm" id="editNama" disabled>
+          <div class="form-group mb-3">
+            <label class="field-label" for="editNama">Peserta</label>
+            <input type="text" class="form-control presensi-input input-info" id="editNama" disabled>
           </div>
-          <div class="form-group mb-2">
-            <label class="small text-muted mb-1">Pelatihan</label>
-            <input type="text" class="form-control form-control-sm" id="editPelatihan" disabled>
-          </div>
-          <div class="form-group mb-2">
-            <label class="small text-muted mb-1">Tgl Lahir</label>
-            <input type="text" class="form-control form-control-sm" id="editTtl" disabled>
-          </div>
-          <div class="row g-2">
-            <div class="col-6 form-group mb-2" id="edit-date-tl">
-              <label class="small text-muted mb-1">Tgl Lulus</label>
-              <div class="input-group input-group-sm date">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                </div>
-                <input type="text" name="tl" class="form-control" id="editTl" required>
-              </div>
+          <div class="form-row">
+            <div class="form-group col-12 col-sm-6 mb-3">
+              <label class="field-label" for="editPelatihan">Pelatihan</label>
+              <input type="text" class="form-control presensi-input input-info" id="editPelatihan" disabled>
             </div>
-            <div class="col-6 form-group mb-2" id="edit-date-tc">
-              <label class="small text-muted mb-1">Tgl Cetak</label>
-              <div class="input-group input-group-sm date">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                </div>
-                <input type="text" name="tc" class="form-control" id="editTc" required>
-              </div>
+            <div class="form-group col-12 col-sm-6 mb-3">
+              <label class="field-label" for="editTtl">Tgl Lahir</label>
+              <input type="text" class="form-control presensi-input input-info" id="editTtl" disabled>
             </div>
           </div>
-          <div class="form-group mb-2">
-            <label class="small text-muted mb-1">Instruktur</label>
-            <select class="form-control form-control-sm" name="Instruktur" id="editInstruktur" required>
-              <option value="">Pilih Instruktur</option>
+          <div class="form-row">
+            <div class="form-group col-6 mb-3" id="edit-date-tl">
+              <label class="field-label" for="editTl">Tgl Lulus</label>
+              <div class="input-group date">
+                <div class="input-group-prepend">
+                  <span class="input-group-text bg-white"><i class="fas fa-calendar-alt text-primary"></i></span>
+                </div>
+                <input type="text" name="tl" class="form-control presensi-input" id="editTl" required readonly autocomplete="off">
+              </div>
+            </div>
+            <div class="form-group col-6 mb-3" id="edit-date-tc">
+              <label class="field-label" for="editTc">Tgl Cetak</label>
+              <div class="input-group date">
+                <div class="input-group-prepend">
+                  <span class="input-group-text bg-white"><i class="fas fa-calendar-alt text-primary"></i></span>
+                </div>
+                <input type="text" name="tc" class="form-control presensi-input" id="editTc" required readonly autocomplete="off">
+              </div>
+            </div>
+          </div>
+          <div class="form-group mb-3">
+            <label class="field-label" for="editInstruktur">Instruktur</label>
+            <select class="form-control presensi-input" id="editInstruktur" name="Instruktur" required>
+              <option value="">Pilih instruktur</option>
               <?php
               $data = $this->db->query("SELECT Id,NamaInstruktur FROM instruktur")->result();
               foreach ($data as $row) { ?>
@@ -273,11 +297,12 @@
             </select>
           </div>
           <div id="editNilaiContainer" style="display:none">
+            <label class="field-label">Nilai Kompetensi</label>
             <?php for ($i = 1; $i <= 5; $i++) { ?>
-            <div class="form-group mb-1" id="editNilaiGroup<?= $i ?>">
-              <div class="d-flex align-items-center">
-                <span class="small" id="editLabelNilai<?= $i ?>">Unit Kompetensi <?= $i ?></span>
-                <select class="form-control form-control-sm ml-auto" style="width:auto;min-width:72px" name="n<?= $i ?>" id="editN<?= $i ?>">
+            <div class="form-group mb-2" id="editNilaiGroup<?= $i ?>">
+              <div class="d-flex align-items-center justify-content-between">
+                <span class="nilai-label" id="editLabelNilai<?= $i ?>">Unit Kompetensi <?= $i ?></span>
+                <select class="form-control presensi-input nilai-select" name="n<?= $i ?>" id="editN<?= $i ?>">
                   <option value="">-</option>
                   <option value="A">A</option>
                   <option value="B">B</option>
@@ -288,29 +313,203 @@
             </div>
             <?php } ?>
           </div>
-      </div>
-      <div class="modal-footer pt-2 px-3 pb-3 d-flex flex-nowrap">
-        <button type="button" class="btn btn-secondary flex-fill" data-dismiss="modal">Batal</button>
-        <button type="submit" class="btn btn-primary flex-fill ml-2">Simpan</button>
-      </div>
       </form>
+      <div class="modal-footer px-3 px-sm-4 pt-2 pb-3">
+        <button type="button" class="btn btn-secondary presensi-btn flex-fill" data-dismiss="modal">Batal</button>
+        <button type="submit" form="formUbahLulusan" class="btn btn-primary presensi-btn flex-fill ml-2"><i class="fas fa-save mr-1"></i>Simpan</button>
+      </div>
     </div>
   </div>
 </div>
 
 <style>
-@media (max-width: 576px) {
-  .modal-fullscreen-mobile {
-    margin: 0 !important;
-    max-width: 100%;
+/* ===== Modal Tambah & Ubah Lulusan: gaya aplikasi mobile ===== */
+.lulusan-app-modal .modal-content {
+  border: 0;
+  border-radius: .75rem;
+  max-height: calc(100vh - 3.5rem);
+  box-shadow: 0 20px 60px rgba(15, 23, 42, .22);
+}
+@supports (height: 100dvh) {
+  .lulusan-app-modal .modal-content { max-height: calc(100dvh - 3.5rem); }
+}
+.lulusan-app-modal .modal-header,
+.lulusan-app-modal .modal-footer { flex-shrink: 0; }
+.lulusan-app-modal .modal-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.minw-0 { min-width: 0; }
+.presensi-icon {
+  width: 2.5rem; height: 2.5rem;
+  border-radius: .6rem;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: rgba(37, 99, 235, .1);
+  color: #2563eb;
+  font-size: 1.05rem;
+  flex-shrink: 0;
+}
+.presensi-subtitle { font-size: .8rem; color: #6b7280; margin-top: .1rem; }
+.presensi-close {
+  width: 2.5rem; height: 2.5rem;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.35rem;
+  color: #6b7280;
+  transition: background-color .15s, color .15s;
+}
+.presensi-close:hover { background: #f1f5f9; color: #111827; }
+.field-label {
+  font-size: .85rem; font-weight: 600; color: #374151;
+  margin-bottom: .35rem; display: block;
+}
+.presensi-input { min-height: 44px; font-size: 16px; }
+.input-info {
+  background: #f8fafc !important;
+  border-color: #e2e8f0;
+  color: #334155;
+}
+#instrukturLulusan { font-size: 16px; }
+.nilai-label {
+  font-size: .85rem; font-weight: 500; color: #374151;
+  padding-right: .75rem;
+}
+.nilai-select { width: auto; min-width: 88px; }
+
+/* Input & select outlined, sudut lembut */
+.lulusan-app-modal .form-control { border-radius: .6rem; }
+.lulusan-app-modal .input-group-text {
+  border-radius: .6rem 0 0 .6rem;
+  border-right: 0;
+}
+.lulusan-app-modal .input-group > .form-control {
+  border-radius: 0 .6rem .6rem 0;
+}
+.lulusan-app-modal .form-control:focus {
+  border-color: #93b4f5;
+  box-shadow: 0 0 0 .2rem rgba(37, 99, 235, .15);
+}
+
+/* Select2 di dalam modal */
+.lulusan-app-modal .select2-container--default .select2-selection--single {
+  min-height: 44px;
+  padding: .45rem .75rem;
+  border-color: #ced4da;
+  border-radius: .6rem;
+  font-size: 16px;
+  display: flex; align-items: center;
+}
+.lulusan-app-modal .select2-container--default .select2-selection--single .select2-selection__arrow { height: 100%; }
+.lulusan-app-modal .select2-container--default.select2-container--focus .select2-selection--single {
+  border-color: #93b4f5;
+  box-shadow: 0 0 0 .2rem rgba(37, 99, 235, .18);
+}
+
+.modal-footer .presensi-btn {
+  min-height: 48px;
+  border-radius: .55rem;
+  font-weight: 600;
+}
+
+/* Tampilan aplikasi mobile di layar kecil */
+@media (max-width: 575.98px) {
+  .lulusan-app-modal .modal-dialog {
+    margin: 0; max-width: 100%;
+    height: 100%;
+    overscroll-behavior: contain;
   }
-  .modal-fullscreen-mobile .modal-footer .btn {
-    font-size: 0.95rem;
-    padding: 0.65rem 0;
-    border-radius: 0.5rem;
+  /* Kunci tinggi ke viewport terkecil agar layout stabil saat URL bar iOS turun/naik */
+  @supports (height: 100svh) {
+    .lulusan-app-modal .modal-dialog { height: 100svh; }
+  }
+  .lulusan-app-modal .modal-content {
+    height: 100%;
+    max-height: none;
+    border-radius: 1.25rem 1.25rem 0 0;
+    box-shadow: 0 -8px 40px rgba(15, 23, 42, .18);
+    overscroll-behavior: contain;
+  }
+  .lulusan-app-modal .modal-header {
+    justify-content: flex-start;
+    padding: .85rem 1rem .85rem .5rem;
+    border-bottom: 1px solid #eef0f4;
+  }
+  /* Reset margin auto dari BS4 (.modal-header .close) agar panah tidak terdorong ke tengah */
+  .lulusan-app-modal .presensi-close {
+    order: -1;
+    margin: 0 .35rem 0 0;
+    color: #2563eb;
+    flex-shrink: 0;
+  }
+  .lulusan-app-modal .presensi-close:hover { background: rgba(37, 99, 235, .08); color: #2563eb; }
+  .lulusan-app-modal .presensi-title-wrap { margin-left: .15rem !important; }
+  .lulusan-app-modal .modal-footer {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    padding: .65rem 1rem calc(.75rem + env(safe-area-inset-bottom, 0px));
+  }
+  .lulusan-app-modal .modal-footer .presensi-btn {
+    width: 100%;
+    margin-left: 0 !important;
+    border-radius: 9999px;
+  }
+  .lulusan-app-modal .modal-footer .btn-secondary {
+    min-height: 42px;
+    background: rgba(37, 99, 235, .07);
+    border-color: transparent;
+    color: #2563eb;
+  }
+  .lulusan-app-modal .modal-footer .btn-secondary:hover,
+  .lulusan-app-modal .modal-footer .btn-secondary:focus {
+    background: rgba(37, 99, 235, .14);
+    border-color: transparent;
+    color: #1d4ed8;
   }
 }
+/* Slide-up halus saat sheet muncul */
+@media (max-width: 575.98px) and (prefers-reduced-motion: no-preference) {
+  .lulusan-app-modal.fade .modal-dialog { transform: translateY(28px); }
+  .lulusan-app-modal.show .modal-dialog { transform: none; }
+}
+@media (min-width: 576px) {
+  .lulusan-app-modal .modal-dialog { max-width: 540px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .presensi-close { transition: none; }
+}
+/* Kunci scroll halaman belakang saat modal terbuka (cegah lompatan scroll iOS) */
+html.app-modal-open, html.app-modal-open body {
+  overflow: hidden !important;
+  overscroll-behavior: none;
+}
 </style>
+<script>
+if (window.jQuery) {
+  window.jQuery(document)
+    .on('show.bs.modal', '.lulusan-app-modal', function () {
+      document.documentElement.classList.add('app-modal-open');
+    });
+  window.jQuery(document).on('hidden.bs.modal', function (e) {
+    if (!document.querySelector('.modal.show')) {
+      document.documentElement.classList.remove('app-modal-open');
+    }
+  });
+}
+</script>
+<script>
+(function () {
+  [['date-tl', 'tl'], ['date-tc', 'tc'], ['edit-date-tl', 'editTl'], ['edit-date-tc', 'editTc']].forEach(function (p) {
+    var icon = document.querySelector('#' + p[0] + ' .input-group-text');
+    if (icon) {
+      icon.addEventListener('click', function () {
+        document.getElementById(p[1]).focus();
+      });
+    }
+  });
+})();
+</script>
 <script type="text/javascript">
   document.title = "Lulusan <?= $profil[0]->Namalkp?>";
 </script>

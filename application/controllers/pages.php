@@ -133,7 +133,7 @@ class pages  extends CI_Controller
     }
     function presensi()
     {
-        $data['presensi'] = $this->db->query("SELECT presensi.Id,presensi.Tgl,peserta.Nama,rombel.Namarombel,presensi.Materi,instruktur.Id AS IdI,instruktur.NamaInstruktur,peserta.Id AS Idp FROM presensi JOIN peserta JOIN instruktur JOIN rombel ON presensi.Nipd=peserta.Nipd AND presensi.Instruktur=instruktur.Id AND presensi.Jeniskursus=rombel.Id WHERE Tgl BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND DATE_SUB(CURDATE(), INTERVAL -1 DAY) order by Tgl DESC")->result();
+        $data['presensi'] = $this->db->query("SELECT presensi.Id,presensi.Tgl,presensi.Nipd,peserta.Nama,peserta.Jeniskursus,rombel.Namarombel,presensi.Materi,instruktur.Id AS IdI,instruktur.NamaInstruktur,peserta.Id AS Idp FROM presensi JOIN peserta JOIN instruktur JOIN rombel ON presensi.Nipd=peserta.Nipd AND presensi.Instruktur=instruktur.Id AND presensi.Jeniskursus=rombel.Id WHERE Tgl BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND DATE_SUB(CURDATE(), INTERVAL -1 DAY) order by Tgl DESC")->result();
 
         $this->load->view('menu/presensi/lihat', $data);
         $this->load->view('layout/footer');

@@ -1,44 +1,218 @@
-    <!-- modal presensi -->
-<div class="example-modal presensi">
-                    <div id="tambahPres" class="modal fade" role="dialog" style="display:none;">
-                      <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h3 class="modal-title">Tambah Presensi Pegawai</h3>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          </div>
-                          <div class="modal-body">
-                          <form action="<?php echo base_url() . 'presensi/tambahpegawai'; ?>" method="POST">
-                          <div class="form-group col-md-12">
-                            <select type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="nipg" required>
-                              <option disabled selected value="">Nama Pegawai</option>
-                              <?php
-                              $data = $this->db->query("SELECT Nipg,NamaPegawai FROM pegawai")->result();
-                              foreach ($data as $row) { ?>
-                                <option value="<?php echo $row->Nipg ?>">
-                                  <?php echo $row->NamaPegawai ?>
-                                </option>
-                              <?php } ?>
-                            </select>
-                          </div>
-                            <div class="form-group col-md-12" id="simple-date3">
-                                <div class="input-group date">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="fas fa-calendar"></i></span>
-                                    </div>
-                                    <input type="text" name="tgl" class="form-control" placeholder="Tanggal" id="simpleDataInput" maxlength=20 value="<?php echo date('Y-m-d H:i:s') ?>" required>
-                                </div>
-                            </div>
-                          </div>
-                          
-                          <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal" aria-label="Close">Batal</button>
-                          <button type="submit" class="btn btn-primary">Simpan</button>
-                          </form>
-                          </div>
-                        </div>
-                        </div>
-                      </div>
+    <!-- Modal Presensi Pegawai -->
+<div class="modal fade ppg-modal" id="tambahPres" tabindex="-1" role="dialog" aria-labelledby="tambahPresTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header align-items-center">
+        <div class="d-flex align-items-center ppg-wrap">
+          <span class="ppg-icon d-none d-sm-inline-flex"><i class="fas fa-user-clock"></i></span>
+          <div class="ml-3 ppg-wrap">
+            <h5 class="modal-title mb-0" id="tambahPresTitle">Presensi Pegawai</h5>
+            <div class="ppg-subtitle">Catat kehadiran pegawai</div>
+          </div>
+        </div>
+        <button type="button" class="close ppg-close" data-dismiss="modal" aria-label="Tutup">
+          <span class="d-none d-sm-inline" aria-hidden="true">&times;</span>
+          <i class="fas fa-arrow-left d-sm-none" aria-hidden="true"></i>
+        </button>
+      </div>
+      <form action="<?= base_url('presensi/tambahpegawai') ?>" method="POST" id="formTambahPresPegawai" class="modal-body px-3 px-sm-4 py-3">
+        <div class="form-group mb-3">
+          <label class="ppg-label" for="pegNipg">Nama Pegawai</label>
+          <select class="form-control ppg-input" id="pegNipg" name="nipg" required>
+            <option value="" selected disabled>Pilih pegawai</option>
+            <?php
+            $data = $this->db->query("SELECT Nipg,NamaPegawai FROM pegawai")->result();
+            foreach ($data as $row) { ?>
+              <option value="<?= $row->Nipg ?>"><?= $row->NamaPegawai ?></option>
+            <?php } ?>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-7 mb-1" id="simple-date3">
+            <label class="ppg-label" for="pegTgl">Tanggal</label>
+            <div class="input-group date">
+              <div class="input-group-prepend">
+                <span class="input-group-text bg-white"><i class="fas fa-calendar-alt text-primary"></i></span>
+              </div>
+              <input type="text" name="tgl" class="form-control ppg-input" id="pegTgl" required readonly value="<?= date('Y-m-d') ?>" autocomplete="off">
+            </div>
+          </div>
+          <div class="form-group col-5 mb-1">
+            <label class="ppg-label" for="pegWaktu">Jam</label>
+            <input type="time" class="form-control ppg-input" id="pegWaktu" value="<?= date('H:i') ?>" required>
+          </div>
+        </div>
+      </form>
+      <div class="modal-footer px-3 px-sm-4 pt-2 pb-3">
+        <button type="button" class="btn btn-secondary ppg-btn flex-fill" data-dismiss="modal">Batal</button>
+        <button type="submit" form="formTambahPresPegawai" class="btn btn-primary ppg-btn flex-fill ml-2"><i class="fas fa-save mr-1"></i>Simpan</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* ===== Modal Presensi Pegawai: gaya aplikasi mobile ===== */
+.ppg-modal .modal-content {
+  border: 0;
+  border-radius: .75rem;
+  max-height: calc(100vh - 3.5rem);
+  box-shadow: 0 20px 60px rgba(15, 23, 42, .22);
+}
+@supports (height: 100dvh) {
+  .ppg-modal .modal-content { max-height: calc(100dvh - 3.5rem); }
+}
+.ppg-modal .modal-header,
+.ppg-modal .modal-footer { flex-shrink: 0; }
+.ppg-modal .modal-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.ppg-wrap { min-width: 0; }
+.ppg-icon {
+  width: 2.5rem; height: 2.5rem;
+  border-radius: .6rem;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: rgba(37, 99, 235, .1);
+  color: #2563eb;
+  font-size: 1.05rem;
+  flex-shrink: 0;
+}
+.ppg-subtitle { font-size: .8rem; color: #6b7280; margin-top: .1rem; }
+.ppg-close {
+  width: 2.5rem; height: 2.5rem;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.35rem;
+  color: #6b7280;
+  transition: background-color .15s, color .15s;
+}
+.ppg-modal .ppg-close:hover { background: #f1f5f9; color: #111827; }
+.ppg-label {
+  font-size: .85rem; font-weight: 600; color: #374151;
+  margin-bottom: .35rem; display: block;
+}
+.ppg-modal .form-control { border-radius: .6rem; }
+.ppg-modal .input-group-text {
+  border-radius: .6rem 0 0 .6rem;
+  border-right: 0;
+}
+.ppg-modal .input-group > .form-control {
+  border-radius: 0 .6rem .6rem 0;
+}
+.ppg-modal .form-control:focus {
+  border-color: #93b4f5;
+  box-shadow: 0 0 0 .2rem rgba(37, 99, 235, .15);
+}
+.ppg-input { min-height: 44px; font-size: 16px; }
+.modal-footer .ppg-btn {
+  min-height: 48px;
+  border-radius: .55rem;
+  font-weight: 600;
+}
+
+/* Tampilan aplikasi mobile di layar kecil */
+@media (max-width: 575.98px) {
+  .ppg-modal .modal-dialog {
+    margin: 0; max-width: 100%;
+    height: 100%;
+    overscroll-behavior: contain;
+  }
+  @supports (height: 100svh) {
+    .ppg-modal .modal-dialog { height: 100svh; }
+  }
+  .ppg-modal .modal-content {
+    height: 100%;
+    max-height: none;
+    border-radius: 1.25rem 1.25rem 0 0;
+    box-shadow: 0 -8px 40px rgba(15, 23, 42, .18);
+    overscroll-behavior: contain;
+  }
+  .ppg-modal .modal-header {
+    justify-content: flex-start;
+    padding: .85rem 1rem .85rem .5rem;
+    border-bottom: 1px solid #eef0f4;
+  }
+  .ppg-modal .ppg-close {
+    order: -1;
+    margin: 0 .35rem 0 0;
+    color: #2563eb;
+    flex-shrink: 0;
+  }
+  .ppg-modal .ppg-close:hover { background: rgba(37, 99, 235, .08); color: #2563eb; }
+  .ppg-modal .ppg-wrap.ml-3 { margin-left: .15rem !important; }
+  .ppg-modal .modal-footer {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    padding: .65rem 1rem calc(.75rem + env(safe-area-inset-bottom, 0px));
+  }
+  .ppg-modal .modal-footer .ppg-btn {
+    width: 100%;
+    margin-left: 0 !important;
+    border-radius: 9999px;
+  }
+  .ppg-modal .modal-footer .btn-secondary {
+    min-height: 42px;
+    background: rgba(37, 99, 235, .07);
+    border-color: transparent;
+    color: #2563eb;
+  }
+  .ppg-modal .modal-footer .btn-secondary:hover,
+  .ppg-modal .modal-footer .btn-secondary:focus {
+    background: rgba(37, 99, 235, .14);
+    border-color: transparent;
+    color: #1d4ed8;
+  }
+}
+@media (max-width: 575.98px) and (prefers-reduced-motion: no-preference) {
+  .ppg-modal.fade .modal-dialog { transform: translateY(28px); }
+  .ppg-modal.show .modal-dialog { transform: none; }
+}
+@media (min-width: 576px) {
+  .ppg-modal .modal-dialog { max-width: 460px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ppg-close { transition: none; }
+}
+html.app-modal-open, html.app-modal-open body {
+  overflow: hidden !important;
+  overscroll-behavior: none;
+}
+</style>
+<script>
+if (window.jQuery) {
+  window.jQuery(document)
+    .on('show.bs.modal', '.ppg-modal', function () {
+      document.documentElement.classList.add('app-modal-open');
+    });
+  window.jQuery(document).on('hidden.bs.modal', function () {
+    if (!document.querySelector('.modal.show')) {
+      document.documentElement.classList.remove('app-modal-open');
+    }
+  });
+}
+
+$(document).ready(function () {
+  // Klik ikon kalender => fokus ke input tanggal
+  var ppgIcon = document.querySelector('#simple-date3 .input-group-text');
+  if (ppgIcon) {
+    ppgIcon.addEventListener('click', function () {
+      document.getElementById('pegTgl').focus();
+    });
+  }
+
+  // Gabungkan tanggal + jam menjadi satu nilai DATETIME saat simpan
+  $('#formTambahPresPegawai').on('submit', function () {
+    var d = document.getElementById('pegTgl').value;
+    var w = document.getElementById('pegWaktu').value;
+    if (d && w && d.indexOf(' ') === -1) {
+      document.getElementById('pegTgl').value = d + ' ' + w + ':00';
+    }
+  });
+});
+</script>
 <!-- end modal presensi -->
     <!-- Modal Logout -->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabelLogout" aria-hidden="true">
@@ -63,7 +237,6 @@
       </div>
     </div>
 
-    </div>
     <!---Container Fluid-->
     </div>
     <!-- Footer -->
@@ -406,7 +579,7 @@
               text: '<i class="fas fa-plus"></i> Tambah',
               className: 'btn btn-info',
               action: function() {
-                location.href = '<?= base_url("rombel/form") ?>';
+                $("#tambahRombel").modal();
               }
             },
             {

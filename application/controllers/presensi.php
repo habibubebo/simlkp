@@ -27,23 +27,24 @@ class presensi extends CI_Controller
     function tambah()
     {
         $tgl = $this->input->post('tgl');
-        $waktu = $this->input->post('waktu');
+        $waktu_list = (array) $this->input->post('waktu');
         $nipd_list = $this->input->post('nama');
         $ins = $this->input->post('Instruktur');
         $materi = $this->input->post('materi');
         $jml = $this->input->post('jumlah');
 
-        $datetime = date('Y-m-d', strtotime($tgl)) . ' ' . $waktu . ':00';
+        $tanggal = date('Y-m-d', strtotime($tgl));
 
         foreach ($nipd_list as $nipd) {
             $jks = $this->db->query("SELECT Jeniskursus FROM peserta WHERE Nipd='$nipd'")->row()->Jeniskursus;
             for ($x = 0; $x < $jml; $x++) {
+                $waktu = isset($waktu_list[$x]) && $waktu_list[$x] !== '' ? $waktu_list[$x] : (isset($waktu_list[0]) ? $waktu_list[0] : date('H:i'));
                 $data = array(
-                    'Tgl' => $datetime,
+                    'Tgl' => $tanggal . ' ' . $waktu . ':00',
                     'Nipd' => $nipd,
                     'Jeniskursus' => $jks,
                     'Instruktur' => $ins,
-                    'Materi' => isset($materi[$x]) ? $materi[$x] : $materi[0]
+                    'Materi' => isset($materi[$x]) && $materi[$x] !== '' ? $materi[$x] : $materi[0]
                 );
                 $this->Model_APS->simpan_data($data, 'presensi');
                 helper_log("add", "menambahkan presensi $nipd");
