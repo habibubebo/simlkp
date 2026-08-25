@@ -54,8 +54,14 @@ class uk extends CI_Controller {
     }
     // from-Ubah
     function form_ubah($Id){
-        $where = array('unitkompetensi.Id' => $Id);
-        $data['uks'] = $this->Model_APS->edit_data_join('unitkompetensi','rombel', 'unitkompetensi.Rombel=rombel.Id',$where)->result();
+        // Select eksplisit: kolom Id tidak bentrok dengan rombel.Id,
+        // LEFT JOIN agar data tetap tampil walau jenis kursus sudah terhapus
+        $data['uks'] = $this->db
+            ->select('unitkompetensi.*, rombel.Namarombel, rombel.Kelas')
+            ->from('unitkompetensi')
+            ->join('rombel', 'unitkompetensi.Rombel = rombel.Id', 'left')
+            ->where('unitkompetensi.Id', $Id)
+            ->get()->result();
         $this->load->view('menu/uk/ubah',$data);
         $this->load->view('layout/footer');
     }

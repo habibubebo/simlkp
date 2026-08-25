@@ -40,7 +40,7 @@
                 <td>
                 <div class="btn-group btn-group-toggle">
                   <label class="btn btn-warning btn-sm">
-                  <a class="text-white" href="<?= base_url("uk/form_ubah/$tp->Id") ?>" class="btn btn-warning btn-sm" title="Klik untuk merubah data.">
+                  <a class="text-white" href="<?= base_url("uk/form_ubah/$tp->Idu") ?>" class="btn btn-warning btn-sm" title="Klik untuk merubah data.">
                     <i class="fas fa-pen-alt"></i>
                   </a>
                   </label>

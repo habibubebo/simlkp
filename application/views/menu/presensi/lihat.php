@@ -7,8 +7,7 @@ function perpendekNama($s) {
     
     return trim($n) . (isset($p[1]) ? ', ' . rtrim(trim($p[1]), '.') : '');
 }
-// echo perpendekNama("Haris Dwi Saputra, S.Pi."); 
-// Hasil: Haris DS, S.Pi
+
 ?>
 <div class="d-sm-flex align-items-center justify-content-between mt-4 mb-0">
   <h1 class="h3 mb-0 text-gray-800 d-none d-sm-block">Presensi</h1>
@@ -228,15 +227,25 @@ function perpendekNama($s) {
       <form id="formEditPresensi" action="<?= base_url('index.php/presensi/ubah') ?>" method="POST" class="modal-body px-3 px-sm-4 py-3">
         <input type="hidden" name="Id" id="epId">
         <input type="hidden" name="jks" id="epJks">
-        <div class="form-group mb-2" id="ep-date-tgl">
-          <label class="field-label" for="epTgl">Tanggal Hadir</label>
-          <div class="input-group date">
-            <div class="input-group-prepend">
-              <span class="input-group-text bg-white"><i class="fas fa-calendar-alt text-primary"></i></span>
+        <div class="form-row mb-2">
+          <div class="form-group col-8 col-md-8 mb-0" id="ep-date-tgl">
+            <label class="field-label" for="epTgl">Tanggal Hadir</label>
+            <div class="input-group date">
+              <div class="input-group-prepend">
+                <span class="input-group-text bg-white"><i class="fas fa-calendar-alt text-primary"></i></span>
+              </div>
+              <input type="text" name="tgl" class="form-control presensi-input" id="epTgl" required readonly autocomplete="off">
             </div>
-            <input type="text" name="tgl" class="form-control presensi-input" id="epTgl" required readonly autocomplete="off">
           </div>
-          <small class="text-muted d-block mt-1">Jam sesi mengikuti data awal.</small>
+          <div class="form-group col-4 col-md-4 mb-0">
+            <label class="field-label" for="epJam">Jam</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text bg-white"><i class="fas fa-clock text-primary"></i></span>
+              </div>
+              <input type="time" name="jam" class="form-control presensi-input" id="epJam" required>
+            </div>
+          </div>
         </div>
         <div class="form-group mb-3">
           <label class="field-label" for="epNipd">Nama Peserta</label>
@@ -817,7 +826,7 @@ if (window.jQuery) {
       jam.name = 'waktu[]';
       jam.setAttribute('aria-label', 'Jam pertemuan ' + i);
       jam.required = true;
-      if (!prevJam[i - 1]) prevJam[i - 1] = addMinutes(last, 45);
+      if (!prevJam[i - 1]) prevJam[i - 1] = addMinutes(last, 90);
       last = prevJam[i - 1];
       jam.value = last;
 
@@ -944,7 +953,8 @@ $(document).ready(function () {
     var tgl = String(b.data('tgl') || '');
     var m = tgl.match(/^(\d{4}-\d{2}-\d{2})(?:\s+(.+))?$/);
     $('#epTgl').val(m ? m[1] : tgl);
-    $('#epTgl').data('origtime', (m && m[2]) ? m[2] : '');
+    var jam = (m && m[2]) ? m[2].replace(/:\d{2}$/, '') : '';
+    $('#epJam').val(jam);
     $('#epId').val(b.data('id'));
     $('#epJks').val(b.data('jks'));
     var nipd = String(b.data('nipd') || '');
@@ -957,11 +967,11 @@ $(document).ready(function () {
     $('#epMateri').val(b.data('materi'));
   });
 
-  // Kembalikan komponen jam asli agar tidak berubah saat simpan
+  // Gabungkan tanggal + jam saat submit
   $('#formEditPresensi').on('submit', function () {
-    var t = $('#epTgl').data('origtime');
+    var t = $('#epJam').val();
     if (t) {
-      $('#epTgl').val($('#epTgl').val() + ' ' + t);
+      $('#epTgl').val($('#epTgl').val() + ' ' + t + ':00');
     }
   });
 });
