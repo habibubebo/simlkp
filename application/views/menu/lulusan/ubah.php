@@ -60,6 +60,12 @@
                     <div class="form-group col-md-3">
                         <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nilai 4" name="n4" maxlength="1" required value="<?php echo $tp->n4 ?>">
                     </div>
+                    <div class="form-group col-md-3">
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nilai 5" name="n5" maxlength="1" value="<?php echo $tp->n5 ?>">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Nilai 6" name="n6" maxlength="1" value="<?php echo $tp->n6 ?>">
+                    </div>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Simpan</button>

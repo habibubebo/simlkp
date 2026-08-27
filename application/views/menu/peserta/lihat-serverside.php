@@ -7,18 +7,15 @@
   </ol>
 </div>
 <!-- Content -->
-<?php
-$alert = $this->session->flashdata('alert');
-if (isset($alert)) {
-  echo '<div class="alert alert-danger alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-    <h6><i class="fas fa-exclamation-triangle"></i><b> Informasi</b></h6>
-    <strong>' . $alert . '</strong>
-  </div>';
-};
-?>
+<?php if (!empty($alert)): ?>
+<div class="alert alert-danger alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <h6><i class="fas fa-exclamation-triangle"></i><b> Informasi</b></h6>
+  <strong><?= $alert ?></strong>
+</div>
+<?php endif; ?>
 <div class="row">
   <!-- DataTable with Hover -->
   <!-- <div class="col-lg-12"> -->
@@ -520,11 +517,9 @@ if (window.jQuery) {
             className: "",
             targets: -2,
             render: function(e, a, t, r) {
-              return new Date(t.Tglmasuk).toISOString()
-                .slice(0, 10)
-                .split("-")
-                .reverse()
-                .join("/");
+              var d = new Date(t.Tglmasuk);
+              if (isNaN(d.getTime()) || !t.Tglmasuk || t.Tglmasuk === '0000-00-00') return '-';
+              return d.toISOString().slice(0, 10).split("-").reverse().join("/");
             }
           }, {
             className: "noExport",

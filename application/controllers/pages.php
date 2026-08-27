@@ -97,15 +97,15 @@ class pages  extends CI_Controller
     }
     function peserta()
     {
-        // $data['peserta'] = $this->Model_APS->tampil_data_join('*,peserta.Id AS Idp', 'peserta', 'rombel', 'peserta.Jeniskursus=rombel.Id', 'peserta.Nipd', 'DESC')->result();
         $data['rombel'] = $this->db->query("SELECT Namarombel,Kelas FROM rombel")->result();
+        $data['alert'] = $this->session->flashdata('alert');
         $this->load->view('menu/peserta/lihat-serverside', $data);
         $this->load->view('layout/footer');
     }
     function peserta2()
     {
-        // $data['peserta'] = $this->Model_APS->tampil_data_join('*,peserta.Id AS Idp', 'peserta', 'rombel', 'peserta.Jeniskursus=rombel.Id', 'peserta.Nipd', 'DESC')->result();
         $data['rombel'] = $this->db->query("SELECT Namarombel,Kelas FROM rombel")->result();
+        $data['alert'] = $this->session->flashdata('alert');
         $this->load->view('menu/peserta/lihat-serverside', $data);
         $this->load->view('layout/footer');
     }
@@ -133,9 +133,7 @@ class pages  extends CI_Controller
     }
     function presensi()
     {
-        $data['presensi'] = $this->db->query("SELECT presensi.Id,presensi.Tgl,presensi.Nipd,peserta.Nama,peserta.Jeniskursus,rombel.Namarombel,presensi.Materi,instruktur.Id AS IdI,instruktur.NamaInstruktur,peserta.Id AS Idp FROM presensi JOIN peserta JOIN instruktur JOIN rombel ON presensi.Nipd=peserta.Nipd AND presensi.Instruktur=instruktur.Id AND presensi.Jeniskursus=rombel.Id WHERE Tgl BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND DATE_SUB(CURDATE(), INTERVAL -1 DAY) order by Tgl DESC")->result();
-
-        $this->load->view('menu/presensi/lihat', $data);
+        $this->load->view('menu/presensi/lihat');
         $this->load->view('layout/footer');
     }
     function log()

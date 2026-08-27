@@ -55,57 +55,7 @@ function perpendekNama($s) {
               <th>Aksi</th>
             </tr>
           </thead>
-          <tbody>
-            <?php
-            foreach ($presensi as $tp) {
-            ?>
-              <tr>
-                <td><?php $this->Model_APS->Gethari($tp->Tgl) ?></td>
-                <td><a class="table-link" href="<?= base_url("index.php/presensi/peserta?Id=$tp->Idp") ?>" title="Melihat seluruh presensi <?= $tp->Nama ?>"><?= perpendekNama($tp->Nama) ?></a></td>
-                <td><?= $tp->Namarombel ?></td>
-                <td><?php $insParts = explode(' ', trim($tp->NamaInstruktur)); ?><a class="table-link ins-link" href="<?= base_url("presensi/instruktur?Id=$tp->IdI") ?>" title="Melihat presensi instruktur <?= htmlspecialchars($tp->NamaInstruktur) ?>"><span class="ins-w1"><?= htmlspecialchars($insParts[0]) ?></span><span class="ins-rest"><?= isset($insParts[1]) ? ' ' . htmlspecialchars(implode(' ', array_slice($insParts, 1))) : '' ?></span></a></td>
-                <td><?= $tp->Materi ?></td>
-                <td>
-                  <div class="btn-group btn-group-toggle action-group">
-                    <a class="btn btn-warning btn-sm flex-fill text-white" href="#" data-toggle="modal" data-target="#editPresensi"
-                      data-id="<?= $tp->Id ?>"
-                      data-tgl="<?= htmlspecialchars($tp->Tgl, ENT_QUOTES) ?>"
-                      data-nipd="<?= htmlspecialchars($tp->Nipd, ENT_QUOTES) ?>"
-                      data-nama="<?= htmlspecialchars($tp->Nama, ENT_QUOTES) ?>"
-                      data-jks="<?= htmlspecialchars($tp->Jeniskursus, ENT_QUOTES) ?>"
-                      data-ins="<?= htmlspecialchars($tp->IdI, ENT_QUOTES) ?>"
-                      data-materi="<?= htmlspecialchars($tp->Materi, ENT_QUOTES) ?>"
-                      title="Klik untuk merubah data.">
-                      <i class="fas fa-pen-alt"></i><span class="btn-text"> Edit</span>
-                    </a>
-                    <a class="btn btn-danger btn-sm flex-fill text-white" href="#" data-toggle="modal" data-target="#deleteuser<?= $tp->Id; ?>" title="Klik untuk menghapus data.">
-                      <i class="fas fa-trash-alt"></i><span class="btn-text"> Hapus</span>
-                    </a>
-                  </div>
-                  <!-- modal delete -->
-                  <div class="example-modal">
-                    <div id="deleteuser<?= $tp->Id; ?>" class="modal fade" role="dialog" style="display:none;">
-                      <div class="modal-dialog">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h3 class="modal-title">Konfirmasi Delete Data</h3>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          </div>
-                          <div class="modal-body">
-                            <h6 align="center">Apakah anda yakin ingin menghapus data <?= $tp->Nama . ' tanggal ' . $tp->Tgl; ?><strong><span class="grt"></span></strong> ?</h6>
-                          </div>
-                          <div class="modal-footer">
-                            <a href="<?= base_url('index.php/presensi/hapus/' . $tp->Id) ?>" class="btn btn-danger"><i class="fa fa-trash"> </i> Hapus</a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <!-- modal delete -->
-                </td>
-              </tr>
-            <?php } ?>
-          </tbody>
+          <tbody></tbody>
         </table>
       </div>
     </div>
@@ -116,6 +66,113 @@ function perpendekNama($s) {
 </button>
 <script type="text/javascript">
   document.title = "Presensi <?= $profil[0]->Namalkp?>";
+</script>
+<script>
+var appPath = '<?= base_url() ?>';
+var hariList = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+var bulanList = ['','Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+
+function fmtTanggal(raw) {
+  if (!raw) return '';
+  var d = new Date(raw);
+  var dd = ('0'+d.getDate()).slice(-2);
+  var hh = ('0'+d.getHours()).slice(-2);
+  var mm = ('0'+d.getMinutes()).slice(-2);
+  return hariList[d.getDay()] + ', ' + dd + ' ' + bulanList[d.getMonth()+1] + ' ' + d.getFullYear() + ' <span class="text-info">Pukul ' + hh + ':' + mm + '</span>';
+}
+
+function pendekNama(s) {
+  if (!s) return '';
+  var parts = s.split(',', 2);
+  var words = parts[0].trim().split(/\s+/);
+  var out = words.slice(0, 2).join(' ');
+  if (words.length > 2) {
+    out += ' ' + words.slice(2).map(function(w){ return w.charAt(0).toUpperCase() + '.'; }).join('');
+  }
+  return out.trim() + (parts[1] ? ', ' + parts[1].trim().replace(/\.$/, '') : '');
+}
+
+function esc(s) { return s ? s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') : ''; }
+
+$(document).ready(function() {
+  var tabel = $('#tabelpresensi').DataTable({
+    processing: true,
+    serverSide: true,
+    ordering: true,
+    order: [[0, 'desc']],
+    dom: 'Bfrtip',
+    pagingType: 'numbers',
+    language: {
+      searchPlaceholder: 'Pencarian',
+      search: ''
+    },
+    buttons: [{
+      text: '<i class="fas fa-plus"></i> Peserta',
+      className: 'btn btn-info',
+      action: function() { $('#tambahPresensiSiswa').modal(); }
+    },{
+      text: '<i class="fas fa-plus"></i> Pegawai',
+      className: 'btn btn-warning',
+      action: function() { $('#tambahPres').modal(); }
+    }],
+    ajax: {
+      url: '<?= base_url('cek/presensi'); ?>',
+      type: 'POST'
+    },
+    deferRender: true,
+    aLengthMenu: [[10, 50, 100], [10, 50, 100]],
+    columns: [
+      { data: 'Tgl' },
+      { data: 'Nama' },
+      { data: 'Namarombel' },
+      { data: 'NamaInstruktur' },
+      { data: 'Materi' },
+      { data: 'Id' }
+    ],
+    columnDefs: [
+      {
+        targets: 0,
+        render: function(data) { return fmtTanggal(data); }
+      },
+      {
+        targets: 1,
+        render: function(data, type, row) {
+          return '<a class="table-link" href="' + appPath + 'index.php/presensi/peserta?Id=' + row.Idp + '" title="Melihat seluruh presensi ' + esc(row.Nama) + '">' + esc(pendekNama(row.Nama)) + '</a>';
+        }
+      },
+      {
+        targets: 3,
+        render: function(data, type, row) {
+          if (!data) return '';
+          var parts = data.split(/\s+/);
+          return '<a class="table-link ins-link" href="' + appPath + 'presensi/instruktur?Id=' + row.IdI + '" title="Melihat presensi instruktur ' + esc(data) + '"><span class="ins-w1">' + esc(parts[0]) + '</span><span class="ins-rest">' + (parts.length > 1 ? ' ' + esc(parts.slice(1).join(' ')) : '') + '</span></a>';
+        }
+      },
+      {
+        targets: 5,
+        orderable: false,
+        className: 'text-center',
+        render: function(data, type, row) {
+          return '<div class="btn-group btn-group-toggle action-group">' +
+            '<a class="btn btn-warning btn-sm flex-fill text-white" href="#" data-toggle="modal" data-target="#editPresensi" data-id="' + row.Id + '" data-tgl="' + esc(row.Tgl) + '" data-nipd="' + esc(row.Nipd) + '" data-nama="' + esc(row.Nama) + '" data-jks="' + esc(row.Jeniskursus) + '" data-ins="' + esc(row.IdI) + '" data-materi="' + esc(row.Materi) + '" title="Klik untuk merubah data."><i class="fas fa-pen-alt"></i><span class="btn-text"> Edit</span></a>' +
+            '<a class="btn btn-danger btn-sm flex-fill text-white btn-hapus-presensi" href="#" data-id="' + row.Id + '" data-nama="' + esc(row.Nama) + '" data-tgl="' + esc(row.Tgl) + '" title="Klik untuk menghapus data."><i class="fas fa-trash-alt"></i><span class="btn-text"> Hapus</span></a>' +
+            '</div>';
+        }
+      }
+    ]
+  });
+
+  // Hapus via konfirmasi (tanpa modal statis)
+  $(document).on('click', '.btn-hapus-presensi', function(e) {
+    e.preventDefault();
+    var id = $(this).data('id');
+    var nama = $(this).data('nama');
+    var tgl = $(this).data('tgl');
+    if (confirm('Apakah anda yakin ingin menghapus data ' + nama + ' tanggal ' + tgl + ' ?')) {
+      window.location.href = appPath + 'index.php/presensi/hapus/' + id;
+    }
+  });
+});
 </script>
 
 <!-- Modal Tambah Presensi Siswa -->
@@ -485,8 +542,6 @@ function perpendekNama($s) {
 @media (prefers-reduced-motion: reduce) {
   .presensi-close, .step-btn { transition: none; }
   .step-btn:not(:disabled):active { transform: none; }
-  #tabelpresensi tbody tr { transition: none; }
-  #tabelpresensi tbody tr:active { transform: none; }
 }
 /* Kunci scroll halaman belakang saat modal terbuka (cegah lompatan scroll iOS) */
 html.app-modal-open, html.app-modal-open body {
@@ -494,223 +549,221 @@ html.app-modal-open, html.app-modal-open body {
   overscroll-behavior: none;
 }
 
-/* ====== Daftar presensi ala iPhone (layar kecil) ====== */
+/* ====== Daftar presensi mobile ====== */
 @media (max-width: 767.98px) {
+  /* === Toolbar === */
+  #tabelpresensi_wrapper > .row:first-child {
+    padding: 0 .75rem .5rem;
+    gap: .45rem;
+  }
   #tabelpresensi_wrapper div.dataTables_filter {
-    padding: 0 .25rem .6rem;
+    padding: 0;
+    flex: 1 1 100%;
+    margin-bottom: 0;
   }
   #tabelpresensi_wrapper div.dataTables_filter label {
     margin-bottom: 0;
+    width: 100%;
   }
   #tabelpresensi_wrapper div.dataTables_filter input {
+    width: 100% !important;
     height: 44px;
     font-size: 16px;
     background: #eef0f4;
     border: 1px solid transparent;
     border-radius: 13px;
-    box-shadow: none;
-    -webkit-appearance: none;
-    appearance: none;
+    padding: 0 1rem;
   }
   #tabelpresensi_wrapper div.dataTables_filter input:focus {
     background: #fff;
     border-color: #93b4f5;
-    box-shadow: 0 0 0 .25rem rgba(37, 99, 235, .12);
+    box-shadow: 0 0 0 .25rem rgba(37,99,235,.12);
   }
-
-  /* Latar konten abu lembut agar kartu putih kontras (ala grouped list iOS) */
-  #container-wrapper { background: #eceff4; }
-
-  /* Kartu luar pembungkus tabel menyatu dengan warna halaman */
-  .card.mb-0 {
-    background: transparent;
-    border: 0;
-    box-shadow: none;
+  #tabelpresensi_wrapper .dt-buttons {
+    display: flex !important;
+    gap: .4rem;
+    flex: 1 1 100%;
   }
-  .card.mb-0 > .table-responsive {
-    padding: .25rem .75rem 0 !important;
-    overflow-x: visible;
-  }
-  #tabelpresensi,
-  #tabelpresensi tbody {
-    display: block;
-    width: 100%;
-    background: transparent !important;
-  }
-  #tabelpresensi thead { display: none; }
-
-  /* Baris = kartu putih melayang dengan bayangan berlapis */
-  #tabelpresensi tbody tr {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    background: #fff;
-    border: 0;
-    border-radius: 18px;
-    padding: .9rem 1rem .95rem;
-    margin-bottom: .7rem;
-    box-shadow:
-      0 1px 2px rgba(17, 24, 39, .06),
-      0 6px 16px -6px rgba(17, 24, 39, .10),
-      0 0 0 .5px rgba(17, 24, 39, .05);
-    -webkit-tap-highlight-color: transparent;
-    transition: transform .12s ease;
-  }
-  #tabelpresensi tbody tr:active { transform: scale(.985); }
-  #tabelpresensi td {
-    display: block;
-    padding: 0 !important;
-    border: 0 !important;
-    white-space: normal;
-    vertical-align: top;
-  }
-  #tabelpresensi td:not(:nth-child(5)):before { display: none; }
-
-  /* Tanggal → teks di kiri atas kartu, berbagi baris dengan ikon aksi */
-  #tabelpresensi td:nth-child(1) {
-    order: 0;
-    flex: 1 1 auto;
-    min-width: 0;
-    font-size: .78rem;
-    line-height: 1.35;
+  #tabelpresensi_wrapper .dt-buttons .btn {
+    flex: 1 1 0;
+    font-size: .8rem;
+    padding: .45rem .5rem;
+    border-radius: 10px;
     font-weight: 600;
-    letter-spacing: .01em;
-    color: #64748b;
-    margin-bottom: .2rem;
   }
-  #tabelpresensi td:nth-child(1) .text-info {
+  #tabelpresensi_wrapper .dataTables_length { display: none !important; }
+
+  /* === Background & wrapper === */
+  #container-wrapper { background: #eceff4; }
+  #tabelpresensi_wrapper { background: transparent !important; border: 0 !important; box-shadow: none !important; }
+
+  /* === Override base: table & tbody === */
+  #tabelpresensi,
+  #tabelpresensi.dataTable { width: 100% !important; background: transparent !important; }
+
+  /* === Override base: baris kartu === */
+  table.dataTable#tabelpresensi tbody tr {
+    display: flex !important;
+    flex-wrap: wrap;
+    align-items: stretch;
+    background: #fff !important;
+    border: 0 !important;
+    border-radius: 14px !important;
+    padding: .7rem .85rem .65rem !important;
+    margin: 0 .75rem .55rem !important;
+    box-shadow: 0 1px 3px rgba(17,24,39,.07), 0 0 0 .5px rgba(17,24,39,.04) !important;
+  }
+  table.dataTable#tabelpresensi tbody tr:nth-child(even) { background: #fff !important; }
+
+  /* === Override base: cell layout === */
+  table.dataTable#tabelpresensi tbody td {
+    display: block !important;
+    padding: 0 !important;
+    border: none !important;
+    border-bottom: 0 !important;
+    min-height: auto !important;
+    gap: 0;
+    justify-content: flex-start !important;
+    align-items: stretch !important;
+    background: transparent !important;
+    white-space: normal !important;
+  }
+  /* Sembunyiin pseudo label bawaan ruang-admin */
+  table.dataTable#tabelpresensi tbody td:before { display: none !important; }
+  table.dataTable#tabelpresensi tbody td:last-child { border-bottom: 0 !important; }
+
+  /* === Tanggal: baris pertama, kiri atas === */
+  table.dataTable#tabelpresensi tbody td:nth-child(1) {
+    order: 0;
+    flex: 1 1 0%;
+    min-width: 0;
+    font-size: .73rem;
+    line-height: 1.3;
+    font-weight: 600;
+    color: #64748b;
+  }
+  table.dataTable#tabelpresensi tbody td:nth-child(1) .text-info {
     display: block;
-    margin-top: .1rem;
+    margin-top: .05rem;
     color: #94a3b8 !important;
     font-weight: 500;
   }
 
-  /* Nama → judul kartu dengan chevron di kanan */
-  #tabelpresensi td:nth-child(2) {
+  /* === Aksi: ikon kecil di pojok kanan, sebaris tanggal === */
+  table.dataTable#tabelpresensi tbody td:nth-child(6) {
     order: 1;
-    display: flex;
-    align-items: center;
-    flex: 0 0 100%;
-    margin: .1rem 0 .05rem;
+    flex: 0 0 auto;
+    align-self: flex-start;
   }
-  #tabelpresensi td:nth-child(2) .table-link,
-  #tabelpresensi td:nth-child(2) a.btn {
-    flex: 1 1 auto;
-    min-width: 0;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    padding: 0;
-    font-size: 1.02rem;
+  /* Override base action-group: jadi icon-only */
+  table.dataTable#tabelpresensi td .action-group {
+    width: auto !important;
+    display: flex !important;
+    gap: .3rem !important;
+  }
+  table.dataTable#tabelpresensi td .action-group .btn {
+    width: 30px !important;
+    height: 30px !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    border-radius: 8px !important;
+    border: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: .72rem !important;
+  }
+  table.dataTable#tabelpresensi td .action-group .btn-text { display: none !important; }
+  table.dataTable#tabelpresensi td .action-group .btn i { display: inline-block !important; }
+
+  /* === Nama: judul kartu === */
+  table.dataTable#tabelpresensi tbody td:nth-child(2) {
+    order: 2;
+    flex: 0 0 100%;
+    margin: .12rem 0 0;
+    overflow: hidden;
+  }
+  table.dataTable#tabelpresensi tbody td:nth-child(2) .table-link {
+    display: block;
+    font-size: .95rem;
     font-weight: 600;
     color: #111827;
     text-decoration: none;
-    text-align: left;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  #tabelpresensi td:nth-child(2) a::after {
+  table.dataTable#tabelpresensi tbody td:nth-child(2) .table-link::after {
     content: "\203A";
-    flex: 0 0 auto;
-    margin-left: .55rem;
-    font-size: 1.45rem;
+    float: right;
+    font-size: 1.2rem;
     font-weight: 400;
-    line-height: 1;
     color: #c4cad3;
+    line-height: 1;
   }
 
-  /* Baris info: "Jenis Kursus - Materi" rata kiri, avatar instruktur di kanan */
-  #tabelpresensi td:nth-child(3) {
-    order: 2;
-    flex: 0 1 auto;
+  /* === Info baris: Jenis Kursus (kiri) — Materi (kanan) === */
+  table.dataTable#tabelpresensi tbody td:nth-child(3) {
+    order: 3;
+    flex: 1 1 auto;
     min-width: 0;
-    max-width: 48%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-size: .8rem;
+    max-width: 55%;
+    font-size: .75rem;
     font-weight: 600;
     color: #374151;
-  }
-  #tabelpresensi td:nth-child(5) {
-    order: 3;
-    flex: 0 1 auto;
-    min-width: 0;
-    max-width: 38%;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
-    font-size: .8rem;
-    font-weight: 400;
-    color: #6b7280;
   }
-  #tabelpresensi td:nth-child(5)::before {
-    content: "-";
-    margin: 0 .35rem;
-    color: #cbd2dc;
-  }
-  /* Instruktur → kata pertama saja, hitam bold + chevron, rata kanan */
-  #tabelpresensi td:nth-child(4) {
+  table.dataTable#tabelpresensi tbody td:nth-child(5) {
     order: 4;
     flex: 0 1 auto;
-    margin-left: auto;
     min-width: 0;
     max-width: 42%;
-    overflow: hidden;
+    margin-left: auto;
+    font-size: .75rem;
+    color: #6b7280;
     white-space: nowrap;
-  }
-  #tabelpresensi td:nth-child(4) .ins-rest { display: none; }
-  #tabelpresensi td:nth-child(4) a.table-link {
-    max-width: 100%;
-    overflow: hidden;
-    font-size: .8rem;
-    font-weight: 700;
-    color: #111827 !important;
-    border-bottom: 0;
-    text-decoration: none;
-  }
-  #tabelpresensi td:nth-child(4) .ins-w1 {
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  table.dataTable#tabelpresensi tbody td:nth-child(5)::before {
+    content: "\2014\00a0" !important;
+    display: inline !important;
+    color: #cbd2dc;
+    font-weight: 400;
+  }
 
-  /* Aksi → ikon kecil di pojok kanan atas, sebaris dengan tanggal */
-  #tabelpresensi td:last-child {
-    order: 0;
-    flex: 0 0 auto;
-    margin: 0 0 0 .5rem;
+  /* === Instruktur: baris bawah, full width === */
+  table.dataTable#tabelpresensi tbody td:nth-child(4) {
+    order: 5;
+    flex: 0 0 100%;
+    margin-top: .25rem;
+    padding-top: .3rem !important;
+    border-top: 1px solid #f1f5f9 !important;
+    font-size: .72rem;
+    color: #6b7280;
   }
-  #tabelpresensi td:last-child .action-group {
-    gap: .4rem;
+  table.dataTable#tabelpresensi tbody td:nth-child(4):before { display: none !important; }
+  table.dataTable#tabelpresensi tbody td:nth-child(4) .ins-rest { display: none; }
+  table.dataTable#tabelpresensi tbody td:nth-child(4) a.table-link {
+    font-size: .72rem;
+    font-weight: 600;
+    color: #334155 !important;
+    text-decoration: none;
   }
-  #tabelpresensi td:last-child .action-group .btn {
-    width: 32px;
-    height: 32px;
-    min-height: 0;
-    padding: 0;
-    border-radius: 9px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: .8rem;
-  }
-  #tabelpresensi td:last-child .action-group .btn-text { display: none; }
-  #tabelpresensi td:last-child .action-group .btn i { display: inline-block !important; }
 
-  /* Info & paginasi ala iOS: kapsul putih melayang */
+  /* === Info & paginasi === */
   #tabelpresensi_info {
-    padding: .15rem .95rem 0;
-    font-size: .74rem;
+    padding: .1rem .5rem 0;
+    font-size: .72rem;
     color: #8a919c;
     text-align: center;
   }
   #tabelpresensi_paginate {
     display: flex;
     justify-content: center;
-    padding: .5rem .75rem calc(1rem + env(safe-area-inset-bottom, 0px));
-    max-width: 100%;
+    padding: .4rem .5rem calc(.6rem + env(safe-area-inset-bottom, 0px));
     overflow-x: auto;
     scrollbar-width: none;
   }
@@ -719,45 +772,41 @@ html.app-modal-open, html.app-modal-open body {
     display: inline-flex;
     flex-wrap: nowrap;
     align-items: center;
-    gap: .15rem;
+    gap: .12rem;
     margin: 0;
     background: #fff;
     border-radius: 9999px;
-    padding: .25rem;
-    box-shadow:
-      0 1px 2px rgba(17, 24, 39, .06),
-      0 6px 16px -6px rgba(17, 24, 39, .10),
-      0 0 0 .5px rgba(17, 24, 39, .05);
+    padding: .2rem .25rem;
+    box-shadow: 0 1px 3px rgba(17,24,39,.07);
   }
   #tabelpresensi_paginate .page-link {
     border: 0;
     background: transparent;
     border-radius: 9999px;
-    min-width: 34px;
-    height: 34px;
-    padding: 0 .55rem;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 .5rem;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     color: #475569;
-    font-size: .85rem;
+    font-size: .82rem;
     font-weight: 600;
   }
   #tabelpresensi_paginate .page-item.disabled .page-link { color: #c3cad4; }
   #tabelpresensi_paginate .page-item:not(.disabled):not(.active) .page-link:hover {
-    background: rgba(37, 99, 235, .08);
+    background: rgba(37,99,235,.08);
     color: #2563eb;
   }
   #tabelpresensi_paginate .page-item.active .page-link {
     background: #2563eb;
     color: #fff;
-    box-shadow: 0 1px 3px rgba(37, 99, 235, .35);
+    box-shadow: 0 1px 3px rgba(37,99,235,.35);
   }
-  /* Prev/Next jadi ikon chevron */
   #tabelpresensi_paginate .previous a,
   #tabelpresensi_paginate .next a {
-    width: 34px;
-    min-width: 34px;
+    width: 32px;
+    min-width: 32px;
     padding: 0;
     font-size: 0;
   }
@@ -765,15 +814,11 @@ html.app-modal-open, html.app-modal-open body {
   #tabelpresensi_paginate .next a::before {
     font-family: "Font Awesome 5 Free";
     font-weight: 900;
-    font-size: .8rem;
+    font-size: .75rem;
     line-height: 1;
   }
-  #tabelpresensi_paginate .previous a::before {
-    content: "\f053";
-  }
-  #tabelpresensi_paginate .next a::before {
-    content: "\f054";
-  }
+  #tabelpresensi_paginate .previous a::before { content: "\f053"; }
+  #tabelpresensi_paginate .next a::before { content: "\f054"; }
 }
 </style>
 <script>

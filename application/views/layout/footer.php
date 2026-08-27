@@ -289,28 +289,6 @@ $(document).ready(function () {
     <script>
       $(document).ready(function() {
         $('#dataTableHover').DataTable();
-        $('#tabelpresensi').DataTable({
-          dom: 'Bfrtip',
-          ordering: false,
-          "pagingType": "numbers",
-          language: {
-            searchPlaceholder: "Pencarian",
-            search: ""
-          },
-          buttons: [{
-            text: '<i class="fas fa-plus"></i> Peserta',
-            className: 'btn btn-info',
-            action: function() {
-              $("#tambahPresensiSiswa").modal();
-            }
-          },{
-              text: '<i class="fas fa-plus"></i> Pegawai',
-              className: 'btn btn-warning',
-              action: function(){
-                $("#tambahPres").modal();
-              }
-            }, ]
-        });
         $('#tabelpresensipeserta').DataTable({
           dom: 'Bfrtip',
           searching: false,

@@ -7,6 +7,22 @@
   </ol>
 </div>
 <!-- Content -->
+<?php
+$ukCell = function ($tp, $i) {
+  $kode = trim((string) $tp->{'Kode' . $i});
+  $nama = trim((string) $tp->{'Uk' . $i});
+  $jp = trim((string) $tp->{'Jp' . $i});
+  if ($nama === '' && $kode === '' && $jp === '') {
+    return '-';
+  }
+  $out = '';
+  if ($kode !== '') {
+    $out .= '<small class="text-muted d-block">' . html_escape($kode) . '</small>';
+  }
+  $out .= html_escape(trim($nama . ' - ' . $jp, ' -'));
+  return $out;
+};
+?>
 <div class="row">
   <!-- DataTable with Hover -->
   <div class="col-lg-12">
@@ -22,6 +38,7 @@
               <th>Unit 3</th>
               <th>Unit 4</th>
               <th>Unit 5</th>
+              <th>Unit 6</th>
               <th>Aksi</th>
             </tr>
           </thead>
@@ -32,11 +49,12 @@
               <tr>
                 <td><?= $tp->Namarombel ?></td>
                 <td><?= $tp->Kelas ?></td>
-                <td><?= $tp->Uk1 . ' - ' . $tp->Jp1 ?></td>
-                <td><?= $tp->Uk2 . ' - ' . $tp->Jp2 ?></td>
-                <td><?= $tp->Uk3 . ' - ' . $tp->Jp3 ?></td>
-                <td><?= $tp->Uk4 . ' - ' . $tp->Jp4 ?></td>
-                <td><?= $tp->Uk5 . ' - ' . $tp->Jp5 ?></td>
+                <td><?= $ukCell($tp, 1) ?></td>
+                <td><?= $ukCell($tp, 2) ?></td>
+                <td><?= $ukCell($tp, 3) ?></td>
+                <td><?= $ukCell($tp, 4) ?></td>
+                <td><?= $ukCell($tp, 5) ?></td>
+                <td><?= $ukCell($tp, 6) ?></td>
                 <td>
                 <div class="btn-group btn-group-toggle">
                   <label class="btn btn-warning btn-sm">

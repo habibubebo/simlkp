@@ -7,18 +7,15 @@
   </ol>
 </div>
 <!-- Content -->
-<?php
-$alert = $this->session->flashdata('alert');
-if (isset($alert)) {
-  echo '<div class="alert alert-danger alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-    <h6><i class="fas fa-exclamation-triangle"></i><b> Informasi</b></h6>
-    <strong>' . $alert . '</strong>
-  </div>';
-};
-?>
+<?php if (!empty($alert)): ?>
+<div class="alert alert-danger alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <h6><i class="fas fa-exclamation-triangle"></i><b> Informasi</b></h6>
+  <strong><?= $alert ?></strong>
+</div>
+<?php endif; ?>
 <div class="row">
   <!-- DataTable with Hover -->
   <!-- <div class="col-lg-12"> -->

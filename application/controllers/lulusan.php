@@ -37,6 +37,7 @@ class lulusan  extends CI_Controller
         $n3 = $this->input->post('n3');
         $n4 = $this->input->post('n4');
         $n5 = $this->input->post('n5');
+        $n6 = $this->input->post('n6');
 
         $data = array(
             'Nipd' => $nipd,
@@ -47,7 +48,8 @@ class lulusan  extends CI_Controller
             'n2' => $n2,
             'n3' => $n3,
             'n4' => $n4,
-            'n5' => $n5
+            'n5' => $n5,
+            'n6' => $n6
         );
         $this->Model_APS->simpan_data($data, 'lulusan');
         helper_log("add", "menambahkan lulusan $nipd");
@@ -56,7 +58,7 @@ class lulusan  extends CI_Controller
     // from-Ubah
     function form_ubah($Id)
     {
-        $sel = 'lulusan.Id,lulusan.Nipd,lulusan.Tgllulus,lulusan.Tglcetak,lulusan.Instruktur,lulusan.n1,lulusan.n2,lulusan.n3,lulusan.n4,lulusan.n5,instruktur.NamaInstruktur';
+        $sel = 'lulusan.Id,lulusan.Nipd,lulusan.Tgllulus,lulusan.Tglcetak,lulusan.Instruktur,lulusan.n1,lulusan.n2,lulusan.n3,lulusan.n4,lulusan.n5,lulusan.n6,instruktur.NamaInstruktur';
         $where = array('lulusan.Id' => $Id);
         $data['lulusan'] = $this->Model_APS->sel_edit_data_join($sel, 'lulusan', 'instruktur', 'lulusan.Instruktur=instruktur.Id', $where)->result();
 
@@ -76,6 +78,7 @@ class lulusan  extends CI_Controller
         $n3 = $this->input->post('n3');
         $n4 = $this->input->post('n4');
         $n5 = $this->input->post('n5');
+        $n6 = $this->input->post('n6');
 
         $data = array(
             'Nipd' => $nipd,
@@ -86,7 +89,8 @@ class lulusan  extends CI_Controller
             'n2' => $n2,
             'n3' => $n3,
             'n4' => $n4,
-            'n5' => $n5
+            'n5' => $n5,
+            'n6' => $n6
         );
         $where = array('Id' => $Id);
         $this->Model_APS->proses_update($where, $data, 'lulusan');
@@ -129,7 +133,7 @@ class lulusan  extends CI_Controller
     function getData()
     {
         $id = $this->input->post('id');
-        $this->db->select('lulusan.Id,lulusan.Nipd,lulusan.Tgllulus,lulusan.Tglcetak,lulusan.Instruktur,lulusan.n1,lulusan.n2,lulusan.n3,lulusan.n4,lulusan.n5,peserta.Nama,peserta.Ttl,rombel.Namarombel,unitkompetensi.Uk1,unitkompetensi.Uk2,unitkompetensi.Uk3,unitkompetensi.Uk4,unitkompetensi.Uk5');
+        $this->db->select('lulusan.Id,lulusan.Nipd,lulusan.Tgllulus,lulusan.Tglcetak,lulusan.Instruktur,lulusan.n1,lulusan.n2,lulusan.n3,lulusan.n4,lulusan.n5,lulusan.n6,peserta.Nama,peserta.Ttl,rombel.Namarombel,unitkompetensi.Uk1,unitkompetensi.Uk2,unitkompetensi.Uk3,unitkompetensi.Uk4,unitkompetensi.Uk5,unitkompetensi.Uk6');
         $this->db->from('lulusan');
         $this->db->join('peserta', 'lulusan.Nipd=peserta.Nipd');
         $this->db->join('rombel', 'peserta.Jeniskursus=rombel.Id');

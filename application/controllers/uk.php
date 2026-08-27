@@ -23,30 +23,46 @@ class uk extends CI_Controller {
     // Tambah
     function tambah(){
         $rombel = $this->input->post('rombel');
+        $kode1 = $this->input->post('kode1');
+        $kode2 = $this->input->post('kode2');
+        $kode3 = $this->input->post('kode3');
+        $kode4 = $this->input->post('kode4');
+        $kode5 = $this->input->post('kode5');
+        $kode6 = $this->input->post('kode6');
         $uk1 = $this->input->post('uk1');
         $uk2 = $this->input->post('uk2');
         $uk3 = $this->input->post('uk3');
         $uk4 = $this->input->post('uk4');
         $uk5 = $this->input->post('uk5');
+        $uk6 = $this->input->post('uk6');
         $jp1 = $this->input->post('jp1');
         $jp2 = $this->input->post('jp2');
         $jp3 = $this->input->post('jp3');
         $jp4 = $this->input->post('jp4');
         $jp5 = $this->input->post('jp5');
+        $jp6 = $this->input->post('jp6');
         $jptot = $this->input->post('jptotal');
 
         $data = array(
             'Rombel' => $rombel,
+            'Kode1' => $kode1,
+            'Kode2' => $kode2,
+            'Kode3' => $kode3,
+            'Kode4' => $kode4,
+            'Kode5' => $kode5,
+            'Kode6' => $kode6,
             'Uk1' => $uk1,
             'Uk2' => $uk2,
             'Uk3' => $uk3,
             'Uk4' => $uk4,
             'Uk5' => $uk5,
+            'Uk6' => $uk6,
             'Jp1' => $jp1,
             'Jp2' => $jp2,
             'Jp3' => $jp3,
             'Jp4' => $jp4,
             'Jp5' => $jp5,
+            'Jp6' => $jp6,
             'Jptotal' => $jptot
    );
         $this->Model_APS->simpan_data($data,'unitkompetensi');
@@ -69,30 +85,46 @@ class uk extends CI_Controller {
     function ubah($Id  = null){
         $Id = $this->input->post('Id');
            $rombel = $this->input->post('rombel');
+        $kode1 = $this->input->post('kode1');
+        $kode2 = $this->input->post('kode2');
+        $kode3 = $this->input->post('kode3');
+        $kode4 = $this->input->post('kode4');
+        $kode5 = $this->input->post('kode5');
+        $kode6 = $this->input->post('kode6');
         $uk1 = $this->input->post('uk1');
         $uk2 = $this->input->post('uk2');
         $uk3 = $this->input->post('uk3');
         $uk4 = $this->input->post('uk4');
         $uk5 = $this->input->post('uk5');
+        $uk6 = $this->input->post('uk6');
         $jp1 = $this->input->post('jp1');
         $jp2 = $this->input->post('jp2');
         $jp3 = $this->input->post('jp3');
         $jp4 = $this->input->post('jp4');
         $jp5 = $this->input->post('jp5');
+        $jp6 = $this->input->post('jp6');
         $jptot = $this->input->post('jptotal');
 
         $data = array(
             'Rombel' => $rombel,
+            'Kode1' => $kode1,
+            'Kode2' => $kode2,
+            'Kode3' => $kode3,
+            'Kode4' => $kode4,
+            'Kode5' => $kode5,
+            'Kode6' => $kode6,
             'Uk1' => $uk1,
             'Uk2' => $uk2,
             'Uk3' => $uk3,
             'Uk4' => $uk4,
             'Uk5' => $uk5,
+            'Uk6' => $uk6,
             'Jp1' => $jp1,
             'Jp2' => $jp2,
             'Jp3' => $jp3,
             'Jp4' => $jp4,
             'Jp5' => $jp5,
+            'Jp6' => $jp6,
             'Jptotal' => $jptot
         );
         $where = array('Id' => $Id);

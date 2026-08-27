@@ -54,6 +54,7 @@ CREATE TABLE IF NOT EXISTS `lulusan` (
   `n3` text,
   `n4` text,
   `n5` text,
+  `n6` text,
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
@@ -145,16 +146,24 @@ CREATE TABLE IF NOT EXISTS `sapras` (
 CREATE TABLE IF NOT EXISTS `unitkompetensi` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Rombel` int(11) NOT NULL,
+  `Kode1` text NOT NULL,
+  `Kode2` text NOT NULL,
+  `Kode3` text NOT NULL,
+  `Kode4` text NOT NULL,
+  `Kode5` text NOT NULL,
+  `Kode6` text NOT NULL,
   `Uk1` text NOT NULL,
   `Uk2` text NOT NULL,
   `Uk3` text NOT NULL,
   `Uk4` text NOT NULL,
   `Uk5` text NOT NULL,
+  `Uk6` text NOT NULL,
   `Jp1` text NOT NULL,
   `Jp2` text NOT NULL,
   `Jp3` text NOT NULL,
   `Jp4` text NOT NULL,
   `Jp5` text NOT NULL,
+  `Jp6` text NOT NULL,
   `Jptotal` text NOT NULL,
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;

@@ -70,8 +70,55 @@ class cek extends CI_Controller
         );
         
         echo json_encode($response);
-     
+    }
 
+    function presensi()
+    {
+        $draw = intval($_POST['draw'] ?? 0);
+        $start = intval($_POST['start'] ?? 0);
+        $length = intval($_POST['length'] ?? 10);
+        $search = $_POST['search']['value'] ?? '';
+        $orderCol = intval($_POST['order'][0]['column'] ?? 0);
+        $orderDir = $_POST['order'][0]['dir'] ?? 'DESC';
 
+        $cols = ['Tgl', 'Nama', 'Namarombel', 'NamaInstruktur', 'Materi', 'Id'];
+        $orderField = $cols[$orderCol] ?? 'Tgl';
+
+        $base = "FROM presensi JOIN peserta ON presensi.Nipd=peserta.Nipd JOIN instruktur ON presensi.Instruktur=instruktur.Id JOIN rombel ON presensi.Jeniskursus=rombel.Id";
+
+        $where = '';
+        if (!empty($search)) {
+            $s = $this->db->escape_like_str($search);
+            $where = " WHERE (peserta.Nama LIKE '%$s%' OR rombel.Namarombel LIKE '%$s%' OR instruktur.NamaInstruktur LIKE '%$s%' OR presensi.Materi LIKE '%$s%')";
+        }
+
+        $total = $this->db->query("SELECT COUNT(*) AS cnt $base $where")->row()->cnt;
+
+        $sql = "SELECT presensi.Id, presensi.Tgl, presensi.Nipd, peserta.Nama, peserta.Jeniskursus, rombel.Namarombel, instruktur.Id AS IdI, instruktur.NamaInstruktur, peserta.Id AS Idp, presensi.Materi $base $where ORDER BY $orderField $orderDir LIMIT $start, $length";
+        $rows = $this->db->query($sql)->result();
+
+        $data = [];
+        foreach ($rows as $r) {
+            $data[] = [
+                'Tgl' => $r->Tgl,
+                'Nama' => $r->Nama,
+                'Namarombel' => $r->Namarombel,
+                'NamaInstruktur' => $r->NamaInstruktur,
+                'Materi' => $r->Materi,
+                'Id' => $r->Id,
+                'Nipd' => $r->Nipd,
+                'IdI' => $r->IdI,
+                'Idp' => $r->Idp,
+                'Jeniskursus' => $r->Jeniskursus,
+            ];
+        }
+
+        header('Content-Type: application/json');
+        echo json_encode([
+            'draw' => $draw,
+            'recordsTotal' => $total,
+            'recordsFiltered' => $total,
+            'data' => $data,
+        ]);
     }
 }

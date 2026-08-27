@@ -159,29 +159,37 @@
           </select>
         </div>
 
-        <div class="ukf-section">Unit &amp; Jam Pelajaran</div>
+        <div class="ukf-section">Kode, Unit &amp; Jam Pelajaran</div>
 
         <div class="row mb-1">
-          <div class="col-8"><span class="ukf-cap">Nama Unit</span></div>
-          <div class="col-4"><span class="ukf-cap">JP</span></div>
+          <div class="col-3"><span class="ukf-cap">Kode</span></div>
+          <div class="col-6"><span class="ukf-cap">Nama Unit</span></div>
+          <div class="col-3"><span class="ukf-cap">JP</span></div>
         </div>
 
-        <?php for ($i = 1; $i <= 5; $i++) {
+        <?php for ($i = 1; $i <= 6; $i++) {
           $wajib = $i <= 3;
           $opt = $wajib ? '' : ' (opsional)';
+          $kodeField = 'Kode' . $i;
           $unitField = 'Uk' . $i;
           $jpField = 'Jp' . $i;
         ?>
           <div class="form-row">
-            <div class="form-group col-8 mb-2">
+            <div class="form-group col-3 mb-2">
+              <input type="text" class="form-control ukf-input" aria-label="Kode unit <?= $i ?>"
+                     placeholder="Kode <?= $i . $opt ?>" name="kode<?= $i ?>" maxlength="20"
+                     style="font-size:.8rem"
+                     value="<?= html_escape($tp->$kodeField) ?>">
+            </div>
+            <div class="form-group col-6 mb-2">
               <div class="ukf-wrap">
                 <input type="text" class="form-control ukf-input" aria-label="Unit <?= $i ?>"
                        placeholder="Unit <?= $i . $opt ?>" name="uk<?= $i ?>"
-                       value="<?= $tp->$unitField ?>" <?= $wajib ? 'required' : '' ?>>
+                       value="<?= html_escape($tp->$unitField) ?>" <?= $wajib ? 'required' : '' ?>>
                 <span class="ukf-count">0/50</span>
               </div>
             </div>
-            <div class="form-group col-4 mb-2">
+            <div class="form-group col-3 mb-2">
               <input type="text" inputmode="numeric" class="form-control ukf-input ukf-jp" aria-label="Jam pelajaran unit <?= $i ?>"
                      placeholder="JP <?= $i ?>" name="jp<?= $i ?>"
                      value="<?= preg_replace('/[^0-9]/', '', $tp->$jpField) ?>" <?= $wajib ? 'required' : '' ?>>
@@ -189,7 +197,7 @@
           </div>
         <?php } ?>
 
-        <small class="ukf-note d-block mb-2">Unit 1 sampai 3 wajib diisi. Isi unit 4 dan 5 bila ada.</small>
+        <small class="ukf-note d-block mb-2">Unit 1 sampai 3 wajib diisi. Isi unit 4 sampai 6 bila ada.</small>
 
         <div class="form-group mb-1">
           <label class="ukf-label" for="jptotal">Total JP <span class="text-danger">*</span></label>

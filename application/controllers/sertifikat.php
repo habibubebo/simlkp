@@ -124,42 +124,17 @@ class sertifikat extends CI_Controller
         $pdf->Cell(44, 12, 'Waktu', 1, 0, 'C');
         $pdf->Cell(44, 12, 'Nilai', 1, 1, 'C');
 
-        $pdf->Cell(23, 10, '', 0, 0, 'C');
-        $pdf->Cell(17, 10, '1.', 1, 0, 'C');
-        $pdf->Cell(73, 10, $row->Uk1, 1, 0, 'L');
-        $pdf->Cell(44, 10, $row->Jp1, 1, 0, 'C');
-        $pdf->Cell(44, 10, $row->n1, 1, 1, 'C');
-
-        $pdf->Cell(23, 10, '', 0, 0, 'C');
-        $pdf->Cell(17, 10, '2.', 1, 0, 'C');
-        $pdf->Cell(73, 10, $row->Uk2, 1, 0, 'L');
-        $pdf->Cell(44, 10, $row->Jp2, 1, 0, 'C');
-        $pdf->Cell(44, 10, $row->n2, 1, 1, 'C');
-
-        $pdf->Cell(23, 10, '', 0, 0, 'C');
-        $pdf->Cell(17, 10, '3.', 1, 0, 'C');
-        $pdf->Cell(73, 10, $row->Uk3, 1, 0, 'L');
-        $pdf->Cell(44, 10, $row->Jp3, 1, 0, 'C');
-        $pdf->Cell(44, 10, $row->n3, 1, 1, 'C');
-        if ($row->Uk5 !== '-') {
+        $noUrut = 0;
+        for ($u = 1; $u <= 6; $u++) {
+            $ukV = trim((string)$row->{'Uk' . $u});
+            if ($ukV === '' || $ukV === '-') continue;
+            $noUrut++;
             $pdf->Cell(23, 10, '', 0, 0, 'C');
-            $pdf->Cell(17, 10, '4.', 1, 0, 'C');
-            $pdf->Cell(73, 10, $row->Uk4, 1, 0, 'L');
-            $pdf->Cell(44, 10, $row->Jp4, 1, 0, 'C');
-            $pdf->Cell(44, 10, $row->n4, 1, 1, 'C');
-            $pdf->Cell(23, 10, '', 0, 0, 'C');
-            $pdf->Cell(17, 10, '5.', 1, 0, 'C');
-            $pdf->Cell(73, 10, $row->Uk5, 1, 0, 'L');
-            $pdf->Cell(44, 10, $row->Jp5, 1, 0, 'C');
-            $pdf->Cell(44, 10, $row->n5, 1, 1, 'C');
-        } else if ($row->Uk4 !== '-') {
-            $pdf->Cell(23, 10, '', 0, 0, 'C');
-            $pdf->Cell(17, 10, '4.', 1, 0, 'C');
-            $pdf->Cell(73, 10, $row->Uk4, 1, 0, 'L');
-            $pdf->Cell(44, 10, $row->Jp4, 1, 0, 'C');
-            $pdf->Cell(44, 10, $row->n4, 1, 1, 'C');
-            } else {
-        }; 
+            $pdf->Cell(17, 10, $noUrut . '.', 1, 0, 'C');
+            $pdf->Cell(73, 10, $row->{'Uk' . $u}, 1, 0, 'L');
+            $pdf->Cell(44, 10, $row->{'Jp' . $u}, 1, 0, 'C');
+            $pdf->Cell(44, 10, $row->{'n' . $u}, 1, 1, 'C');
+        }
         $pdf->Cell(23, 10, '', 0, 0, 'C');
         $pdf->Cell(17, 10, '', 1, 0, 'C');
         $pdf->Cell(73, 10, 'JUMLAH', 1, 0, 'C');

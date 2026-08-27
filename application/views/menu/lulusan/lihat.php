@@ -84,7 +84,7 @@
                 <td><?= date("d-m-Y",strtotime($tp->Tgllulus))  ?></td>
                 <td><?= date("d-m-Y",strtotime($tp->Tglcetak))  ?></td>
                 <td><?= $tp->NamaInstruktur ?></td>
-                <td><?= $tp->n1 . ',' . $tp->n2 . ',' . $tp->n3 . ',' . $tp->n4 . ',' . $tp->n5 ?></td>
+                <td><?php $nilais=[]; for($i=1;$i<=6;$i++){ $v=trim((string)$tp->{'n'.$i}); if($v!=='') $nilais[]=$v; } echo $nilais?html_escape(implode(', ',$nilais)):''; ?></td>
                 <td>
                   <div class="btn-group btn-group-toggle action-group">
                     <a href="#" class="btn btn-info btn-sm flex-fill text-white btn-edit-lulusan" data-id="<?= $tp->Idl ?>" title="Klik untuk merubah data.">
@@ -207,7 +207,7 @@
 
           <div id="nilaiContainer" style="display:none">
             <label class="field-label">Nilai Kompetensi</label>
-            <?php for ($i = 1; $i <= 5; $i++) { ?>
+            <?php for ($i = 1; $i <= 6; $i++) { ?>
             <div class="form-group mb-2" id="nilaiGroup<?= $i ?>">
               <div class="d-flex align-items-center justify-content-between">
                 <span class="nilai-label" id="labelNilai<?= $i ?>">Unit Kompetensi <?= $i ?></span>
@@ -298,7 +298,7 @@
           </div>
           <div id="editNilaiContainer" style="display:none">
             <label class="field-label">Nilai Kompetensi</label>
-            <?php for ($i = 1; $i <= 5; $i++) { ?>
+            <?php for ($i = 1; $i <= 6; $i++) { ?>
             <div class="form-group mb-2" id="editNilaiGroup<?= $i ?>">
               <div class="d-flex align-items-center justify-content-between">
                 <span class="nilai-label" id="editLabelNilai<?= $i ?>">Unit Kompetensi <?= $i ?></span>
@@ -573,7 +573,7 @@ $(document).ready(function() {
     $('#tl').val('');
     $('[name="Instruktur"]').val('');
     $('#nilaiContainer').hide();
-    for (var i = 1; i <= 5; i++) {
+    for (var i = 1; i <= 6; i++) {
       $('#labelNilai' + i).text('Unit Kompetensi ' + i);
       $('[name="n' + i + '"]').val('');
     }
@@ -582,7 +582,7 @@ $(document).ready(function() {
   $('#peserta').on('change', function() {
     var nipd = $(this).val();
     $('#nilaiContainer').hide();
-    for (var i = 1; i <= 5; i++) {
+    for (var i = 1; i <= 6; i++) {
       $('#labelNilai' + i).text('Unit Kompetensi ' + i);
       $('[name="n' + i + '"]').val('');
     }
@@ -600,7 +600,7 @@ $(document).ready(function() {
           $('#ttl_lulusan').val(res[0].Ttl);
           $('#pelatihan').val(res[0].Namarombel);
           var showNilai = false;
-          for (var i = 1; i <= 5; i++) {
+          for (var i = 1; i <= 6; i++) {
             var uk = res[0]['Uk' + i];
             if (uk && uk !== '-') {
               $('#labelNilai' + i).text(uk);
@@ -640,7 +640,7 @@ $(document).ready(function() {
     e.preventDefault();
     var id = $(this).data('id');
     $('#editNilaiContainer').hide();
-    for (var i = 1; i <= 5; i++) {
+    for (var i = 1; i <= 6; i++) {
       $('#editLabelNilai' + i).text('Unit Kompetensi ' + i);
       $('#editN' + i).val('');
     }
@@ -660,7 +660,7 @@ $(document).ready(function() {
         $('#editTc').val(res.Tglcetak);
         $('#editInstruktur').val(res.Instruktur);
         var show = false;
-        for (var i = 1; i <= 5; i++) {
+        for (var i = 1; i <= 6; i++) {
           var uk = res['Uk' + i];
           if (uk && uk !== '-') {
             $('#editLabelNilai' + i).text(uk);
