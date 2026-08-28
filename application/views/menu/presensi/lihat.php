@@ -9,42 +9,76 @@ function perpendekNama($s) {
 }
 
 ?>
-<div class="d-sm-flex align-items-center justify-content-between mt-4 mb-0">
-  <h1 class="h3 mb-0 text-gray-800 d-none d-sm-block">Presensi</h1>
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item">Menu</li>
-    <li class="breadcrumb-item active" aria-current="page">Presensi</li>
+<style>
+.modern-head h1{letter-spacing:-.02em}
+.modern-stat .stat-icon{width:2.6rem;height:2.6rem;border-radius:.65rem;display:flex;align-items:center;justify-content:center;font-size:1rem}
+.modern-stat.stat-pes .stat-icon{background:rgba(37,99,235,.1);color:#2563eb}
+.modern-stat.stat-peg .stat-icon{background:rgba(16,185,129,.12);color:#059669}
+.modern-card{border:1px solid #eef0f4;border-radius:.85rem;box-shadow:0 1px 3px rgba(15,23,42,.04),0 8px 24px rgba(15,23,42,.04)}
+.modern-card .card-header{background:#fff;border-bottom:1px solid #f1f5f9;border-radius:.85rem .85rem 0 0}
+.modern-table{width:100%!important}
+.modern-table thead th{font-size:.66rem;letter-spacing:.07em;text-transform:uppercase;color:#94a3b8;font-weight:700;border-top:0;border-bottom:1px solid #f1f5f9;white-space:nowrap;padding:.8rem .7rem;background:#fcfdff}
+.modern-table tbody td{font-size:.82rem;color:#334155;vertical-align:middle;padding:.62rem .7rem;border-top:1px solid #f8fafc}
+.modern-table tbody tr:hover td{background:#f8fafc}
+.modern-card .dataTables_wrapper{padding:0}
+.modern-card .dt-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.75rem;padding:1rem 1.1rem .85rem;border-bottom:1px solid #f1f5f9;background:#fff}
+.modern-card .dataTables_length label{margin:0;display:flex;align-items:center;gap:.4rem;font-size:.78rem;color:#64748b;font-weight:500}
+.modern-card .dataTables_length select{border:1px solid #e2e8f0;border-radius:.5rem;padding:.32rem 1.6rem .32rem .6rem;font-size:.78rem;color:#334155;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E") no-repeat right .5rem center;appearance:none;min-width:64px}
+.modern-card .dataTables_filter label{margin:0;display:flex;align-items:center;gap:.5rem;font-size:.78rem;color:#64748b;font-weight:500}
+.modern-card .dataTables_filter input{border:1px solid #e2e8f0;border-radius:.6rem;padding:.42rem .75rem .42rem 2rem;font-size:.82rem;color:#334155;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' stroke='%2394a3b8' stroke-width='1.7' viewBox='0 0 24 24'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.5-3.5'/%3E%3C/svg%3E") no-repeat 9px center;width:220px;transition:border-color .15s,box-shadow .15s}
+.modern-card .dataTables_filter input:focus{outline:none;border-color:#93b4f5;box-shadow:0 0 0 .2rem rgba(37,99,235,.12)}
+.modern-card .dt-bottom{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.75rem;padding:.85rem 1.1rem;border-top:1px solid #f1f5f9;background:#fcfdff}
+.modern-card .dataTables_info{font-size:.76rem;color:#94a3b8;padding:0!important}
+.modern-card .dataTables_paginate .pagination{margin:0;gap:.28rem}
+.modern-card .dataTables_paginate .paginate_button{border:1px solid #e2e8f0!important;background:#fff!important;color:#475569!important;border-radius:.5rem!important;padding:.32rem .62rem!important;font-size:.76rem!important;font-weight:600!important;min-width:32px;text-align:center}
+.modern-card .dataTables_paginate .paginate_button:hover{background:#f8fafc!important;border-color:#cbd5e1!important;color:#1e293b!important}
+.modern-card .dataTables_paginate .paginate_button.current,.modern-card .dataTables_paginate .paginate_button.current:hover{background:#2563eb!important;border-color:#2563eb!important;color:#fff!important;box-shadow:0 2px 8px rgba(37,99,235,.25)}
+.dt-btn{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:.45rem;font-size:.7rem;border:1px solid transparent;transition:all .15s;flex-shrink:0;text-decoration:none!important}
+.dt-btn-edit{background:#fff;border-color:#e2e8f0;color:#475569}
+.dt-btn-edit:hover{background:#f8fafc;border-color:#cbd5e1;color:#1e293b}
+.dt-btn-delete{background:#fff;border-color:#fecaca;color:#dc2626}
+.dt-btn-delete:hover{background:#fef2f2;border-color:#fca5a5;color:#991b1b}
+@media(max-width:767.98px){.modern-head .breadcrumb{display:none}.modern-card .dt-top{flex-direction:column;align-items:stretch}.modern-card .dataTables_filter input{width:100%}.modern-card .dataTables_filter label{width:100%}}
+</style>
+<?php
+$today = date("Y-m-d 00:00:00");
+$todays = date("Y-m-d H:i:s");
+$_pes = $this->db->query("SELECT COUNT(*) as c FROM presensi WHERE Tgl between '$today' and '$todays' AND pegawai IS Null")->row()->c ?? 0;
+$_pegArr = $this->db->query("SELECT NamaPegawai FROM presensi JOIN pegawai ON presensi.Nipd = pegawai.Nipg WHERE Tgl between '$today' and '$todays' AND pegawai=1")->result();
+$_insArr = $this->db->query("SELECT DISTINCT NamaInstruktur FROM presensi JOIN instruktur ON presensi.Instruktur = instruktur.Id WHERE Tgl between '$today' and '$todays' AND (pegawai IS NULL OR pegawai != 1) AND Instruktur IS NOT NULL")->result();
+$_pegNamesArr = array_map(fn($r)=>$r->NamaPegawai, $_pegArr);
+$_insNamesArr = array_map(fn($r)=>$r->NamaInstruktur, $_insArr);
+$_allStaff = array_values(array_unique(array_merge($_pegNamesArr, $_insNamesArr)));
+$_pegCount = count($_allStaff);
+$_pegNames = implode(', ', $_allStaff);
+?>
+<div class="modern-head d-flex flex-column flex-md-row align-items-md-center justify-content-between mt-4 mb-3">
+  <div class="mb-2 mb-md-0">
+    <h1 class="h4 mb-1 font-weight-bold text-gray-800" style="font-weight:800">Presensi</h1>
+    <p class="text-muted small mb-0">Kehadiran peserta dan staff (instruktur/pegawai) harian</p>
+  </div>
+  <ol class="breadcrumb mb-0 bg-transparent p-0" style="font-size:.8rem">
+    <li class="breadcrumb-item"><a href="<?= base_url('pages/dashboard') ?>" style="color:#94a3b8;text-decoration:none">Dashboard</a></li>
+    <li class="breadcrumb-item active" aria-current="page" style="color:#334155;font-weight:600">Presensi</li>
   </ol>
 </div>
-<div class="alert alert-info" role="alert">
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">×</span>
-  </button>
-  <?php
-  $today = date("Y-m-d 00:00:00");
-  $todays = date("Y-m-d H:i:s");
-  $data = $this->db->query("SELECT * FROM presensi WHERE Tgl between '$today' and '$todays' AND pegawai IS Null ")->result();
-  $total = 0;
-  foreach ($data as $row) {
-    $total += 1;
-  };
-  echo "<b>$total</b> Peserta dan ";
-  $data = $this->db->query("SELECT * FROM presensi JOIN pegawai ON  presensi.Nipd = pegawai.Nipg WHERE Tgl between '$today' and '$todays' AND pegawai=1")->result();
-  echo "Pegawai <b>";
-  $jml = count($data);
-  foreach ($data as $row) {
-    if ($jml>1){ echo $row->NamaPegawai.', ';} else echo $row->NamaPegawai;
-  };
-  echo "</b> telah presensi hari ini.";
-  ?>
+<div class="row mb-3">
+  <div class="col-6 mb-3"><div class="card modern-card modern-stat stat-pes h-100"><div class="card-body py-3 d-flex align-items-center justify-content-between"><div><div class="text-muted" style="font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700">Peserta Hari Ini</div><div class="h4 mb-0 mt-1" style="font-weight:800;color:#1e293b"><?= $_pes ?></div><div class="small text-muted" style="font-size:.72rem">Kehadiran tercatat</div></div><div class="stat-icon"><i class="fas fa-user-check"></i></div></div></div></div>
+  <div class="col-6 mb-3"><div class="card modern-card modern-stat stat-peg h-100"><div class="card-body py-3 d-flex align-items-center justify-content-between"><div><div class="text-muted" style="font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700">Staff Hari Ini</div><div class="h4 mb-0 mt-1" style="font-weight:800;color:#065f46"><?= $_pegCount ?></div><div class="small text-muted" style="font-size:.72rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px" title="<?= html_escape($_pegNames) ?>"><?= $_pegNames ? html_escape($_pegNames) : 'Belum ada' ?></div></div><div class="stat-icon"><i class="fas fa-users"></i></div></div></div></div>
 </div>
 <!-- Content -->
-<div class="row">
-  <!-- DataTable with Hover -->
-  <div class="">
-    <div class="card mb-0">
-      <div class="table-responsive p-3">
-        <table class="table align-items-center table-flush table-hover" id="tabelpresensi">
+<div class="card modern-card mb-4">
+  <div class="card-header py-3 d-flex flex-column flex-md-row align-items-md-center justify-content-between" style="gap:.6rem">
+    <div class="d-flex align-items-center" style="gap:.6rem">
+      <h6 class="m-0 font-weight-bold" style="color:#1e293b;font-size:.9rem">Daftar Presensi</h6>
+    </div>
+    <div class="d-flex align-items-center" style="gap:.5rem">
+      <button class="btn btn-sm" style="background:#eff6ff;border:1px solid #bfdbfe;color:#2563eb;border-radius:.5rem;font-weight:600;font-size:.78rem;padding:.38rem .6rem" data-toggle="modal" data-target="#tambahPresensiSiswa"><i class="fas fa-user-plus mr-1"></i> Peserta</button>
+      <button class="btn btn-sm" style="background:#fffbeb;border:1px solid #fde68a;color:#92400e;border-radius:.5rem;font-weight:600;font-size:.78rem;padding:.38rem .6rem" data-toggle="modal" data-target="#tambahPres"><i class="fas fa-id-badge mr-1"></i> Pegawai</button>
+    </div>
+  </div>
+  <div class="table-responsive">
+    <table class="table modern-table table-hover mb-0" id="tabelpresensi" style="width:100%">
           <thead class="thead-light">
             <tr>
               <th>Tanggal</th>
@@ -58,8 +92,6 @@ function perpendekNama($s) {
           <tbody></tbody>
         </table>
       </div>
-    </div>
-  </div>
 </div>
 <button class="fab-presensi" data-toggle="modal" data-target="#tambahPresensiSiswa" title="Tambah Presensi">
   <i class="fas fa-plus"></i>
@@ -78,7 +110,7 @@ function fmtTanggal(raw) {
   var dd = ('0'+d.getDate()).slice(-2);
   var hh = ('0'+d.getHours()).slice(-2);
   var mm = ('0'+d.getMinutes()).slice(-2);
-  return hariList[d.getDay()] + ', ' + dd + ' ' + bulanList[d.getMonth()+1] + ' ' + d.getFullYear() + ' <span class="text-info">Pukul ' + hh + ':' + mm + '</span>';
+  return hariList[d.getDay()] + ', ' + dd + ' ' + bulanList[d.getMonth()+1] + ' ' + d.getFullYear() + '<br><span class="text-muted" style="font-size:.75rem">Pukul ' + hh + ':' + mm + '</span>';
 }
 
 function pendekNama(s) {
@@ -100,21 +132,19 @@ $(document).ready(function() {
     serverSide: true,
     ordering: true,
     order: [[0, 'desc']],
-    dom: 'Bfrtip',
+    dom: '<"dt-top"lf>rt<"dt-bottom"ip>',
     pagingType: 'numbers',
     language: {
-      searchPlaceholder: 'Pencarian',
-      search: ''
+      search: "",
+      searchPlaceholder: "Cari nama, materi, kursus...",
+      lengthMenu: "Tampil _MENU_",
+      info: "Menampilkan _START_–_END_ dari _TOTAL_ presensi",
+      infoEmpty: "Tidak ada presensi",
+      infoFiltered: "(difilter dari _MAX_ total)",
+      zeroRecords: "Tidak ada data yang cocok",
+      emptyTable: "Belum ada presensi",
+      paginate: { first: "Awal", last: "Akhir", next: "›", previous: "‹" }
     },
-    buttons: [{
-      text: '<i class="fas fa-plus"></i> Peserta',
-      className: 'btn btn-info',
-      action: function() { $('#tambahPresensiSiswa').modal(); }
-    },{
-      text: '<i class="fas fa-plus"></i> Pegawai',
-      className: 'btn btn-warning',
-      action: function() { $('#tambahPres').modal(); }
-    }],
     ajax: {
       url: '<?= base_url('cek/presensi'); ?>',
       type: 'POST'
@@ -144,8 +174,17 @@ $(document).ready(function() {
         targets: 3,
         render: function(data, type, row) {
           if (!data) return '';
-          var parts = data.split(/\s+/);
-          return '<a class="table-link ins-link" href="' + appPath + 'presensi/instruktur?Id=' + row.IdI + '" title="Melihat presensi instruktur ' + esc(data) + '"><span class="ins-w1">' + esc(parts[0]) + '</span><span class="ins-rest">' + (parts.length > 1 ? ' ' + esc(parts.slice(1).join(' ')) : '') + '</span></a>';
+          var short = (function(n) {
+            var c = n.split(',');
+            var title = c.length > 1 ? c[c.length - 1].trim() : '';
+            var namePart = c[0].trim();
+            var words = namePart.split(/\s+/);
+            var prefixes = ['dr.','prof.','drs.','drj.','ir.','hj.','hm.','drh.'];
+            var first = words[0];
+            var nama = prefixes.indexOf(first.toLowerCase()) !== -1 && words.length > 1 ? words[1] : first;
+            return title ? nama + ', ' + title : nama;
+          })(data);
+          return '<a class="table-link ins-link" href="' + appPath + 'presensi/instruktur?Id=' + row.IdI + '" title="Melihat presensi instruktur ' + esc(data) + '">' + esc(short) + '</a>';
         }
       },
       {
@@ -153,13 +192,14 @@ $(document).ready(function() {
         orderable: false,
         className: 'text-center',
         render: function(data, type, row) {
-          return '<div class="btn-group btn-group-toggle action-group">' +
-            '<a class="btn btn-warning btn-sm flex-fill text-white" href="#" data-toggle="modal" data-target="#editPresensi" data-id="' + row.Id + '" data-tgl="' + esc(row.Tgl) + '" data-nipd="' + esc(row.Nipd) + '" data-nama="' + esc(row.Nama) + '" data-jks="' + esc(row.Jeniskursus) + '" data-ins="' + esc(row.IdI) + '" data-materi="' + esc(row.Materi) + '" title="Klik untuk merubah data."><i class="fas fa-pen-alt"></i><span class="btn-text"> Edit</span></a>' +
-            '<a class="btn btn-danger btn-sm flex-fill text-white btn-hapus-presensi" href="#" data-id="' + row.Id + '" data-nama="' + esc(row.Nama) + '" data-tgl="' + esc(row.Tgl) + '" title="Klik untuk menghapus data."><i class="fas fa-trash-alt"></i><span class="btn-text"> Hapus</span></a>' +
+          return '<div class="d-inline-flex" style="gap:.3rem">' +
+            '<a class="dt-btn dt-btn-edit" href="#" data-toggle="modal" data-target="#editPresensi" data-id="' + row.Id + '" data-tgl="' + esc(row.Tgl) + '" data-nipd="' + esc(row.Nipd) + '" data-nama="' + esc(row.Nama) + '" data-jks="' + esc(row.Jeniskursus) + '" data-ins="' + esc(row.IdI) + '" data-materi="' + esc(row.Materi) + '" title="Ubah"><i class="fas fa-pen"></i></a>' +
+            '<a class="dt-btn dt-btn-delete btn-hapus-presensi" href="#" data-id="' + row.Id + '" data-nama="' + esc(row.Nama) + '" data-tgl="' + esc(row.Tgl) + '" title="Hapus"><i class="fas fa-trash-alt"></i></a>' +
             '</div>';
         }
       }
-    ]
+    ],
+    drawCallback: function(){ var h=[]; this.api().columns().header().toArray().forEach(function(th){h.push($(th).text().trim());}); this.api().rows({page:'current'}).nodes().toArray().forEach(function(r){$(r).find('td').each(function(i){if(h[i])$(this).attr('data-label',h[i]);});}); }
   });
 
   // Hapus via konfirmasi (tanpa modal statis)

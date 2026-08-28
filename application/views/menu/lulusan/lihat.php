@@ -1,69 +1,150 @@
-<!-- Header -->
+<?php
+$__totalLulus = count($lulusan);
+$__bulanIni = 0; $__tahunIni = 0; $__progSet = [];
+$__nowM = date('Y-m'); $__nowY = date('Y');
+foreach ($lulusan as $__r) {
+  $tgl = $__r->Tgllulus ?? '';
+  if ($tgl && date('Y-m', strtotime($tgl)) === $__nowM) $__bulanIni++;
+  if ($tgl && date('Y', strtotime($tgl)) === $__nowY) $__tahunIni++;
+  $pn = trim($__r->Namarombel ?? '');
+  if ($pn !== '') $__progSet[$pn] = true;
+}
+$__progCount = count($__progSet);
+?>
 <style type="text/css">
-    .txtedit {
-      display: none;
-      width: 100%;
-    }
-  </style>
-<div class="d-sm-flex align-items-center justify-content-between mt-4 mb-2">
-  <h1 class="h3 mb-0 text-gray-800 d-none d-sm-block">Lulusan</h1>
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item">Menu</li>
-    <li class="breadcrumb-item active" aria-current="page">Lulusan</li>
+.modern-head h1{letter-spacing:-.02em}
+.notes-card .note-row{transition:background .15s}
+.notes-card .note-row:hover{background:#f8fafc}
+.notes-card .note-label{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:#64748b}
+.notes-card .note-jenis-wrap{display:inline-flex;align-items:center;gap:.35rem;max-width:100%}
+.notes-card .note-dot{width:7px;height:7px;border-radius:50%;background:#f59e0b;flex-shrink:0;opacity:.9}
+.edit{display:inline-flex;align-items:center;gap:.4rem;max-width:100%;padding:.3rem .55rem;margin:-.3rem -.1rem;border-radius:.5rem;border:1px solid transparent;cursor:pointer;transition:background .15s,border-color .15s,color .15s;word-break:break-word}
+.edit:hover{background:#f1f5f9;border-color:#e2e8f0;color:#1e293b}
+.edit:focus-visible{outline:none;border-color:#93b4f5;box-shadow:0 0 0 .2rem rgba(37,99,235,.15)}
+.edit .edit-icon{opacity:0;transform:translateX(-2px);transition:opacity .15s,transform .15s;color:#94a3b8;font-size:.7rem;flex-shrink:0}
+.edit:hover .edit-icon,.edit:focus-visible .edit-icon{opacity:1;transform:translateX(0)}
+.edit.is-editing{opacity:.6;pointer-events:none}
+.txtedit{display:none;width:100%;border:1px solid #e2e8f0;border-radius:.6rem;padding:.42rem .65rem;font-size:.82rem;color:#1e293b;background:#fff;transition:border-color .15s,box-shadow .15s}
+.txtedit:focus{outline:none;border-color:#93b4f5;box-shadow:0 0 0 .2rem rgba(37,99,235,.12);background:#fff}
+.txtedit.saving{opacity:.7;pointer-events:none}
+.note-saved{font-size:.68rem;font-weight:600;color:#059669;opacity:0;transform:translateY(2px);transition:opacity .2s,transform .2s}
+.note-saved.show{opacity:1;transform:translateY(0)}
+.modern-stat .stat-icon{width:2.6rem;height:2.6rem;border-radius:.65rem;display:flex;align-items:center;justify-content:center;font-size:1rem}
+.modern-stat.stat-total .stat-icon{background:rgba(37,99,235,.1);color:#2563eb}
+.modern-stat.stat-bulan .stat-icon{background:rgba(16,185,129,.12);color:#059669}
+.modern-stat.stat-tahun .stat-icon{background:rgba(139,92,246,.12);color:#7c3aed}
+.modern-stat.stat-prog .stat-icon{background:rgba(245,158,11,.14);color:#d97706}
+.modern-card{border:1px solid #eef0f4;border-radius:.85rem;box-shadow:0 1px 3px rgba(15,23,42,.04),0 8px 24px rgba(15,23,42,.04)}
+.modern-card .card-header{background:#fff;border-bottom:1px solid #f1f5f9;border-radius:.85rem .85rem 0 0}
+.modern-table{width:100%!important}
+.modern-table thead th{font-size:.64rem;letter-spacing:.07em;text-transform:uppercase;color:#94a3b8;font-weight:700;border-top:0;border-bottom:1px solid #f1f5f9;white-space:nowrap;padding:.75rem .6rem;background:#fcfdff}
+.modern-table tbody td{font-size:.78rem;color:#334155;vertical-align:middle;padding:.6rem .6rem;border-top:1px solid #f8fafc}
+.modern-table tbody tr:first-child td{border-top:0}
+.modern-table tbody tr:hover td{background:#f8fafc}
+.mono{font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace;font-size:.74rem;color:#475569}
+.modern-card .dataTables_wrapper{padding:0}
+.modern-card .dt-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.75rem;padding:1rem 1.1rem .85rem;border-bottom:1px solid #f1f5f9;background:#fff}
+.modern-card .dataTables_length label{margin:0;display:flex;align-items:center;gap:.4rem;font-size:.78rem;color:#64748b;font-weight:500}
+.modern-card .dataTables_length select{border:1px solid #e2e8f0;border-radius:.5rem;padding:.32rem 1.6rem .32rem .6rem;font-size:.78rem;color:#334155;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10z'/%3E%3C/svg%3E") no-repeat right .5rem center;appearance:none;min-width:64px}
+.modern-card .dataTables_filter label{margin:0;display:flex;align-items:center;gap:.5rem;font-size:.78rem;color:#64748b;font-weight:500}
+.modern-card .dataTables_filter input{border:1px solid #e2e8f0;border-radius:.6rem;padding:.42rem .75rem .42rem 2rem;font-size:.82rem;color:#334155;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' stroke='%2394a3b8' stroke-width='1.7' viewBox='0 0 24 24'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.5-3.5'/%3E%3C/svg%3E") no-repeat 9px center;width:220px;transition:border-color .15s,box-shadow .15s}
+.modern-card .dataTables_filter input:focus{outline:none;border-color:#93b4f5;box-shadow:0 0 0 .2rem rgba(37,99,235,.12)}
+.modern-card .dt-bottom{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.75rem;padding:.85rem 1.1rem;border-top:1px solid #f1f5f9;background:#fcfdff}
+.modern-card .dataTables_info{font-size:.76rem;color:#94a3b8;padding:0!important}
+.modern-card .dataTables_paginate .pagination{margin:0;gap:.28rem}
+.modern-card .dataTables_paginate .paginate_button{border:1px solid #e2e8f0!important;background:#fff!important;color:#475569!important;border-radius:.5rem!important;padding:.32rem .62rem!important;font-size:.76rem!important;font-weight:600!important;min-width:32px;text-align:center}
+.modern-card .dataTables_paginate .paginate_button:hover{background:#f8fafc!important;border-color:#cbd5e1!important;color:#1e293b!important}
+.modern-card .dataTables_paginate .paginate_button.current,.modern-card .dataTables_paginate .paginate_button.current:hover{background:#2563eb!important;border-color:#2563eb!important;color:#fff!important;box-shadow:0 2px 8px rgba(37,99,235,.25)}
+.dt-btn{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:.45rem;font-size:.7rem;border:1px solid transparent;transition:all .15s;flex-shrink:0;text-decoration:none!important}
+.dt-btn-edit{background:#fff;border-color:#e2e8f0;color:#475569}
+.dt-btn-edit:hover{background:#f8fafc;border-color:#cbd5e1;color:#1e293b}
+.dt-btn-print{background:#fffbeb;border-color:#fde68a;color:#92400e}
+.dt-btn-print:hover{background:#fef3c7;border-color:#fcd34d;color:#78350f}
+.dt-btn-delete{background:#fff;border-color:#fecaca;color:#dc2626}
+.dt-btn-delete:hover{background:#fef2f2;border-color:#fca5a5;color:#991b1b}
+@media(max-width:767.98px){.modern-head .breadcrumb{display:none}.modern-card .dt-top{flex-direction:column;align-items:stretch}.modern-card .dataTables_filter input{width:100%}.modern-card .dataTables_filter label{width:100%}}
+</style>
+<div class="modern-head d-flex flex-column flex-md-row align-items-md-center justify-content-between mt-4 mb-3">
+  <div class="mb-2 mb-md-0">
+    <h1 class="h4 mb-1 font-weight-bold text-gray-800" style="font-weight:800">Lulusan</h1>
+    <p class="text-muted small mb-0">Data alumni yang telah menyelesaikan pelatihan</p>
+  </div>
+  <ol class="breadcrumb mb-0 bg-transparent p-0" style="font-size:.8rem">
+    <li class="breadcrumb-item"><a href="<?= base_url('pages/dashboard') ?>" style="color:#94a3b8;text-decoration:none">Dashboard</a></li>
+    <li class="breadcrumb-item active" aria-current="page" style="color:#334155;font-weight:600">Lulusan</li>
   </ol>
 </div>
-<!-- Content -->
-<div class="row">
-  <div class="col-xl mb-3">
-                <div class="card">
-                    <div class="card-header d-flex justify-content-between">
-                        <h5 class="my-auto">Catatan</h5>
-                        <span class="text-warning">Klik pada teks untuk edit</span>
-                    </div>
-                    <div class="table-responsive text-nowrap">
-                        <table class="table table-hover">
-                            <thead hidden>
-                                <tr>
-                                    <th></th>
-                                    <th width='10%'></th>
-                                    <th width='90%'></th>
-                                </tr>
-                            </thead>
-                            <tbody class="table-border-bottom-0">
-                                <?php foreach ($notes as $tp) { ?>
-                                    <tr>
-                                        <td hidden><a class="text-danger" href="<?= base_url('admin/deletemaster/pk/' . $tp->id) ?>">Del</a></td>
-                                        <td><b class="text-info">
-                                            <span class='edit'><?= $tp->jenis ?></span>
-                                            <input type='text' class='txtedit pk' data-id='<?= $tp->id ?>' data-field='jenis' id='jenistxt_<?= $tp->id ?>' value='<?= $tp->jenis ?>'></b>
-                                        </td>
-                                        <td>
-                                            <span class='edit'><?= $tp->data ?></span>
-                                            <input type='text' class='txtedit pk' data-id='<?= $tp->id ?>' data-field='data' id='datatxt_<?= $tp->id ?>' value='<?= $tp->data ?>'>
-                                        </td>
-                                    </tr>
-                                <?php } ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+<div class="row mb-3">
+  <div class="col-6 col-xl-3 mb-3"><div class="card modern-card modern-stat stat-total h-100"><div class="card-body py-3 d-flex align-items-center justify-content-between"><div><div class="text-muted" style="font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700">Total Lulusan</div><div class="h4 mb-0 mt-1" style="font-weight:800;color:#1e293b"><?= $__totalLulus ?></div><div class="small text-muted" style="font-size:.72rem">Alumni terdata</div></div><div class="stat-icon"><i class="fas fa-graduation-cap"></i></div></div></div></div>
+  <div class="col-6 col-xl-3 mb-3"><div class="card modern-card modern-stat stat-bulan h-100"><div class="card-body py-3 d-flex align-items-center justify-content-between"><div><div class="text-muted" style="font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700">Bulan Ini</div><div class="h4 mb-0 mt-1" style="font-weight:800;color:#065f46"><?= $__bulanIni ?></div><div class="small text-muted" style="font-size:.72rem"><?= date('F Y') ?></div></div><div class="stat-icon"><i class="fas fa-calendar-check"></i></div></div></div></div>
+  <div class="col-6 col-xl-3 mb-3"><div class="card modern-card modern-stat stat-tahun h-100"><div class="card-body py-3 d-flex align-items-center justify-content-between"><div><div class="text-muted" style="font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700">Tahun Ini</div><div class="h4 mb-0 mt-1" style="font-weight:800;color:#5b21b6"><?= $__tahunIni ?></div><div class="small text-muted" style="font-size:.72rem"><?= date('Y') ?> lulus</div></div><div class="stat-icon"><i class="fas fa-chart-line"></i></div></div></div></div>
+  <div class="col-6 col-xl-3 mb-3"><div class="card modern-card modern-stat stat-prog h-100"><div class="card-body py-3 d-flex align-items-center justify-content-between"><div><div class="text-muted" style="font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700">Program</div><div class="h4 mb-0 mt-1" style="font-weight:800;color:#92400e"><?= $__progCount ?></div><div class="small text-muted" style="font-size:.72rem">Jenis kursus</div></div><div class="stat-icon"><i class="fas fa-layer-group"></i></div></div></div></div>
 </div>
+<!-- Content - Catatan inline edit modern -->
 <div class="row">
-  <!-- DataTable with Hover -->
-  <div class="col-lg-12">
-    <div class="card mb-4">
-
-      <div class="table-responsive p-3">
-        <table class="table align-items-center table-flush table-hover" id="tabellulusan">
+  <div class="col-12 mb-3">
+    <div class="card modern-card notes-card">
+      <div class="card-header py-3 d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center" style="gap:.6rem">
+          <span class="d-flex align-items-center justify-content-center" style="width:32px;height:32px;border-radius:.6rem;background:#fffbeb;color:#d97706;border:1px solid #fde68a;flex-shrink:0"><i class="fas fa-sticky-note" style="font-size:.8rem"></i></span>
+          <div>
+            <h6 class="m-0 font-weight-bold" style="color:#1e293b;font-size:.9rem">Catatan Sertifikat</h6>
+            <div class="small text-muted" style="font-size:.70rem;margin-top:.1rem">Klik isi catatan untuk ubah, Enter simpan, Esc batal</div>
+          </div>
+        </div>
+      </div>
+      <div style="border-radius:0 0 .85rem .85rem;overflow:hidden">
+        <div class="d-none d-md-flex align-items-center px-3 py-2" style="background:#fcfdff;border-bottom:1px solid #f1f5f9;gap:.75rem">
+          <span class="note-label" style="width:200px;flex-shrink:0">Jenis</span>
+          <span class="note-label" style="flex:1">Isi Catatan</span>
+          <span class="note-label" style="width:70px;flex-shrink:0;text-align:right">Status</span>
+        </div>
+        <?php foreach ($notes as $tp) { ?>
+          <div class="note-row d-flex flex-column flex-md-row align-items-stretch align-items-md-center px-3 py-3" style="gap:.6rem;border-top:1px solid #f8fafc">
+            <div class="d-flex align-items-center" style="width:100%;max-width:200px;flex-shrink:0;gap:.5rem;min-width:0">
+              <span class="note-dot d-none d-md-inline-block"></span>
+              <div style="flex:1;min-width:0">
+                <div class="d-md-none note-label mb-1">Jenis</div>
+                <span class="d-inline-flex align-items-center" style="font-size:.82rem;font-weight:700;color:#1e293b;background:#f8fafc;border:1px solid #e2e8f0;border-radius:9999px;padding:.22rem .55rem;max-width:100%;word-break:break-word"><?= html_escape($tp->jenis) ?></span>
+              </div>
+            </div>
+            <div style="flex:1;min-width:0">
+              <div class="d-md-none note-label mb-1">Isi Catatan</div>
+              <span class="edit" data-id="<?= $tp->id ?>" data-field="data" tabindex="0" role="button" aria-label="Ubah data"><span class="edit-text"><?= $tp->data !== '' ? html_escape($tp->data) : '<em style="color:#94a3b8;font-style:normal">Belum diisi</em>' ?></span><i class="fas fa-pen edit-icon"></i></span>
+              <input type="text" class="txtedit pk" data-id="<?= $tp->id ?>" data-field="data" id="datatxt_<?= $tp->id ?>" value="<?= html_escape($tp->data) ?>" placeholder="Tulis catatan..." aria-label="Edit data">
+            </div>
+            <div class="d-flex align-items-center justify-content-between justify-content-md-end" style="width:100%;max-width:70px;flex-shrink:0;gap:.4rem">
+              <span class="note-saved" id="saved-<?= $tp->id ?>"><i class="fas fa-check mr-1"></i>Tersimpan</span>
+            </div>
+          </div>
+        <?php } ?>
+        <?php if (empty($notes)) { ?>
+          <div class="text-center py-4 px-3">
+            <div class="mx-auto mb-2 d-flex align-items-center justify-content-center" style="width:44px;height:44px;border-radius:.7rem;background:#fffbeb;border:1px solid #fde68a;color:#d97706"><i class="fas fa-sticky-note"></i></div>
+            <div class="small font-weight-bold" style="color:#1e293b">Belum ada catatan</div>
+            <div class="small text-muted">Tambahkan catatan melalui menu master data</div>
+          </div>
+        <?php } ?>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card modern-card mb-4">
+  <div class="card-header py-3 d-flex flex-column flex-md-row align-items-md-center justify-content-between" style="gap:.6rem">
+    <div class="d-flex align-items-center" style="gap:.6rem">
+      <h6 class="m-0 font-weight-bold" style="color:#1e293b;font-size:.9rem">Daftar Lulusan</h6>
+    </div>
+    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalTambah" style="background:#2563eb;border-color:#2563eb;border-radius:.5rem;font-weight:600;font-size:.78rem;padding:.42rem .75rem"><i class="fas fa-plus mr-1"></i> Tambah Lulusan</button>
+  </div>
+  <div class="table-responsive">
+    <table class="table modern-table table-hover mb-0" id="tabellulusan" style="width:100%">
           <thead class="thead-light">
             <tr>
               <th>Nama</th>
               <th>No Induk</th>
               <th>Tanggal Lahir</th>
               <th>Jenis Kursus</th>
-              <th>Tanggal Masuk</th>
-              <th>Tanggal Lulus</th>
+              <th>Periode</th>
               <th>Tanggal Cetak</th>
               <th>Instruktur</th>
               <th>Nilai</th>
@@ -80,22 +161,20 @@
                 <td><?= $tp->Nipd ?></td>
                 <td><?= $tp->Ttl ?></td>
                 <td><?= $tp->Namarombel ?></td>
-                <td><?= date("d-m-Y",strtotime($tp->Tglmasuk))  ?></td>
-                <td><?= date("d-m-Y",strtotime($tp->Tgllulus))  ?></td>
+                <td>
+                  <div style="line-height:1.3;display:flex;flex-direction:column;gap:.15rem">
+                    <span class="mono" style="font-size:.72rem;color:#334155;white-space:nowrap"><?= date("d-m-Y",strtotime($tp->Tglmasuk)) ?> <span style="color:#94a3b8;font-weight:500;font-size:.65rem">Masuk</span></span>
+                    <span class="mono" style="font-size:.72rem;color:#334155;white-space:nowrap"><?= date("d-m-Y",strtotime($tp->Tgllulus)) ?> <span style="color:#94a3b8;font-weight:500;font-size:.65rem">Lulus</span></span>
+                  </div>
+                </td>
                 <td><?= date("d-m-Y",strtotime($tp->Tglcetak))  ?></td>
                 <td><?= $tp->NamaInstruktur ?></td>
                 <td><?php $nilais=[]; for($i=1;$i<=6;$i++){ $v=trim((string)$tp->{'n'.$i}); if($v!=='') $nilais[]=$v; } echo $nilais?html_escape(implode(', ',$nilais)):''; ?></td>
                 <td>
-                  <div class="btn-group btn-group-toggle action-group">
-                    <a href="#" class="btn btn-info btn-sm flex-fill text-white btn-edit-lulusan" data-id="<?= $tp->Idl ?>" title="Klik untuk merubah data.">
-                    <i class="fas fa-pen-alt"></i><span class="btn-text"> Edit</span>
-                    </a>
-                    <a href="<?= base_url("sertifikat?Id=$tp->Idl") ?>" target="_blank" class="btn btn-warning btn-sm flex-fill text-white print" title="Klik untuk mencetak pdf.">
-                    <i class="fas fa-print"></i><span class="btn-text"> Print</span>
-                    </a>
-                    <a href="#" class="btn btn-danger btn-sm flex-fill text-white" data-toggle="modal" data-target="#deleteuser<?= $tp->Idl; ?>" title="Klik untuk menghapus data.">
-                    <i class="fas fa-trash-alt"></i><span class="btn-text"> Hapus</span>
-                    </a>
+                  <div class="d-inline-flex" style="gap:.3rem">
+                    <a href="#" class="dt-btn dt-btn-edit btn-edit-lulusan" data-id="<?= $tp->Idl ?>" title="Ubah"><i class="fas fa-pen"></i></a>
+                    <a href="<?= base_url("sertifikat?Id=$tp->Idl") ?>" target="_blank" class="dt-btn dt-btn-print" title="Cetak Sertifikat"><i class="fas fa-print"></i></a>
+                    <a href="#" class="dt-btn dt-btn-delete" data-toggle="modal" data-target="#deleteuser<?= $tp->Idl; ?>" title="Hapus"><i class="fas fa-trash-alt"></i></a>
                   </div>
                   
                   <!-- modal delete -->
@@ -124,9 +203,24 @@
           </tbody>
         </table>
       </div>
-    </div>
-  </div>
 </div>
+<script>
+$(function(){
+  function initLulus(){
+    var $t=$('#tabellulusan'); if(!$t.length) return;
+    if($.fn.DataTable.isDataTable($t)){ try{$t.DataTable().destroy();}catch(e){} $t.removeAttr('style'); }
+    $t.DataTable({
+      pageLength:10, lengthMenu:[5,10,25,50], order:[],
+      columnDefs:[{orderable:false,targets:[8]}],
+      dom:'<"dt-top"lf>rt<"dt-bottom"ip>',
+      language:{search:"",searchPlaceholder:"Cari lulusan, NIPD, kursus...",lengthMenu:"Tampil _MENU_",info:"Menampilkan _START_–_END_ dari _TOTAL_ lulusan",infoEmpty:"Tidak ada lulusan",infoFiltered:"(difilter dari _MAX_ total)",zeroRecords:"Tidak ada data yang cocok",emptyTable:"Belum ada lulusan",paginate:{first:"Awal",last:"Akhir",next:"›",previous:"‹"}},
+      drawCallback:function(){ var h=[]; this.api().columns().header().toArray().forEach(function(th){h.push($(th).text().trim());}); this.api().rows({page:'current'}).nodes().toArray().forEach(function(r){$(r).find('td').each(function(i){if(h[i])$(this).attr('data-label',h[i]);});}); }
+    });
+  }
+  if(document.readyState==='complete') setTimeout(initLulus,80); else $(window).on('load',function(){setTimeout(initLulus,80);});
+  setTimeout(initLulus,300);
+});
+</script>
 <button class="fab-presensi" data-toggle="modal" data-target="#modalTambah" title="Tambah Lulusan">
   <i class="fas fa-plus"></i>
 </button>
@@ -514,50 +608,66 @@ if (window.jQuery) {
   document.title = "Lulusan <?= $profil[0]->Namalkp?>";
 </script>
 <script type="text/javascript">
-            $(document).ready(function() {
-
-                // On text click
-                $('.edit').click(function() {
-
-                    // Hide input element
-                    $('.txtedit').hide();
-
-                    // Show next input element
-                    $(this).next('.txtedit').show().focus();
-
-                    // Hide clicked element
-                    $(this).hide();
-                });
-                 $('.txtedit.pk').focusout(function() {
-                    // Get edit id, field name and value
-                    var edit_id = $(this).data('id');
-                    var fieldname = $(this).data('field');
-                    var value = $(this).val();
-
-                    // Hide Input element
-                    $(this).hide();
-
-                    // Update viewing value and display it
-                    $(this).prev('.edit').show();
-                    $(this).prev('.edit').text(value);
-
-                    // Send AJAX request
-                    $.ajax({
-                        url: '<?= base_url() ?>lulusan/notes/update',
-                        type: 'post',
-                        data: {
-                            field: fieldname,
-                            value: value,
-                            id: edit_id
-                        },
-                        success: function(response) {
-                            console.log(response);
-
-                        }
-                    });
-                });
-                 });
-                </script>
+$(function(){
+  function showSaved(id){
+    var $s=$('#saved-'+id); $s.addClass('show');
+    setTimeout(function(){ $s.removeClass('show'); }, 1800);
+  }
+  function enterEdit($edit){
+    var $input=$edit.next('.txtedit');
+    if(!$input.length) return;
+    $edit.addClass('is-editing').hide();
+    $input.show().focus().select();
+  }
+  function exitEdit($input, save){
+    var $edit=$input.prev('.edit');
+    var id=$input.data('id');
+    var field=$input.data('field');
+    var val=$input.val();
+    var display = val !== '' ? $('<div>').text(val).html() : '<em style="color:#94a3b8;font-style:normal">Belum diisi</em>';
+    if(!save){
+      $input.hide();
+      $edit.removeClass('is-editing').show();
+      return;
+    }
+    $edit.find('.edit-text').html(display);
+    $input.hide().removeClass('saving');
+    $edit.removeClass('is-editing').show();
+    $input.addClass('saving');
+    $.ajax({
+      url: '<?= base_url() ?>lulusan/notes/update',
+      type: 'post',
+      data: { field: field, value: val, id: id },
+      success: function(res){
+        $input.removeClass('saving');
+        showSaved(id);
+        console.log(res);
+      },
+      error: function(){
+        $input.removeClass('saving');
+        $edit.css('color','#dc2626');
+        setTimeout(function(){ $edit.css('color',''); }, 1500);
+      }
+    });
+  }
+  $(document).on('click', '.notes-card .edit', function(e){
+    e.preventDefault();
+    $('.txtedit:visible').each(function(){ exitEdit($(this), false); });
+    enterEdit($(this));
+  });
+  $(document).on('keydown', '.notes-card .edit', function(e){
+    if(e.key==='Enter' || e.key===' '){ e.preventDefault(); enterEdit($(this)); }
+  });
+  $(document).on('focusout', '.txtedit.pk', function(){
+    var $t=$(this);
+    setTimeout(function(){ if($t.is(':visible')) exitEdit($t, true); }, 150);
+  });
+  $(document).on('keydown', '.txtedit.pk', function(e){
+    if(e.key==='Enter'){ e.preventDefault(); $(this).blur(); }
+    if(e.key==='Escape'){ e.preventDefault(); exitEdit($(this), false); }
+  });
+});
+</script>
 <script>
 $(document).ready(function() {
   $('#peserta').select2({

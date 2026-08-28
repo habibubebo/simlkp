@@ -240,18 +240,23 @@ $(document).ready(function () {
     <!---Container Fluid-->
     </div>
     <!-- Footer -->
-    <footer class="sticky-footer bg-white">
-      <div class="container my-auto">
-        <div class="copyright text-center my-auto">
-          <span>Waktu render : {elapsed_time} ms <br>Copyright &copy; <script>
-              document.write(new Date().getFullYear());
-            </script> - developed by
-            <b><a href="https://instagram.com/habibubebo" target="_blank">Habibubebo</a></b>
-            <div class="mb-2">
-              <a href="<?= base_url('index.php/pages/log'); ?>"><small>(Version 0.8 Beta)</small></a>
-
+    <footer class="modern-footer">
+      <div class="container-fluid px-3 px-md-4">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div class="footer-logo">
+              <i class="fas fa-graduation-cap"></i>
             </div>
-          </span>
+            <div class="footer-brand-text">
+              <span class="footer-brand-name">LKP Cendekia Utama</span>
+              <span class="footer-brand-sub">Sistem Informasi Manajemen</span>
+            </div>
+          </div>
+          <div class="footer-meta">
+            <span class="footer-render">Render: {elapsed_time} ms</span>
+            <span class="footer-copy">&copy; <script>document.write(new Date().getFullYear());</script> <a href="https://instagram.com/habibubebo" target="_blank" rel="noopener">Habibubebo</a></span>
+            <a href="<?= base_url('index.php/pages/log'); ?>" class="footer-version">v0.9</a>
+          </div>
         </div>
       </div>
     </footer>
