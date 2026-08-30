@@ -19,3 +19,4 @@ application/logs/*
 .vscode
 .DS_Store
 *.bat
+/system_3.1.11.bak
