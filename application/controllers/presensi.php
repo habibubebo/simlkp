@@ -36,7 +36,9 @@ class presensi extends CI_Controller
         $tanggal = date('Y-m-d', strtotime($tgl));
 
         foreach ($nipd_list as $nipd) {
-            $jks = $this->db->query("SELECT Jeniskursus FROM peserta WHERE Nipd='$nipd'")->row()->Jeniskursus;
+            $nipd = (int)$nipd;
+            if ($nipd <= 0) continue;
+            $jks = $this->db->query("SELECT Jeniskursus FROM peserta WHERE Nipd=$nipd")->row()->Jeniskursus;
             for ($x = 0; $x < $jml; $x++) {
                 $waktu = isset($waktu_list[$x]) && $waktu_list[$x] !== '' ? $waktu_list[$x] : (isset($waktu_list[0]) ? $waktu_list[0] : date('H:i'));
                 $data = array(
@@ -93,8 +95,8 @@ class presensi extends CI_Controller
     }
     function peserta($Id = null)
     {
-        $Id = $_REQUEST['Id'];
-        $query = $this->db->query("SELECT *,presensi.Id AS Idpr,peserta.Id AS Idp,instruktur.Id AS IdI FROM presensi JOIN peserta JOIN instruktur JOIN rombel ON presensi.Nipd=peserta.Nipd AND presensi.Instruktur=instruktur.Id AND presensi.Jeniskursus=rombel.Id WHERE peserta.Id=$Id order by presensi.Tgl ASC");
+        $Id = (int)$this->input->get_post('Id');
+        $query = $this->db->query("SELECT *,presensi.Id AS Idpr,peserta.Id AS Idp,instruktur.Id AS IdI FROM presensi JOIN peserta JOIN instruktur JOIN rombel ON presensi.Nipd=peserta.Nipd AND presensi.Instruktur=instruktur.Id AND presensi.Jeniskursus=rombel.Id WHERE peserta.Id=$Id order by presensi.Tgl DESC");
         
             if ($query->num_rows() == 0) {
                 $this->session->set_flashdata('alert', 'Data presensi kosong');
@@ -106,16 +108,16 @@ class presensi extends CI_Controller
     }
     function instruktur($Id = null)
     {
-        $Id = $_REQUEST['Id'];
-        $query = $this->db->query("SELECT *,presensi.Id AS Idpr FROM presensi JOIN peserta JOIN instruktur JOIN rombel ON presensi.Nipd=peserta.Nipd AND presensi.Instruktur=instruktur.Id AND presensi.Jeniskursus=rombel.Id WHERE Instruktur.Id=$Id order by presensi.Tgl DESC");
+        $Id = (int)$this->input->get_post('Id');
+        $query = $this->db->query("SELECT *,presensi.Id AS Idpr,peserta.Id AS Idp FROM presensi JOIN peserta JOIN instruktur JOIN rombel ON presensi.Nipd=peserta.Nipd AND presensi.Instruktur=instruktur.Id AND presensi.Jeniskursus=rombel.Id WHERE Instruktur.Id=$Id order by presensi.Tgl DESC");
         $data['presensi'] = $query->result();
         $this->load->view('menu/presensi/instruktur',$data);
         $this->load->view('layout/footer');
     }
     function pegawai($Id = null)
     {
-        $Id = $_REQUEST['Id'];
-        $query = $this->db->query("SELECT *,presensi.Id AS Idpr FROM presensi JOIN pegawai ON  presensi.Nipd = pegawai.Nipg WHERE Nipg=$Id");
+        $Id = (int)$this->input->get_post('Id');
+        $query = $this->db->query("SELECT *,presensi.Id AS Idpr,peserta.Id AS Idp FROM presensi JOIN pegawai ON  presensi.Nipd = pegawai.Nipg WHERE Nipg=$Id");
         $data['presensi'] = $query->result();
         $this->load->view('menu/presensi/pegawai',$data);
         $this->load->view('layout/footer');

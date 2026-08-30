@@ -12,7 +12,10 @@ class cek extends CI_Controller
     
     function index()
     {
-        $induk = $_GET['nipd'] ?? '1';
+        $induk = (int)($this->input->get('nipd') ?? 0);
+        if ($induk <= 0) {
+            return;
+        }
         $query = $this->db->query("SELECT *,lulusan.Id AS Idl FROM lulusan JOIN instruktur JOIN peserta JOIN rombel JOIN unitkompetensi on lulusan.Instruktur=instruktur.Id AND lulusan.Nipd=peserta.Nipd AND peserta.Jeniskursus=rombel.Id AND unitkompetensi.Rombel=rombel.Id where peserta.Nipd=$induk");
         $data = $query->result();
         
@@ -42,28 +45,31 @@ class cek extends CI_Controller
 
     function lulusan()
     {
-        $draw = $_GET['draw'];
-        $start = $_GET['start'];
-        $length = $_GET['length'];
-        $search_value = $_GET['search']['value'];
-       
-        $query = "SELECT *,lulusan.Id AS Idl FROM lulusan JOIN instruktur JOIN peserta JOIN rombel JOIN unitkompetensi on lulusan.Instruktur=instruktur.Id AND lulusan.Nipd=peserta.Nipd AND peserta.Jeniskursus=rombel.Id AND unitkompetensi.Rombel=rombel.Id ORDER BY lulusan.Id desc";
+        $draw = (int)($this->input->get('draw') ?? 0);
+        $start = (int)($this->input->get('start') ?? 0);
+        $length = (int)($this->input->get('length') ?? 10);
+        if ($length < 1 || $length > 200) { $length = 10; }
+        $search_value = $this->db->escape_like_str((string)($this->input->get('search')['value'] ?? ''));
+
+        $query = "SELECT *,lulusan.Id AS Idl FROM lulusan JOIN instruktur JOIN peserta JOIN rombel JOIN unitkompetensi on lulusan.Instruktur=instruktur.Id AND lulusan.Nipd=peserta.Nipd AND peserta.Jeniskursus=rombel.Id AND unitkompetensi.Rombel=rombel.Id";
         
-        if (!empty($search_value)) {
-            $query .= " WHERE name LIKE '%" . $search_value . "%' ";
+        if ($search_value !== '') {
+            $query .= " WHERE (peserta.Nama LIKE '%" . $search_value . "%' OR rombel.Namarombel LIKE '%" . $search_value . "%')";
         }
         
+        $query .= " ORDER BY lulusan.Id desc";
+        
         // Hitung total data tanpa filter
-        $total_data = $this->db->query($query)->num_rows;
+        $total_data = $this->db->query($query)->num_rows();
         
         // Tambahkan LIMIT untuk paginasi
         $query .= " LIMIT " . $start . ", " . $length;
         
-        $data = $this->db->query($query)->fetch_all(MYSQLI_ASSOC);
+        $data = $this->db->query($query)->result_array();
         
         // Persiapkan respons dalam format JSON untuk DataTables
         $response = array(
-            "draw" => intval($draw),
+            "draw" => $draw,
             "recordsTotal" => $total_data,
             "recordsFiltered" => $total_data,  // Anda bisa menghitung ulang jika ada filter pencarian
             "data" => $data
@@ -79,7 +85,7 @@ class cek extends CI_Controller
         $length = intval($_POST['length'] ?? 10);
         $search = $_POST['search']['value'] ?? '';
         $orderCol = intval($_POST['order'][0]['column'] ?? 0);
-        $orderDir = $_POST['order'][0]['dir'] ?? 'DESC';
+        $orderDir = strtoupper((string)($_POST['order'][0]['dir'] ?? '')) === 'ASC' ? 'ASC' : 'DESC';
 
         $cols = ['Tgl', 'Nama', 'Namarombel', 'NamaInstruktur', 'Materi', 'Id'];
         $orderField = $cols[$orderCol] ?? 'Tgl';

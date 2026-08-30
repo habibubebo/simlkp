@@ -108,11 +108,12 @@ class Model_APS extends CI_Model
     function get_tables($tables,$cari,$iswhere)
         {
             // Ambil data yang di ketik user pada textbox pencarian
-            $search = htmlspecialchars($_POST['search']['value']);
+            $search = isset($_POST['search']['value']) ? $this->db->escape_like_str($_POST['search']['value']) : '';
             // Ambil data limit per page
-            $limit = preg_replace("/[^a-zA-Z0-9.]/", '', "{$_POST['length']}");
+            $limit = (int)preg_replace("/[^0-9]/", '', "{$_POST['length']}");
+            $limit = ($limit < 1 || $limit > 200) ? 10 : $limit;
             // Ambil data start
-            $start =preg_replace("/[^a-zA-Z0-9.]/", '', "{$_POST['start']}"); 
+            $start = (int)preg_replace("/[^0-9]/", '', "{$_POST['start']}"); 
             
             $query = $tables;
             
@@ -128,11 +129,13 @@ class Model_APS extends CI_Model
 
             
             // Untuk mengambil nama field yg menjadi acuan untuk sorting
-            $order_field = $_POST['order'][0]['column']; 
+            $order_field = (int)($_POST['order'][0]['column'] ?? 0);
+            $colName = $_POST['columns'][$order_field]['data'] ?? '';
+            if (!preg_match('/^[a-zA-Z0-9_.]+$/', $colName)) { $colName = '1'; }
 
             // Untuk menentukan order by "ASC" atau "DESC"
-            $order_ascdesc = $_POST['order'][0]['dir']; 
-            $order = " ORDER BY ".$_POST['columns'][$order_field]['data']." ".$order_ascdesc;
+            $order_ascdesc = strtoupper((string)($_POST['order'][0]['dir'] ?? '')) === 'ASC' ? 'ASC' : 'DESC';
+            $order = " ORDER BY ".$colName." ".$order_ascdesc;
 
             if(!empty($iswhere)){
                 $sql_data = $this->db->query("SELECT * FROM ".$query." WHERE $iswhere AND (".$cari.")".$order." LIMIT ".$limit." OFFSET ".$start);
@@ -159,7 +162,7 @@ class Model_APS extends CI_Model
             $data = $sql_data->result_array();
 
             $callback = array(    
-                'draw' => $_POST['draw'], // Ini dari datatablenya    
+                'draw' => (int)($_POST['draw'] ?? 0), // Ini dari datatablenya    
                 'recordsTotal' => $sql_count,    
                 'recordsFiltered'=>$sql_filter_count,    
                 'data'=>$data
@@ -169,11 +172,12 @@ class Model_APS extends CI_Model
         function get_tables_query($query,$cari,$where,$iswhere)
         {
             // Ambil data yang di ketik user pada textbox pencarian
-            $search = htmlspecialchars($_POST['search']['value']);
+            $search = isset($_POST['search']['value']) ? $this->db->escape_like_str($_POST['search']['value']) : '';
             // Ambil data limit per page
-            $limit = preg_replace("/[^a-zA-Z0-9.]/", '', "{$_POST['length']}");
+            $limit = (int)preg_replace("/[^0-9]/", '', "{$_POST['length']}");
+            $limit = ($limit < 1 || $limit > 200) ? 10 : $limit;
             // Ambil data start
-            $start =preg_replace("/[^a-zA-Z0-9.]/", '', "{$_POST['start']}"); 
+            $start = (int)preg_replace("/[^0-9]/", '', "{$_POST['start']}"); 
 
             if($where != null)
             {
@@ -195,12 +199,14 @@ class Model_APS extends CI_Model
     
                 $cari = implode(" LIKE '%".$search."%' OR ", $cari)." LIKE '%".$search."%'";
                 
-                // Untuk mengambil nama field yg menjadi acuan untuk sorting
-                $order_field = $_POST['order'][0]['column']; 
-    
+// Untuk mengambil nama field yg menjadi acuan untuk sorting
+                $order_field = (int)($_POST['order'][0]['column'] ?? 0);
+                $colName = $_POST['columns'][$order_field]['data'] ?? '';
+                if (!preg_match('/^[a-zA-Z0-9_.]+$/', $colName)) { $colName = '1'; }
+
                 // Untuk menentukan order by "ASC" atau "DESC"
-                $order_ascdesc = $_POST['order'][0]['dir']; 
-                $order = " ORDER BY ".$_POST['columns'][$order_field]['data']." ".$order_ascdesc;
+                $order_ascdesc = strtoupper((string)($_POST['order'][0]['dir'] ?? '')) === 'ASC' ? 'ASC' : 'DESC';
+                $order = " ORDER BY ".$colName." ".$order_ascdesc;
     
                 if(!empty($iswhere))
                 {
@@ -240,12 +246,14 @@ class Model_APS extends CI_Model
     
                 $cari = implode(" LIKE '%".$search."%' OR ", $cari)." LIKE '%".$search."%'";
                 
-                // Untuk mengambil nama field yg menjadi acuan untuk sorting
-                $order_field = $_POST['order'][0]['column']; 
-    
+// Untuk mengambil nama field yg menjadi acuan untuk sorting
+                $order_field = (int)($_POST['order'][0]['column'] ?? 0);
+                $colName = $_POST['columns'][$order_field]['data'] ?? '';
+                if (!preg_match('/^[a-zA-Z0-9_.]+$/', $colName)) { $colName = '1'; }
+
                 // Untuk menentukan order by "ASC" atau "DESC"
-                $order_ascdesc = $_POST['order'][0]['dir']; 
-                $order = " ORDER BY ".$_POST['columns'][$order_field]['data']." ".$order_ascdesc;
+                $order_ascdesc = strtoupper((string)($_POST['order'][0]['dir'] ?? '')) === 'ASC' ? 'ASC' : 'DESC';
+                $order = " ORDER BY ".$colName." ".$order_ascdesc;
     
                 if(!empty($iswhere))
                 {                
@@ -276,7 +284,7 @@ class Model_APS extends CI_Model
             }
             
             $callback = array(    
-                'draw' => $_POST['draw'], // Ini dari datatablenya    
+                'draw' => (int)($_POST['draw'] ?? 0), // Ini dari datatablenya    
                 'recordsTotal' => $sql_count,    
                 'recordsFiltered'=>$sql_filter_count,    
                 'data'=>$data

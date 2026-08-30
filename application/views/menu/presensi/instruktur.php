@@ -1,4 +1,6 @@
-<?php
+<?php 
+$bulanIndo = [1=>'Januari',2=>'Februari',3=>'Maret',4=>'April',5=>'Mei',6=>'Juni',7=>'Juli',8=>'Agustus',9=>'September',10=>'Oktober',11=>'November',12=>'Desember']; 
+$bulanPendekIndo = [1=>'Jan',2=>'Feb',3=>'Mar',4=>'Apr',5=>'Mei',6=>'Jun',7=>'Jul',8=>'Agu',9=>'Sep',10=>'Okt',11=>'Nov',12=>'Des'];
 $__ins = $presensi[0];
 $__n = $__ins->NamaInstruktur ?? '-';
 $__initial = strtoupper(substr(trim($__n),0,1) . (strpos(trim($__n),' ') ? substr(trim($__n),strpos(trim($__n),' ')+1,1) : ''));
@@ -7,6 +9,7 @@ $__peserta = count(array_unique(array_map(fn($r)=>$r->Nipd ?? $r->Nama ?? '', $p
 $__materi = count(array_unique(array_map(fn($r)=>trim($r->Materi ?? ''), $presensi)));
 $__last = $presensi[0]->Tgl ?? '';
 foreach ($presensi as $__r) if (strtotime($__r->Tgl) > strtotime($__last)) $__last = $__r->Tgl;
+$__bulanAktifIns = !empty($presensi) ? date('Y-m', strtotime($presensi[0]->Tgl)) : date('Y-m');
 $__nowYm = date('Y-m'); $__prevYm = date('Y-m', strtotime('-1 month'));
 $__bulanIni = 0; $__bulanLalu = 0; $__perBulan = [];
 foreach ($presensi as $__r) {
@@ -49,7 +52,7 @@ foreach ($__allMap as $__k=>$__v) { $__colorMap[$__k] = $__palette[$__idx % coun
 .modern-card{border:1px solid #eef0f4;border-radius:.85rem;box-shadow:0 1px 3px rgba(15,23,42,.04),0 8px 24px rgba(15,23,42,.04)}
 .modern-card .card-header{background:#fff;border-bottom:1px solid #f1f5f9;border-radius:.85rem .85rem 0 0}
 .profile-card{border:1px solid #eef0f4;border-radius:.85rem;overflow:hidden}
-.profile-head{background:linear-gradient(135deg,#0f766e 0%,#115e59 100%);padding:1.25rem;color:#fff;position:relative;overflow:hidden}
+.profile-head{background:linear-gradient(135deg,#2563eb 0%,#1d4ed8 100%);padding:1.25rem;color:#fff;position:relative;overflow:hidden}
 .profile-head::after{content:"";position:absolute;inset:0;background:radial-gradient(400px 120px at 90% -10%,rgba(255,255,255,.18),transparent 60%);pointer-events:none}
 .avatar-lg{width:52px;height:52px;border-radius:.75rem;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.1rem;flex-shrink:0;backdrop-filter:blur(6px)}
 .mono{font-family:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,monospace}
@@ -71,14 +74,24 @@ foreach ($__allMap as $__k=>$__v) { $__colorMap[$__k] = $__palette[$__idx % coun
 .modern-card .dataTables_paginate .pagination{margin:0;gap:.28rem}
 .modern-card .dataTables_paginate .paginate_button{border:1px solid #e2e8f0!important;background:#fff!important;color:#475569!important;border-radius:.5rem!important;padding:.32rem .62rem!important;font-size:.76rem!important;font-weight:600!important;min-width:32px;text-align:center}
 .modern-card .dataTables_paginate .paginate_button:hover{background:#f8fafc!important;border-color:#cbd5e1!important;color:#1e293b!important}
-.modern-card .dataTables_paginate .paginate_button.current,.modern-card .dataTables_paginate .paginate_button.current:hover{background:#0f766e!important;border-color:#0f766e!important;color:#fff!important;box-shadow:0 2px 8px rgba(15,118,110,.25)}
+.modern-card .dataTables_paginate .paginate_button.current,.modern-card .dataTables_paginate .paginate_button.current:hover{background:#2563eb!important;border-color:#2563eb!important;color:#fff!important;box-shadow:0 2px 8px rgba(37,99,235,.25)}
 .dt-btn{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:.45rem;font-size:.7rem;border:1px solid transparent;transition:all .15s;flex-shrink:0;text-decoration:none!important}
 .dt-btn-edit{background:#fff;border-color:#e2e8f0;color:#475569}
 .dt-btn-edit:hover{background:#f8fafc;border-color:#cbd5e1;color:#1e293b}
-@media(max-width:767.98px){.modern-head .breadcrumb{display:none}.modern-card .dt-top{flex-direction:column;align-items:stretch}.modern-card .dataTables_filter input{width:100%}.modern-card .dataTables_filter label{width:100%}}
+.app-search{position:relative;display:flex;align-items:center;background:#fff;border:1px solid #e2e8f0;border-radius:9999px;padding:.6rem 1rem .6rem 2.5rem;box-shadow:0 1px 2px rgba(15,23,42,.04)}
+.app-search i{position:absolute;left:1rem;color:#94a3b8;font-size:.85rem}
+.app-search input{border:none;outline:none;width:100%;font-size:.82rem;color:#1e293b;background:transparent}
+.app-search input::placeholder{color:#94a3b8}
+.app-list{display:grid;gap:.7rem}
+.app-item{background:#fff;border:1px solid #eef0f4;border-radius:.85rem;padding:.75rem;box-shadow:0 1px 3px rgba(15,23,42,.04);display:flex;gap:.7rem;align-items:center}
+.app-item-main{flex:1;min-width:0;overflow:hidden}
+.app-item-date{min-width:52px;text-align:center;flex-shrink:0}
+.app-item-date-day{font-weight:800;color:#1e293b;font-size:1.05rem;line-height:1}
+.app-item-date-mon{font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:#64748b}
+@media(max-width:767.98px){.modern-head .breadcrumb{display:none}.modern-card .dt-top{flex-direction:column;align-items:stretch}.modern-card .dataTables_filter input{width:100%}.modern-card .dataTables_filter label{width:100%}.profile-head{padding:1rem !important}.avatar-lg{width:44px;height:44px;font-size:.95rem}}
 </style>
 
-<div class="modern-head d-flex flex-column flex-md-row align-items-md-center justify-content-between mt-4 mb-3">
+<div class="modern-head d-none d-md-flex flex-column flex-md-row align-items-md-center justify-content-between mt-4 mb-3">
   <div class="mb-2 mb-md-0">
     <a href="<?= base_url('pages/presensi') ?>" class="small d-inline-flex align-items-center mb-2" style="color:#64748b;text-decoration:none;font-weight:500"><i class="fas fa-arrow-left mr-1" style="font-size:.7rem"></i> Kembali ke Presensi</a>
     <h1 class="h4 mb-1 font-weight-bold text-gray-800" style="font-weight:800">Presensi Instruktur</h1>
@@ -109,14 +122,14 @@ foreach ($__allMap as $__k=>$__v) { $__colorMap[$__k] = $__palette[$__idx % coun
 </div>
 
 <div class="row mb-3">
-  <div class="col-6 mb-3"><div class="card modern-card h-100" style="border-left:3px solid #0f766e"><div class="card-body py-3 d-flex align-items-center justify-content-between"><div><div class="text-muted" style="font-size:.65rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700">Bulan Ini</div><div style="font-weight:800;color:#0f766e;font-size:1.35rem"><?= $__bulanIni ?></div><div class="small text-muted" style="font-size:.72rem"><?= $__blnNames[(int)date('n')] ?> <?= date('Y') ?> · <?= $__bulanIni ? round($__bulanIni/$__total*100) : 0 ?>% dari total</div></div><div class="d-flex align-items-center justify-content-center" style="width:36px;height:36px;border-radius:.6rem;background:rgba(15,118,110,.12);color:#0f766e"><i class="fas fa-calendar-check"></i></div></div></div></div>
+  <div class="col-6 mb-3"><div class="card modern-card h-100" style="border-left:3px solid #f59e0b"><div class="card-body py-3 d-flex align-items-center justify-content-between"><div><div class="text-muted" style="font-size:.65rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700">Bulan Ini</div><div style="font-weight:800;color:#d97706;font-size:1.35rem"><?= $__bulanIni ?></div><div class="small text-muted" style="font-size:.72rem"><?= $__blnNames[(int)date('n')] ?> <?= date('Y') ?> · <?= $__bulanIni ? round($__bulanIni/$__total*100) : 0 ?>% dari total</div></div><div class="d-flex align-items-center justify-content-center" style="width:36px;height:36px;border-radius:.6rem;background:rgba(245,158,11,.14);color:#d97706"><i class="fas fa-calendar-check"></i></div></div></div></div>
   <div class="col-6 mb-3"><div class="card modern-card h-100" style="border-left:3px solid #94a3b8"><div class="card-body py-3 d-flex align-items-center justify-content-between"><div><div class="text-muted" style="font-size:.65rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700">Bulan Lalu</div><div style="font-weight:800;color:#475569;font-size:1.35rem"><?= $__bulanLalu ?></div><div class="small text-muted" style="font-size:.72rem"><?= $__blnNames[(int)date('n', strtotime('-1 month'))] ?> <?= date('Y', strtotime('-1 month')) ?></div></div><div class="d-flex align-items-center justify-content-center" style="width:36px;height:36px;border-radius:.6rem;background:#f1f5f9;color:#64748b"><i class="fas fa-history"></i></div></div></div></div>
 </div>
 
 <div class="card modern-card mb-3">
   <div class="card-header py-3">
     <div class="d-flex align-items-center justify-content-between">
-      <h6 class="m-0 font-weight-bold" style="color:#1e293b;font-size:.85rem"><i class="fas fa-chart-bar mr-2" style="color:#0f766e"></i>Resume Peserta per Bulan</h6>
+      <h6 class="m-0 font-weight-bold" style="color:#1e293b;font-size:.85rem"><i class="fas fa-chart-bar mr-2" style="color:#d97706"></i>Resume Peserta per Bulan</h6>
       <span class="badge" style="background:#f1f5f9;color:#475569;font-weight:600;font-size:.65rem;border-radius:9999px;padding:.25rem .5rem"><?= count($__perBulan) ?> bulan</span>
     </div>
     <small class="text-muted" style="font-size:.68rem">Warna pill unik per siswa — sama di semua bulan untuk tracing</small>
@@ -125,20 +138,46 @@ foreach ($__allMap as $__k=>$__v) { $__colorMap[$__k] = $__palette[$__idx % coun
     <table class="table modern-table table-hover mb-0" style="width:100%">
       <thead><tr><th>Bulan</th><th class="text-center">Sesi</th><th class="text-center">Peserta</th><th>Nama Siswa</th></tr></thead>
       <tbody>
-        <?php $shown=0; foreach ($__perBulan as $ym=>$d) { if($shown++>=6) break; [$y,$m]=explode('-',$ym); $cPes = count($d['peserta']); ?>
+        <?php 
+$bulanIndo = [1=>'Januari',2=>'Februari',3=>'Maret',4=>'April',5=>'Mei',6=>'Juni',7=>'Juli',8=>'Agustus',9=>'September',10=>'Oktober',11=>'November',12=>'Desember']; 
+$bulanPendekIndo = [1=>'Jan',2=>'Feb',3=>'Mar',4=>'Apr',5=>'Mei',6=>'Jun',7=>'Jul',8=>'Agu',9=>'Sep',10=>'Okt',11=>'Nov',12=>'Des']; $shown=0; foreach ($__perBulan as $ym=>$d) { if($shown++>=6) break; [$y,$m]=explode('-',$ym); $cPes = count($d['peserta']); ?>
           <tr>
             <td style="font-weight:600;color:#1e293b;white-space:nowrap"><?= $__blnNames[(int)$m] ?> <?= $y ?></td>
-            <td class="text-center"><span class="mono" style="font-weight:700;color:#0f766e"><?= $d['sesi'] ?></span></td>
+            <td class="text-center"><span class="mono" style="font-weight:700;color:#d97706"><?= $d['sesi'] ?></span></td>
             <td class="text-center"><span class="mono" style="font-weight:700;color:#334155"><?= $cPes ?></span></td>
             <td>
               <div class="d-flex flex-wrap" style="gap:.35rem">
-                <?php $keys=array_keys($d['peserta']); $vals=array_values($d['peserta']); foreach($vals as $idx=>$nm){ $k=$keys[$idx]; $pal=$__colorMap[$k] ?? ['bg'=>'#f1f5f9','bd'=>'#e2e8f0','c'=>'#1e293b']; ?><span class="badge" style="background:<?= $pal['bg'] ?>;color:<?= $pal['c'] ?>;border:1px solid <?= $pal['bd'] ?>;font-weight:600;font-size:.7rem;border-radius:9999px;padding:.28rem .55rem;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="<?= html_escape($nm) ?>"><?= html_escape($nm) ?></span><?php } ?>
+                <?php 
+$bulanIndo = [1=>'Januari',2=>'Februari',3=>'Maret',4=>'April',5=>'Mei',6=>'Juni',7=>'Juli',8=>'Agustus',9=>'September',10=>'Oktober',11=>'November',12=>'Desember']; 
+$bulanPendekIndo = [1=>'Jan',2=>'Feb',3=>'Mar',4=>'Apr',5=>'Mei',6=>'Jun',7=>'Jul',8=>'Agu',9=>'Sep',10=>'Okt',11=>'Nov',12=>'Des']; $keys=array_keys($d['peserta']); $vals=array_values($d['peserta']); foreach($vals as $idx=>$nm){ $k=$keys[$idx]; $pal=$__colorMap[$k] ?? ['bg'=>'#f1f5f9','bd'=>'#e2e8f0','c'=>'#1e293b']; ?><span class="badge" style="background:<?= $pal['bg'] ?>;color:<?= $pal['c'] ?>;border:1px solid <?= $pal['bd'] ?>;font-weight:600;font-size:.7rem;border-radius:9999px;padding:.28rem .55rem;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="<?= html_escape($nm) ?>"><?= html_escape($nm) ?></span><?php 
+$bulanIndo = [1=>'Januari',2=>'Februari',3=>'Maret',4=>'April',5=>'Mei',6=>'Juni',7=>'Juli',8=>'Agustus',9=>'September',10=>'Oktober',11=>'November',12=>'Desember']; 
+$bulanPendekIndo = [1=>'Jan',2=>'Feb',3=>'Mar',4=>'Apr',5=>'Mei',6=>'Jun',7=>'Jul',8=>'Agu',9=>'Sep',10=>'Okt',11=>'Nov',12=>'Des']; } ?>
               </div>
             </td>
           </tr>
-        <?php } if (empty($__perBulan)) { ?><tr><td colspan="4" class="text-center text-muted small py-3">Belum ada data per bulan</td></tr><?php } ?>
+        <?php 
+$bulanIndo = [1=>'Januari',2=>'Februari',3=>'Maret',4=>'April',5=>'Mei',6=>'Juni',7=>'Juli',8=>'Agustus',9=>'September',10=>'Oktober',11=>'November',12=>'Desember']; 
+$bulanPendekIndo = [1=>'Jan',2=>'Feb',3=>'Mar',4=>'Apr',5=>'Mei',6=>'Jun',7=>'Jul',8=>'Agu',9=>'Sep',10=>'Okt',11=>'Nov',12=>'Des']; } if (empty($__perBulan)) { ?><tr><td colspan="4" class="text-center text-muted small py-3">Belum ada data per bulan</td></tr><?php 
+$bulanIndo = [1=>'Januari',2=>'Februari',3=>'Maret',4=>'April',5=>'Mei',6=>'Juni',7=>'Juli',8=>'Agustus',9=>'September',10=>'Oktober',11=>'November',12=>'Desember']; 
+$bulanPendekIndo = [1=>'Jan',2=>'Feb',3=>'Mar',4=>'Apr',5=>'Mei',6=>'Jun',7=>'Jul',8=>'Agu',9=>'Sep',10=>'Okt',11=>'Nov',12=>'Des']; } ?>
       </tbody>
     </table>
+  </div>
+</div>
+
+<div class="card modern-card mb-3">
+  <div class="card-header py-3 d-flex align-items-center justify-content-between" style="gap:.6rem">
+    <div class="d-flex align-items-center" style="gap:.5rem">
+      <span class="d-flex align-items-center justify-content-center" style="width:28px;height:28px;border-radius:.6rem;background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe"><i class="fas fa-chart-bar" style="font-size:.75rem"></i></span>
+      <h6 class="m-0 font-weight-bold" style="color:#1e293b;font-size:.9rem">Grafik Kehadiran</h6>
+    </div>
+    <input type="month" id="bulanPickerIns" class="form-control form-control-sm" style="width:auto;min-width:140px;border:1px solid #e2e8f0;border-radius:.5rem;font-size:.78rem;padding:.3rem .5rem" value="<?= $__bulanAktifIns ?>">
+  </div>
+  <div class="card-body">
+    <div style="height:200px;position:relative">
+      <canvas id="chartBulananIns"></canvas>
+    </div>
+    <div class="small text-muted mt-2" style="font-size:.68rem"><i class="fas fa-info-circle mr-1" style="color:#94a3b8"></i>Menampilkan sesi per tanggal di bulan terpilih</div>
   </div>
 </div>
 
@@ -147,7 +186,41 @@ foreach ($__allMap as $__k=>$__v) { $__colorMap[$__k] = $__palette[$__idx % coun
     <h6 class="m-0 font-weight-bold" style="color:#1e293b;font-size:.9rem">Riwayat Mengajar</h6>
     <span class="badge" style="background:#f1f5f9;color:#475569;font-weight:600;font-size:.68rem;border-radius:9999px;padding:.3rem .55rem"><?= $__total ?> sesi</span>
   </div>
-  <div class="modern-table-wrap table-responsive">
+  <div class="d-block d-md-none p-3">
+    <div class="app-search"><i class="fas fa-search"></i><input type="search" id="appSearchIns" placeholder="Cari peserta, materi..."></div>
+    <div id="appListIns" class="app-list mt-3">
+      <?php 
+$bulanIndo = [1=>'Januari',2=>'Februari',3=>'Maret',4=>'April',5=>'Mei',6=>'Juni',7=>'Juli',8=>'Agustus',9=>'September',10=>'Oktober',11=>'November',12=>'Desember']; 
+$bulanPendekIndo = [1=>'Jan',2=>'Feb',3=>'Mar',4=>'Apr',5=>'Mei',6=>'Jun',7=>'Jul',8=>'Agu',9=>'Sep',10=>'Okt',11=>'Nov',12=>'Des']; foreach ($presensi as $tp) {
+        $d = strtotime($tp->Tgl);
+        $day = date('d', $d);
+        $mon = date('M', $d);
+        $jam = date('H:i', $d);
+      ?>
+        <div class="app-item" data-search="<?= html_escape(strtolower($tp->Nama.' '.$tp->Materi.' '.date('d-m-Y',$d))) ?>">
+          <div class="app-item-date">
+            <div class="app-item-date-day"><?= $day ?></div>
+            <div class="app-item-date-mon"><?= $mon ?></div>
+            <div class="mono" style="font-size:.62rem;color:#94a3b8"><?= $jam ?></div>
+          </div>
+          <div class="app-item-main">
+            <div style="font-weight:700;color:#1e293b;font-size:.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><?= html_escape($tp->Nama) ?></div>
+            <div class="small text-muted" style="font-size:.70rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><?= html_escape($tp->Materi) ?></div>
+            <div class="mono small text-muted" style="font-size:.66rem"><?= date('d/m/Y H:i', $d) ?></div>
+          </div>
+          <a href="#" class="dt-btn dt-btn-edit flex-shrink-0" data-toggle="modal" data-target="#editPresensiIns" data-id="<?= $tp->Idpr ?>" data-tgl="<?= html_escape($tp->Tgl) ?>" data-nipd="<?= html_escape($tp->Nipd) ?>" data-nama="<?= html_escape($tp->Nama ?? '') ?>" data-jks="<?= html_escape($tp->Jeniskursus ?? '') ?>" data-ins="<?= html_escape($tp->Instruktur ?? $__ins->Id ?? '') ?>" data-materi="<?= html_escape($tp->Materi) ?>" title="Ubah"><i class="fas fa-pen" style="font-size:.65rem"></i></a>
+        </div>
+      <?php 
+$bulanIndo = [1=>'Januari',2=>'Februari',3=>'Maret',4=>'April',5=>'Mei',6=>'Juni',7=>'Juli',8=>'Agustus',9=>'September',10=>'Oktober',11=>'November',12=>'Desember']; 
+$bulanPendekIndo = [1=>'Jan',2=>'Feb',3=>'Mar',4=>'Apr',5=>'Mei',6=>'Jun',7=>'Jul',8=>'Agu',9=>'Sep',10=>'Okt',11=>'Nov',12=>'Des']; } ?>
+    </div>
+    <div id="appEmptyIns" class="text-center py-4 d-none">
+      <div class="mx-auto mb-2 d-flex align-items-center justify-content-center" style="width:44px;height:44px;border-radius:.7rem;background:#f8fafc;border:1px solid #eef0f4;color:#94a3b8"><i class="fas fa-search"></i></div>
+      <div class="small font-weight-bold" style="color:#334155">Tidak ada sesi</div>
+      <div class="small text-muted">Coba ubah pencarian</div>
+    </div>
+  </div>
+  <div class="d-none d-md-block modern-table-wrap table-responsive">
     <table class="table modern-table table-hover mb-0" id="tabelpresensiIns" style="width:100%">
       <thead>
         <tr>
@@ -159,15 +232,21 @@ foreach ($__allMap as $__k=>$__v) { $__colorMap[$__k] = $__palette[$__idx % coun
         </tr>
       </thead>
       <tbody>
-        <?php $no=1; foreach ($presensi as $tp) { ?>
+        <?php 
+$bulanIndo = [1=>'Januari',2=>'Februari',3=>'Maret',4=>'April',5=>'Mei',6=>'Juni',7=>'Juli',8=>'Agustus',9=>'September',10=>'Oktober',11=>'November',12=>'Desember']; 
+$bulanPendekIndo = [1=>'Jan',2=>'Feb',3=>'Mar',4=>'Apr',5=>'Mei',6=>'Jun',7=>'Jul',8=>'Agu',9=>'Sep',10=>'Okt',11=>'Nov',12=>'Des']; $no=1; foreach ($presensi as $tp) { ?>
           <tr>
             <td class="text-center mono" style="color:#94a3b8"><?= $no++ ?></td>
-            <td><span class="mono" style="font-size:.74rem;color:#334155"><?php $this->Model_APS->Gethari($tp->Tgl) ?></span></td>
-            <td><a href="<?= base_url('presensi/peserta?Id='.$tp->Idp) ?>" style="font-weight:600;color:#0f766e;text-decoration:none;font-size:.82rem"><?= html_escape($tp->Nama) ?></a></td>
+            <td><span class="mono" style="font-size:.74rem;color:#334155"><?php 
+$bulanIndo = [1=>'Januari',2=>'Februari',3=>'Maret',4=>'April',5=>'Mei',6=>'Juni',7=>'Juli',8=>'Agustus',9=>'September',10=>'Oktober',11=>'November',12=>'Desember']; 
+$bulanPendekIndo = [1=>'Jan',2=>'Feb',3=>'Mar',4=>'Apr',5=>'Mei',6=>'Jun',7=>'Jul',8=>'Agu',9=>'Sep',10=>'Okt',11=>'Nov',12=>'Des']; $this->Model_APS->Gethari($tp->Tgl) ?></span></td>
+            <td><a href="<?= base_url('presensi/peserta?Id='.$tp->Idp) ?>" style="font-weight:600;color:#2563eb;text-decoration:none;font-size:.82rem"><?= html_escape($tp->Nama) ?></a></td>
             <td><span style="color:#334155"><?= html_escape($tp->Materi) ?></span></td>
             <td class="text-right"><a href="#" class="dt-btn dt-btn-edit" data-toggle="modal" data-target="#editPresensiIns" data-id="<?= $tp->Idpr ?>" data-tgl="<?= html_escape($tp->Tgl) ?>" data-nipd="<?= html_escape($tp->Nipd) ?>" data-nama="<?= html_escape($tp->Nama ?? '') ?>" data-jks="<?= html_escape($tp->Jeniskursus ?? '') ?>" data-ins="<?= html_escape($tp->Instruktur ?? $__ins->Id ?? '') ?>" data-materi="<?= html_escape($tp->Materi) ?>" title="Ubah"><i class="fas fa-pen"></i></a></td>
           </tr>
-        <?php } ?>
+        <?php 
+$bulanIndo = [1=>'Januari',2=>'Februari',3=>'Maret',4=>'April',5=>'Mei',6=>'Juni',7=>'Juli',8=>'Agustus',9=>'September',10=>'Oktober',11=>'November',12=>'Desember']; 
+$bulanPendekIndo = [1=>'Jan',2=>'Feb',3=>'Mar',4=>'Apr',5=>'Mei',6=>'Jun',7=>'Jul',8=>'Agu',9=>'Sep',10=>'Okt',11=>'Nov',12=>'Des']; } ?>
       </tbody>
     </table>
   </div>
@@ -179,7 +258,7 @@ $(function(){
     var $t=$('#tabelpresensiIns'); if(!$t.length) return;
     if($.fn.DataTable.isDataTable($t)){ try{$t.DataTable().destroy();}catch(e){} $t.removeAttr('style'); }
     $t.DataTable({
-      pageLength:10, lengthMenu:[5,10,25,50], order:[[1,'desc']],
+      pageLength:10, lengthMenu:[5,10,25,50], order:[[0,'asc']],
       columnDefs:[{orderable:false,targets:[4]}],
       dom:'<"dt-top"lf>rt<"dt-bottom"ip>',
       language:{search:"",searchPlaceholder:"Cari peserta, materi...",lengthMenu:"Tampil _MENU_",info:"Menampilkan _START_–_END_ dari _TOTAL_ sesi",infoEmpty:"Tidak ada sesi",infoFiltered:"(difilter dari _MAX_ total)",zeroRecords:"Tidak ada data yang cocok",emptyTable:"Belum ada sesi",paginate:{first:"Awal",last:"Akhir",next:"›",previous:"‹"}},
@@ -188,6 +267,20 @@ $(function(){
   }
   if(document.readyState==='complete') setTimeout(initIns,80); else $(window).on('load',function(){setTimeout(initIns,80);});
   setTimeout(initIns,300);
+  function filterInsApp(){
+    var q=(($('#appSearchIns').val()||'').toLowerCase());
+    var vis=0;
+    $('#appListIns .app-item').each(function(){
+      var $it=$(this);
+      var s=String($it.data('search')||'').toLowerCase();
+      if(!s) s=$it.text().toLowerCase();
+      var show=!q || s.indexOf(q)!==-1;
+      $it.toggle(show);
+      if(show) vis++;
+    });
+    $('#appEmptyIns').toggleClass('d-none', vis>0);
+  }
+  $(document).on('input','#appSearchIns', filterInsApp);
 });
 </script>
 <style>
@@ -196,21 +289,21 @@ $(function(){
 .app-modal .modal-header,.app-modal .modal-footer{flex-shrink:0}
 .app-modal .modal-body{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain}
 .minw-0{min-width:0}
-.presensi-icon{width:2.5rem;height:2.5rem;border-radius:.6rem;display:inline-flex;align-items:center;justify-content:center;background:rgba(15,118,110,.12);color:#0f766e;font-size:1.05rem;flex-shrink:0}
+.presensi-icon{width:2.5rem;height:2.5rem;border-radius:.6rem;display:inline-flex;align-items:center;justify-content:center;background:rgba(37,99,235,.12);color:#2563eb;font-size:1.05rem;flex-shrink:0}
 .presensi-subtitle{font-size:.8rem;color:#6b7280;margin-top:.1rem}
 .presensi-close{width:2.5rem;height:2.5rem;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.35rem;color:#6b7280;transition:background-color .15s,color .15s}
 .presensi-close:hover{background:#f1f5f9;color:#111827}
 .field-label{font-size:.85rem;font-weight:600;color:#374151;margin-bottom:.35rem;display:block}
 .presensi-input{min-height:44px;font-size:16px}
 .app-modal .form-control{border-radius:.6rem}
-.app-modal .form-control:focus{border-color:#93b4f5;box-shadow:0 0 0 .2rem rgba(15,118,110,.15)}
+.app-modal .form-control:focus{border-color:#93b4f5;box-shadow:0 0 0 .2rem rgba(37,99,235,.15)}
 .modal-footer .presensi-btn{min-height:48px;border-radius:.55rem;font-weight:600}
 @media(max-width:575.98px){
   .app-modal .modal-dialog{margin:0;max-width:100%;height:100%}
   @supports (height: 100svh){.app-modal .modal-dialog{height:100svh}}
   .app-modal .modal-content{height:100%;max-height:none;border-radius:1.25rem 1.25rem 0 0;box-shadow:0 -8px 40px rgba(15,23,42,.18)}
   .app-modal .modal-header{justify-content:flex-start;padding:.85rem 1rem .85rem .5rem;border-bottom:1px solid #eef0f4}
-  .app-modal .presensi-close{order:-1;margin:0 .35rem 0 0;color:#0f766e}
+  .app-modal .presensi-close{order:-1;margin:0 .35rem 0 0;color:#2563eb}
   .app-modal .modal-footer{flex-direction:column-reverse;align-items:stretch;padding:.65rem 1rem calc(.75rem + env(safe-area-inset-bottom,0px))}
   .app-modal .modal-footer .presensi-btn{width:100%;margin-left:0!important;border-radius:9999px}
 }
@@ -235,25 +328,33 @@ $(function(){
           <div class="form-group col-8 mb-0" id="ep-date-tgl-ins">
             <label class="field-label" for="epTglIns">Tanggal Hadir</label>
             <div class="input-group date">
-              <div class="input-group-prepend"><span class="input-group-text bg-white"><i class="fas fa-calendar-alt" style="color:#0f766e"></i></span></div>
+              <div class="input-group-prepend"><span class="input-group-text bg-white"><i class="fas fa-calendar-alt" style="color:#2563eb"></i></span></div>
               <input type="text" name="tgl" class="form-control presensi-input" id="epTglIns" required readonly autocomplete="off">
             </div>
           </div>
           <div class="form-group col-4 mb-0">
             <label class="field-label" for="epJamIns">Jam</label>
-            <div class="input-group"><div class="input-group-prepend"><span class="input-group-text bg-white"><i class="fas fa-clock" style="color:#0f766e"></i></span></div><input type="time" name="jam" class="form-control presensi-input" id="epJamIns" required></div>
+            <div class="input-group"><div class="input-group-prepend"><span class="input-group-text bg-white"><i class="fas fa-clock" style="color:#2563eb"></i></span></div><input type="time" name="jam" class="form-control presensi-input" id="epJamIns" required></div>
           </div>
         </div>
         <div class="form-group mb-3">
           <label class="field-label" for="epNipdIns">Nama Peserta</label>
           <select class="form-control presensi-input" id="epNipdIns" name="nama" required>
-            <?php $data=$this->db->query("SELECT Nama,Nipd FROM peserta WHERE Status=1")->result(); foreach($data as $row){ ?><option value="<?= $row->Nipd ?>"><?= html_escape($row->Nama) ?></option><?php } ?>
+            <?php 
+$bulanIndo = [1=>'Januari',2=>'Februari',3=>'Maret',4=>'April',5=>'Mei',6=>'Juni',7=>'Juli',8=>'Agustus',9=>'September',10=>'Oktober',11=>'November',12=>'Desember']; 
+$bulanPendekIndo = [1=>'Jan',2=>'Feb',3=>'Mar',4=>'Apr',5=>'Mei',6=>'Jun',7=>'Jul',8=>'Agu',9=>'Sep',10=>'Okt',11=>'Nov',12=>'Des']; $data=$this->db->query("SELECT Nama,Nipd FROM peserta WHERE Status=1")->result(); foreach($data as $row){ ?><option value="<?= $row->Nipd ?>"><?= html_escape($row->Nama) ?></option><?php 
+$bulanIndo = [1=>'Januari',2=>'Februari',3=>'Maret',4=>'April',5=>'Mei',6=>'Juni',7=>'Juli',8=>'Agustus',9=>'September',10=>'Oktober',11=>'November',12=>'Desember']; 
+$bulanPendekIndo = [1=>'Jan',2=>'Feb',3=>'Mar',4=>'Apr',5=>'Mei',6=>'Jun',7=>'Jul',8=>'Agu',9=>'Sep',10=>'Okt',11=>'Nov',12=>'Des']; } ?>
           </select>
         </div>
         <div class="form-group mb-3">
           <label class="field-label" for="epInsIns">Instruktur</label>
           <select class="form-control presensi-input" id="epInsIns" name="Instruktur" required>
-            <?php $data=$this->db->query("SELECT Id,NamaInstruktur FROM instruktur")->result(); foreach($data as $row){ ?><option value="<?= $row->Id ?>"><?= html_escape($row->NamaInstruktur) ?></option><?php } ?>
+            <?php 
+$bulanIndo = [1=>'Januari',2=>'Februari',3=>'Maret',4=>'April',5=>'Mei',6=>'Juni',7=>'Juli',8=>'Agustus',9=>'September',10=>'Oktober',11=>'November',12=>'Desember']; 
+$bulanPendekIndo = [1=>'Jan',2=>'Feb',3=>'Mar',4=>'Apr',5=>'Mei',6=>'Jun',7=>'Jul',8=>'Agu',9=>'Sep',10=>'Okt',11=>'Nov',12=>'Des']; $data=$this->db->query("SELECT Id,NamaInstruktur FROM instruktur")->result(); foreach($data as $row){ ?><option value="<?= $row->Id ?>"><?= html_escape($row->NamaInstruktur) ?></option><?php 
+$bulanIndo = [1=>'Januari',2=>'Februari',3=>'Maret',4=>'April',5=>'Mei',6=>'Juni',7=>'Juli',8=>'Agustus',9=>'September',10=>'Oktober',11=>'November',12=>'Desember']; 
+$bulanPendekIndo = [1=>'Jan',2=>'Feb',3=>'Mar',4=>'Apr',5=>'Mei',6=>'Jun',7=>'Jul',8=>'Agu',9=>'Sep',10=>'Okt',11=>'Nov',12=>'Des']; } ?>
           </select>
         </div>
         <div class="form-group mb-1">
@@ -263,7 +364,7 @@ $(function(){
       </form>
       <div class="modal-footer px-3 px-sm-4 pt-2 pb-3">
         <button type="button" class="btn btn-secondary presensi-btn flex-fill" data-dismiss="modal">Batal</button>
-        <button type="submit" form="formEditPresensiIns" class="btn btn-primary presensi-btn flex-fill ml-2" style="background:#0f766e;border-color:#0f766e"><i class="fas fa-save mr-1"></i>Simpan</button>
+        <button type="submit" form="formEditPresensiIns" class="btn btn-primary presensi-btn flex-fill ml-2" style="background:#2563eb;border-color:#2563eb"><i class="fas fa-save mr-1"></i>Simpan</button>
       </div>
     </div>
   </div>
@@ -281,4 +382,37 @@ $(document).ready(function(){
   });
   $('#formEditPresensiIns').on('submit', function(){ var t=$('#epJamIns').val(); if(t) $('#epTglIns').val($('#epTglIns').val()+' '+t+':00'); });
 });
+</script>
+<script src="<?= base_url("asset/vendor/chart.js/Chart.min.js") ?>"></script>
+<script>
+(function(){
+  var presensiData = <?= json_encode($presensi) ?>;
+  var ctx = document.getElementById('chartBulananIns');
+  if(!ctx) return;
+  var chartInst = null;
+  function renderBulan(ym){
+    if(!ym) return;
+    var parts = ym.split('-');
+    var y = parseInt(parts[0],10), m = parseInt(parts[1],10);
+    var daysInMonth = new Date(y, m, 0).getDate();
+    var labels = []; var data = [];
+    for(var d=1; d<=daysInMonth; d++){ labels.push(String(d).padStart(2,'0')); data.push(0); }
+    presensiData.forEach(function(row){
+      var dt = new Date(row.Tgl);
+      if(dt.getFullYear()===y && (dt.getMonth()+1)===m){ var day=dt.getDate(); data[day-1]++; }
+    });
+    if(chartInst) chartInst.destroy();
+    Chart.defaults.global.defaultFontFamily='Nunito, -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+    Chart.defaults.global.defaultFontColor='#64748b';
+    chartInst = new Chart(ctx, {
+      type: 'bar',
+      data: { labels: labels, datasets: [{ label:'Sesi', data:data, backgroundColor:'rgba(37,99,235,0.85)', borderColor:'#2563eb', borderWidth:1, borderRadius:4, barThickness:10, maxBarThickness:14 }] },
+      options: { maintainAspectRatio:false, legend:{display:false}, scales:{ xAxes:[{ gridLines:{display:false}, ticks:{fontSize:10, fontColor:'#94a3b8', maxTicksLimit:15} }], yAxes:[{ ticks:{beginAtZero:true, min:0, precision:0, fontSize:10, fontColor:'#94a3b8'}, gridLines:{color:'#f1f5f9', zeroLineColor:'#eef0f4', borderDash:[4,4]} }] }, tooltips:{ backgroundColor:'#1e293b', titleFontColor:'#94a3b8', bodyFontColor:'#fff', borderColor:'#334155', borderWidth:1, displayColors:false, callbacks:{ title:function(t){ return 'Tanggal '+t[0].xLabel; }, label:function(t){ return t.yLabel+' sesi'; } } } }
+    });
+  }
+  var initialYM = document.getElementById('bulanPickerIns') ? document.getElementById('bulanPickerIns').value : '<?= date('Y-m') ?>';
+  setTimeout(function(){ renderBulan(initialYM); }, 180);
+  var picker = document.getElementById('bulanPickerIns');
+  if(picker) picker.addEventListener('change', function(){ renderBulan(this.value); });
+})();
 </script>

@@ -38,11 +38,28 @@ function perpendekNama($s) {
 .dt-btn-edit:hover{background:#f8fafc;border-color:#cbd5e1;color:#1e293b}
 .dt-btn-delete{background:#fff;border-color:#fecaca;color:#dc2626}
 .dt-btn-delete:hover{background:#fef2f2;border-color:#fca5a5;color:#991b1b}
+.app-search{position:relative;display:flex;align-items:center;background:#fff;border:1px solid #e2e8f0;border-radius:9999px;padding:.6rem 1rem .6rem 2.5rem;box-shadow:0 1px 2px rgba(15,23,42,.04);transition:border-color .15s,box-shadow .15s}
+.app-search:focus-within{border-color:#93b4f5;box-shadow:0 0 0 .2rem rgba(37,99,235,.12)}
+.app-search i{position:absolute;left:1rem;color:#94a3b8;font-size:.85rem}
+.app-search input{border:none;outline:none;width:100%;font-size:.82rem;color:#1e293b;background:transparent}
+.app-search input::placeholder{color:#94a3b8}
+.app-filters{display:flex;gap:.5rem;overflow-x:auto;padding:.85rem 0 .25rem;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.app-filters::-webkit-scrollbar{display:none}
+.app-filter{flex-shrink:0;padding:.45rem .9rem;border-radius:9999px;border:1px solid #e2e8f0;background:#fff;color:#475569;font-size:.74rem;font-weight:700;white-space:nowrap;transition:all .15s}
+.app-filter.active{background:#2563eb;color:#fff;border-color:#2563eb;box-shadow:0 4px 12px rgba(37,99,235,.2)}
+.app-list{display:grid;gap:.75rem}
+.app-item{background:#fff;border:1px solid #eef0f4;border-radius:.85rem;padding:.85rem;box-shadow:0 1px 3px rgba(15,23,42,.04),0 8px 24px rgba(15,23,42,.04);display:flex;gap:.75rem;align-items:center;transition:transform .12s}
+.app-item:active{transform:scale(.98)}
+.app-item-avatar{width:44px;height:44px;border-radius:.75rem;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.78rem;flex-shrink:0}
+.app-item-main{flex:1;min-width:0}
+.app-item-name{font-weight:800;color:#1e293b;font-size:.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.app-item-sub{font-size:.70rem;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:.35rem;flex-wrap:wrap}
+.app-item-arrow{width:32px;height:32px;border-radius:9999px;background:#f8fafc;border:1px solid #eef0f4;display:flex;align-items:center;justify-content:center;color:#94a3b8;flex-shrink:0}
 @media(max-width:767.98px){.modern-head .breadcrumb{display:none}.modern-card .dt-top{flex-direction:column;align-items:stretch}.modern-card .dataTables_filter input{width:100%}.modern-card .dataTables_filter label{width:100%}}
 </style>
 <?php
 $today = date("Y-m-d 00:00:00");
-$todays = date("Y-m-d H:i:s");
+$todays = date("Y-m-d 23:59:59");
 $_pes = $this->db->query("SELECT COUNT(*) as c FROM presensi WHERE Tgl between '$today' and '$todays' AND pegawai IS Null")->row()->c ?? 0;
 $_pegArr = $this->db->query("SELECT NamaPegawai FROM presensi JOIN pegawai ON presensi.Nipd = pegawai.Nipg WHERE Tgl between '$today' and '$todays' AND pegawai=1")->result();
 $_insArr = $this->db->query("SELECT DISTINCT NamaInstruktur FROM presensi JOIN instruktur ON presensi.Instruktur = instruktur.Id WHERE Tgl between '$today' and '$todays' AND (pegawai IS NULL OR pegawai != 1) AND Instruktur IS NOT NULL")->result();
@@ -52,7 +69,7 @@ $_allStaff = array_values(array_unique(array_merge($_pegNamesArr, $_insNamesArr)
 $_pegCount = count($_allStaff);
 $_pegNames = implode(', ', $_allStaff);
 ?>
-<div class="modern-head d-flex flex-column flex-md-row align-items-md-center justify-content-between mt-4 mb-3">
+<div class="modern-head d-none d-md-flex flex-column flex-md-row align-items-md-center justify-content-between mt-4 mb-3">
   <div class="mb-2 mb-md-0">
     <h1 class="h4 mb-1 font-weight-bold text-gray-800" style="font-weight:800">Presensi</h1>
     <p class="text-muted small mb-0">Kehadiran peserta dan staff (instruktur/pegawai) harian</p>
@@ -64,7 +81,7 @@ $_pegNames = implode(', ', $_allStaff);
 </div>
 <div class="row mb-3">
   <div class="col-6 mb-3"><div class="card modern-card modern-stat stat-pes h-100"><div class="card-body py-3 d-flex align-items-center justify-content-between"><div><div class="text-muted" style="font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700">Peserta Hari Ini</div><div class="h4 mb-0 mt-1" style="font-weight:800;color:#1e293b"><?= $_pes ?></div><div class="small text-muted" style="font-size:.72rem">Kehadiran tercatat</div></div><div class="stat-icon"><i class="fas fa-user-check"></i></div></div></div></div>
-  <div class="col-6 mb-3"><div class="card modern-card modern-stat stat-peg h-100"><div class="card-body py-3 d-flex align-items-center justify-content-between"><div><div class="text-muted" style="font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700">Staff Hari Ini</div><div class="h4 mb-0 mt-1" style="font-weight:800;color:#065f46"><?= $_pegCount ?></div><div class="small text-muted" style="font-size:.72rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px" title="<?= html_escape($_pegNames) ?>"><?= $_pegNames ? html_escape($_pegNames) : 'Belum ada' ?></div></div><div class="stat-icon"><i class="fas fa-users"></i></div></div></div></div>
+  <div class="col-6 mb-3"><div class="card modern-card modern-stat stat-peg h-100"><div class="card-body py-3 d-flex align-items-center justify-content-between"><div><div class="text-muted" style="font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700">Staff Hari Ini</div><div class="h4 mb-0 mt-1" style="font-weight:800;color:#065f46"><?= $_pegCount ?></div><div class="small text-muted" style="font-size:.72rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px" title="<?= html_escape($_pegNames) ?>"><?= 'Ada' ? 'Ada' : 'Belum ada' ?></div></div><div class="stat-icon"><i class="fas fa-users"></i></div></div></div></div>
 </div>
 <!-- Content -->
 <div class="card modern-card mb-4">
@@ -73,11 +90,36 @@ $_pegNames = implode(', ', $_allStaff);
       <h6 class="m-0 font-weight-bold" style="color:#1e293b;font-size:.9rem">Daftar Presensi</h6>
     </div>
     <div class="d-flex align-items-center" style="gap:.5rem">
-      <button class="btn btn-sm" style="background:#eff6ff;border:1px solid #bfdbfe;color:#2563eb;border-radius:.5rem;font-weight:600;font-size:.78rem;padding:.38rem .6rem" data-toggle="modal" data-target="#tambahPresensiSiswa"><i class="fas fa-user-plus mr-1"></i> Peserta</button>
-      <button class="btn btn-sm" style="background:#fffbeb;border:1px solid #fde68a;color:#92400e;border-radius:.5rem;font-weight:600;font-size:.78rem;padding:.38rem .6rem" data-toggle="modal" data-target="#tambahPres"><i class="fas fa-id-badge mr-1"></i> Pegawai</button>
+      <button class="btn btn-sm d-none d-md-inline-flex align-items-center" style="background:#eff6ff;border:1px solid #bfdbfe;color:#2563eb;border-radius:.5rem;font-weight:600;font-size:.78rem;padding:.38rem .6rem" data-toggle="modal" data-target="#tambahPresensiSiswa"><i class="fas fa-user-plus mr-1"></i> Peserta</button>
+      <button class="btn btn-sm d-none d-md-inline-flex align-items-center" style="background:#fffbeb;border:1px solid #fde68a;color:#92400e;border-radius:.5rem;font-weight:600;font-size:.78rem;padding:.38rem .6rem" data-toggle="modal" data-target="#tambahPres"><i class="fas fa-id-badge mr-1"></i> Pegawai</button>
     </div>
   </div>
-  <div class="table-responsive">
+  <div class="d-block d-md-none">
+    <div class="px-3 pt-3">
+      <div class="app-search"><i class="fas fa-search"></i><input type="search" id="appSearchPresensi" placeholder="Cari nama, materi, kursus..."></div>
+      <div class="app-filters" id="appFiltersPresensi">
+        <button class="app-filter active" data-filter="">Semua</button>
+        <button class="app-filter" data-filter="hariini">Hari Ini</button>
+        <button class="app-filter" data-filter="mingguini">Minggu Ini</button>
+      </div>
+    </div>
+    <div class="px-3 pb-3">
+      <div id="appListPresensi" class="app-list"></div>
+      <div id="appEmptyPresensi" class="text-center py-4 d-none">
+        <div class="mx-auto mb-2 d-flex align-items-center justify-content-center" style="width:44px;height:44px;border-radius:.7rem;background:#f8fafc;border:1px solid #eef0f4;color:#94a3b8"><i class="fas fa-search"></i></div>
+        <div class="small font-weight-bold" style="color:#334155">Tidak ada presensi</div>
+        <div class="small text-muted">Coba ubah pencarian atau filter</div>
+      </div>
+      <div class="d-flex align-items-center justify-content-between mt-3" id="appPaginationPresensi" style="gap:.5rem">
+        <span class="small text-muted" id="appInfoPresensi" style="font-size:.72rem"></span>
+        <div style="display:flex;gap:.4rem">
+          <button id="appPrevPresensi" class="btn btn-sm" style="background:#fff;border:1px solid #e2e8f0;border-radius:.5rem;padding:.35rem .7rem;font-size:.72rem"><i class="fas fa-chevron-left"></i></button>
+          <button id="appNextPresensi" class="btn btn-sm" style="background:#fff;border:1px solid #e2e8f0;border-radius:.5rem;padding:.35rem .7rem;font-size:.72rem"><i class="fas fa-chevron-right"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="d-none d-md-block table-responsive">
     <table class="table modern-table table-hover mb-0" id="tabelpresensi" style="width:100%">
           <thead class="thead-light">
             <tr>
@@ -110,7 +152,8 @@ function fmtTanggal(raw) {
   var dd = ('0'+d.getDate()).slice(-2);
   var hh = ('0'+d.getHours()).slice(-2);
   var mm = ('0'+d.getMinutes()).slice(-2);
-  return hariList[d.getDay()] + ', ' + dd + ' ' + bulanList[d.getMonth()+1] + ' ' + d.getFullYear() + '<br><span class="text-muted" style="font-size:.75rem">Pukul ' + hh + ':' + mm + '</span>';
+  var bln = bulanList[d.getMonth()+1].substring(0,3);
+  return '<span style="font-size:.74rem;font-weight:600;color:#334155;white-space:nowrap">'+dd+' '+bln+'</span><br><span style="font-size:.66rem;color:#94a3b8;white-space:nowrap">'+hh+':'+mm+'</span>';
 }
 
 function pendekNama(s) {
@@ -173,18 +216,18 @@ $(document).ready(function() {
       {
         targets: 3,
         render: function(data, type, row) {
-          if (!data) return '';
+          if (!data) return '<span style="color:#cbd5e1;font-size:.72rem">-</span>';
           var short = (function(n) {
             var c = n.split(',');
-            var title = c.length > 1 ? c[c.length - 1].trim() : '';
+            var title = c.length > 1 ? c[c.length - 1].trim().split(/\s+/)[0] : '';
             var namePart = c[0].trim();
             var words = namePart.split(/\s+/);
             var prefixes = ['dr.','prof.','drs.','drj.','ir.','hj.','hm.','drh.'];
             var first = words[0];
             var nama = prefixes.indexOf(first.toLowerCase()) !== -1 && words.length > 1 ? words[1] : first;
-            return title ? nama + ', ' + title : nama;
+            return title ? nama.substring(0,8)+'. ' + title.substring(0,4)+'.' : nama.substring(0,8);
           })(data);
-          return '<a class="table-link ins-link" href="' + appPath + 'presensi/instruktur?Id=' + row.IdI + '" title="Melihat presensi instruktur ' + esc(data) + '">' + esc(short) + '</a>';
+          return '<a class="table-link ins-link" href="' + appPath + 'presensi/instruktur?Id=' + row.IdI + '" title="'+esc(data)+'" style="font-size:.72rem;white-space:nowrap">'+esc(short)+'</a>';
         }
       },
       {
@@ -200,6 +243,59 @@ $(document).ready(function() {
       }
     ],
     drawCallback: function(){ var h=[]; this.api().columns().header().toArray().forEach(function(th){h.push($(th).text().trim());}); this.api().rows({page:'current'}).nodes().toArray().forEach(function(r){$(r).find('td').each(function(i){if(h[i])$(this).attr('data-label',h[i]);});}); }
+  });
+  function initialsPresensi(n){ if(!n) return '?'; var p=n.trim().split(/\s+/); if(p.length===1) return p[0].substring(0,2).toUpperCase(); return (p[0][0]+p[p.length-1][0]).toUpperCase(); }
+  function renderAppPresensi(){
+    var $list=$('#appListPresensi'); if(!$list.length) return;
+    var data=tabel.rows({page:'current'}).data().toArray();
+    $list.empty();
+    if(!data.length){ $('#appEmptyPresensi').removeClass('d-none'); $('#appInfoPresensi').text('Tidak ada data'); $('#appPrevPresensi,#appNextPresensi').prop('disabled',true).css('opacity',.4); return; }
+    $('#appEmptyPresensi').addClass('d-none');
+    var info=tabel.page.info(); $('#appInfoPresensi').text('Menampilkan '+(info.start+1)+'–'+info.end+' dari '+info.recordsTotal);
+    $('#appPrevPresensi').prop('disabled',!info.page).css('opacity',info.page?1:.4);
+    $('#appNextPresensi').prop('disabled',info.page>=info.pages-1).css('opacity',info.page>=info.pages-1?.4:1);
+    data.forEach(function(row){
+      var init=initialsPresensi(row.Nama);
+      var tgl=row.Tgl? new Date(row.Tgl):null;
+      var tglStr='-'; var jamStr='';
+      if(tgl && !isNaN(tgl.getTime())){
+        var blnShort=['','Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'][tgl.getMonth()+1];
+        tglStr=String(tgl.getDate())+' '+blnShort;
+        jamStr=String(tgl.getHours()).padStart(2,'0')+':'+String(tgl.getMinutes()).padStart(2,'0');
+      }
+      var prog=esc(row.Namarombel||'-');
+      var materiShort=esc((row.Materi||'-').substring(0,18));
+      var nama=esc(pendekNama(row.Nama));
+      var insShort=(function(n){ if(!n) return '-'; var c=n.split(','); var w=c[0].trim().split(/\s+/); return w[0].substring(0,7); })(row.NamaInstruktur||'');
+      var html='<div class="app-item" data-id="'+row.Id+'" data-idp="'+row.Idp+'" data-idi="'+row.IdI+'">'
+        +'<div class="app-item-avatar" style="background:rgba(37,99,235,.08);color:#2563eb">'+init+'</div>'
+        +'<div class="app-item-main">'
+          +'<div class="app-item-name" style="font-size:.78rem">'+nama+' <span style="font-weight:500;color:#94a3b8;font-size:.66rem">'+jamStr+'</span></div>'
+          +'<div class="app-item-sub" style="font-size:.66rem"><span>'+prog+'</span><span style="width:3px;height:3px;border-radius:50%;background:#cbd5e1;display:inline-block"></span><span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:42%">'+materiShort+'</span></div>'
+          +'<div class="app-item-meta" style="font-size:.62rem;color:#94a3b8"><span style="color:#64748b;font-size:.66rem">'+tglStr+'</span> · <span style="color:#94a3b8;font-size:.62rem">'+esc(insShort)+'</span></div>'
+        +'</div>'
+        +'<div class="app-item-arrow"><i class="fas fa-chevron-right" style="font-size:.60rem"></i></div>'
+        +'</div>';
+      $list.append(html);
+    });
+  }
+  tabel.on('draw', renderAppPresensi);
+  $('#appSearchPresensi').on('input', function(){ tabel.search(this.value).draw(); });
+  $('#appFiltersPresensi .app-filter').on('click', function(){
+    $('#appFiltersPresensi .app-filter').removeClass('active'); $(this).addClass('active');
+    var f=$(this).data('filter');
+    if(f==='hariini'){ var d=new Date().toISOString().slice(0,10); tabel.search(d).draw(); }
+    else if(f==='mingguini'){ tabel.search('').draw(); }
+    else { tabel.search('').draw(); }
+  });
+  $('#appPrevPresensi').on('click', function(){ tabel.page('previous').draw('page'); });
+  $('#appNextPresensi').on('click', function(){ tabel.page('next').draw('page'); });
+  $('#appListPresensi').on('click', '.app-item', function(e){
+    if($(e.target).closest('a,button').length) return;
+    var idp=$(this).data('idp');
+    var idi=$(this).data('idi');
+    if(idp) window.location.href=appPath+'presensi/peserta?Id='+idp;
+    else if(idi) window.location.href=appPath+'presensi/instruktur?Id='+idi;
   });
 
   // Hapus via konfirmasi (tanpa modal statis)
@@ -633,8 +729,6 @@ html.app-modal-open, html.app-modal-open body {
   }
   #tabelpresensi_wrapper .dataTables_length { display: none !important; }
 
-  /* === Background & wrapper === */
-  #container-wrapper { background: #eceff4; }
   #tabelpresensi_wrapper { background: transparent !important; border: 0 !important; box-shadow: none !important; }
 
   /* === Override base: table & tbody === */

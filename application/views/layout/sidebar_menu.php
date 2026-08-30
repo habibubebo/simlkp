@@ -1,25 +1,20 @@
     <style>
-      .sidebar .nav-item.active .nav-link {
-        position: relative;
-        background: rgba(78,115,223,.10) !important;
-        color: #4e73df !important;
-        font-weight: 700;
-        border-radius: .35rem;
-        margin: 0 .5rem;
-      }
-      .sidebar .nav-item.active .nav-link::before {
-        content: '';
-        position: absolute;
-        left: -.5rem;
-        top: .35rem;
-        bottom: .35rem;
-        width: 4px;
-        border-radius: 0 4px 4px 0;
-        background: #4e73df;
-      }
-      .sidebar .nav-item.active .nav-link i {
-        color: #4e73df !important;
-      }
+      /* Desktop sidebar - modern pill */
+      .sidebar{border-right:1px solid #eef0f4}
+      .sidebar .sidebar-brand{padding:1.25rem 1rem .9rem;background:#fff}
+      .sidebar .sidebar-brand-icon img{height:38px;width:auto;object-fit:contain}
+      .sidebar hr.sidebar-divider{margin:.5rem 1rem;border-top:1px solid #f1f5f9}
+      .sidebar .sidebar-heading{padding:.9rem 1.1rem .4rem;font-size:.62rem;letter-spacing:.08em;font-weight:800;color:#94a3b8}
+      .sidebar .nav-item{margin:2px 0}
+      .sidebar .nav-item .nav-link{display:flex;align-items:center;gap:.7rem;padding:.62rem .9rem;margin:0 .65rem;border-radius:9999px;color:#475569;font-weight:600;font-size:.84rem;transition:background .15s,color .15s,transform .15s}
+      .sidebar .nav-item .nav-link i{width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:9999px;background:#f8fafc;color:#64748b;font-size:.85rem;flex-shrink:0;transition:background .15s,color .15s}
+      .sidebar .nav-item .nav-link:hover{background:#f8fafc;color:#1e293b}
+      .sidebar .nav-item .nav-link:hover i{background:#eef2ff;color:#2563eb}
+      .sidebar .nav-item.active .nav-link{background:var(--pill-active, #2563eb) !important;color:#fff !important;font-weight:700;box-shadow:0 4px 14px rgba(37,99,235,.25)}
+      .sidebar .nav-item.active .nav-link::before{display:none}
+      .sidebar .nav-item.active .nav-link i{background:rgba(255,255,255,.18) !important;color:#fff !important}
+      .sidebar .nav-item.active .nav-link:hover{background:#1d4ed8 !important;color:#fff !important}
+      @media(max-width:767.98px){ .sidebar{display:none !important} }
     </style>
     <!-- Sidebar (Menu)-->
     <?php

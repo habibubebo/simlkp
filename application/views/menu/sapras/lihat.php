@@ -10,7 +10,9 @@ foreach ($sapras as $__r) {
 }
 ?>
 <style>
-.sapras-head h1{letter-spacing:-.02em}
+.modern-head h1{letter-spacing:-.02em}
+.modern-card{border:1px solid #eef0f4;border-radius:.85rem;box-shadow:0 1px 3px rgba(15,23,42,.04),0 8px 24px rgba(15,23,42,.04);background:#fff}
+.modern-card .card-header{background:#fff;border-bottom:1px solid #f1f5f9;border-radius:.85rem .85rem 0 0}
 .sapras-stat .stat-icon{width:2.6rem;height:2.6rem;border-radius:.65rem;display:flex;align-items:center;justify-content:center;font-size:1rem}
 .sapras-stat.stat-total .stat-icon{background:rgba(37,99,235,.1);color:#2563eb}
 .sapras-stat.stat-baik .stat-icon{background:rgba(16,185,129,.12);color:#059669}
@@ -39,7 +41,6 @@ foreach ($sapras as $__r) {
 .sapras-actions .btn-outline-secondary{border-color:#e2e8f0;color:#475569;background:#fff}
 .sapras-actions .btn-outline-secondary:hover{background:#f8fafc;border-color:#cbd5e1;color:#1e293b}
 .sapras-table-wrap{border-radius:0 0 .85rem .85rem;overflow:hidden}
-/* DataTables modern overrides */
 .sapras-card .dataTables_wrapper{padding:0}
 .sapras-card .dataTables_wrapper .row{margin:0}
 .sapras-card .dataTables_wrapper .dataTables_length,.sapras-card .dataTables_wrapper .dataTables_filter,.sapras-card .dataTables_wrapper .dataTables_info,.sapras-card .dataTables_wrapper .dataTables_paginate{padding:0}
@@ -60,19 +61,33 @@ foreach ($sapras as $__r) {
 .sapras-card .dataTables_paginate .paginate_button.current,.sapras-card .dataTables_paginate .paginate_button.current:hover{background:#2563eb!important;border-color:#2563eb!important;color:#fff!important;box-shadow:0 2px 8px rgba(37,99,235,.25)}
 .sapras-card .dataTables_paginate .paginate_button.disabled{opacity:.4;pointer-events:none}
 .sapras-card .dataTables_empty{padding:2rem!important;color:#94a3b8!important}
-@media(max-width:767.98px){
-  .sapras-table thead{display:table-header-group}
-  .sapras-head .breadcrumb{display:none}
-  .sapras-card .dt-top{flex-direction:column;align-items:stretch}
-  .sapras-card .dataTables_filter input{width:100%}
-  .sapras-card .dataTables_filter label{width:100%}
-  .sapras-card .dt-bottom{flex-direction:column;align-items:stretch;text-align:center}
-  .sapras-card .dataTables_paginate .pagination{justify-content:center}
-}
+
+/* mobile app list */
+.app-search{position:relative;display:flex;align-items:center;background:#fff;border:1px solid #e2e8f0;border-radius:9999px;padding:.6rem 1rem .6rem 2.5rem;box-shadow:0 1px 2px rgba(15,23,42,.04);transition:border-color .15s,box-shadow .15s}
+.app-search:focus-within{border-color:#93b4f5;box-shadow:0 0 0 .2rem rgba(37,99,235,.12)}
+.app-search i{position:absolute;left:1rem;color:#94a3b8;font-size:.85rem}
+.app-search input{border:none;outline:none;width:100%;font-size:.82rem;color:#1e293b;background:transparent}
+.app-search input::placeholder{color:#94a3b8}
+.app-list{display:grid;gap:.7rem}
+.app-item{background:#fff;border:1px solid #eef0f4;border-radius:.85rem;padding:.8rem;box-shadow:0 1px 3px rgba(15,23,42,.04),0 8px 24px rgba(15,23,42,.04);display:flex;flex-wrap:wrap;gap:.7rem;align-items:center}
+.app-item-main{flex:1;min-width:0;overflow:hidden}
+.app-item-actions{width:100%;display:flex;gap:.4rem;margin-top:.15rem}
+.app-action{flex:1;display:flex;align-items:center;justify-content:center;gap:.35rem;font-size:.7rem;font-weight:700;border-radius:.5rem;padding:.42rem .3rem;text-decoration:none!important;transition:transform .12s}
+.app-action:active{transform:scale(.97)}
+.act-edit{background:#fff;border:1px solid #e2e8f0;color:#475569}
+.act-del{background:#fff;border:1px solid #fecaca;color:#dc2626}
+.app-chip{display:inline-flex;align-items:center;gap:.3rem;background:#f8fafc;border:1px solid #eef0f4;color:#475569;border-radius:9999px;padding:.16rem .5rem;font-size:.66rem;font-weight:600}
+.app-chip i{font-size:.55rem;color:#94a3b8}
+.avatar-sm{width:32px;height:32px;border-radius:.5rem;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.7rem;flex-shrink:0}
+.fab-sap{position:fixed;bottom:calc(76px + env(safe-area-inset-bottom,0px));right:16px;z-index:1029;width:52px;height:52px;border-radius:9999px;background:#2563eb;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(37,99,235,.4);font-size:1.1rem;text-decoration:none;transition:transform .12s}
+.fab-sap:active{transform:scale(.95)}
+.modal-sapras .modal-content{border:0;border-radius:.9rem;box-shadow:0 20px 60px rgba(15,23,42,.18)}
+@media(max-width:767.98px){.modern-head .breadcrumb{display:none}.sapras-card .dt-top{flex-direction:column;align-items:stretch}.sapras-card .dataTables_filter input{width:100%}.sapras-card .dataTables_filter label{width:100%}.sapras-card .dt-bottom{flex-direction:column;align-items:stretch;text-align:center}.sapras-card .dataTables_paginate .pagination{justify-content:center}}
+@media(prefers-reduced-motion:reduce){.app-action,.fab-sap{transition:none}}
 </style>
 
-<!-- Header -->
-<div class="sapras-head d-flex flex-column flex-md-row align-items-md-center justify-content-between mt-4 mb-3">
+<!-- Header desktop -->
+<div class="modern-head d-none d-md-flex flex-column flex-md-row align-items-md-center justify-content-between mt-4 mb-3">
   <div class="mb-2 mb-md-0">
     <h1 class="h4 mb-1 font-weight-bold text-gray-800" style="font-weight:800">Sarana Prasarana</h1>
     <p class="text-muted small mb-0">Kelola data tanah, bangunan, alat dan inventaris lembaga</p>
@@ -83,8 +98,23 @@ foreach ($sapras as $__r) {
   </ol>
 </div>
 
-<!-- Stats -->
-<div class="row mb-3">
+<!-- Header mobile -->
+<div class="d-md-none mt-3 mb-3 app-page-head">
+  <div class="d-flex align-items-center justify-content-between mb-2" style="gap:.6rem">
+    <div style="min-width:0">
+      <h1 style="font-size:1.15rem;font-weight:800;color:#1e293b;letter-spacing:-.01em;margin:0">Sarana Prasarana</h1>
+      <div class="small text-muted" style="font-size:.72rem">Kelola data tanah, bangunan, alat dan inventaris</div>
+    </div>
+    <div class="d-flex align-items-center flex-shrink-0" style="gap:.45rem">
+      <a href="<?= base_url('Laporan/sapras'); ?>" class="d-flex align-items-center justify-content-center" style="width:38px;height:38px;border-radius:9999px;background:#fff;border:1px solid #e2e8f0;color:#475569" title="Unduh Laporan"><i class="fas fa-download" style="font-size:.78rem"></i></a>
+      <span class="badge" style="background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe;font-size:.7rem;border-radius:9999px;padding:.3rem .6rem;font-weight:700"><?= $__total ?> data</span>
+    </div>
+  </div>
+  <div class="app-search"><i class="fas fa-search"></i><input type="search" id="appSearchSap" placeholder="Cari jenis, nama, sertifikat..."></div>
+</div>
+
+<!-- Stats desktop -->
+<div class="row mb-3 d-none d-md-flex">
   <div class="col-6 col-xl-3 mb-3">
     <div class="card sapras-card sapras-stat stat-total h-100">
       <div class="card-body py-3 d-flex align-items-center justify-content-between">
@@ -135,8 +165,69 @@ foreach ($sapras as $__r) {
   </div>
 </div>
 
-<!-- Table Card -->
-<div class="card sapras-card mb-4">
+<!-- Stats mobile -->
+<div class="card modern-card d-md-none mb-3">
+  <div class="row no-gutters text-center" style="font-size:.78rem">
+    <div class="col-6 py-3" style="border-right:1px solid #f1f5f9;border-bottom:1px solid #f1f5f9"><div class="text-muted" style="font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700">Total Unit</div><div style="font-weight:800;color:#1e293b;font-size:1.1rem"><?= $__total ?></div><div class="text-muted" style="font-size:.66rem"><?= number_format($__luas,0,',','.') ?> m² luas</div></div>
+    <div class="col-6 py-3" style="border-bottom:1px solid #f1f5f9"><div class="text-muted" style="font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700">Baik</div><div style="font-weight:800;color:#065f46;font-size:1.1rem"><?= $__baik ?></div><div class="text-muted" style="font-size:.66rem"><?= $__total ? round($__baik/$__total*100) : 0 ?>% dari total</div></div>
+    <div class="col-6 py-3" style="border-right:1px solid #f1f5f9"><div class="text-muted" style="font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700">Perbaikan</div><div style="font-weight:800;color:#92400e;font-size:1.1rem"><?= $__perbaikan ?></div><div class="text-muted" style="font-size:.66rem">Perlu tindak lanjut</div></div>
+    <div class="col-6 py-3"><div class="text-muted" style="font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700">Rusak</div><div style="font-weight:800;color:#991b1b;font-size:1.1rem"><?= $__rusak ?></div><div class="text-muted" style="font-size:.66rem"><?= $__rusak ? 'Butuh perhatian' : 'Aman' ?></div></div>
+  </div>
+</div>
+
+<!-- List mobile -->
+<div class="d-md-none mb-4">
+  <div id="appListSap" class="app-list">
+    <?php foreach ($sapras as $tp) {
+      $kond = strtolower(trim($tp->kondisi ?? ''));
+      $badgeClass = 'kondisi-unknown'; $icBg = '#f1f5f9'; $icCol = '#64748b';
+      if ($kond === 'baik') { $badgeClass = 'kondisi-baik'; $icBg = '#ecfdf5'; $icCol = '#059669'; }
+      elseif ($kond === 'rusak') { $badgeClass = 'kondisi-rusak'; $icBg = '#fef2f2'; $icCol = '#dc2626'; }
+      elseif ($kond === 'perbaikan') { $badgeClass = 'kondisi-perbaikan'; $icBg = '#fffbeb'; $icCol = '#d97706'; }
+      $sert = trim($tp->Nosertifikat ?? '');
+      $dim = '-';
+      if ($tp->Panjang || $tp->Lebar) $dim = ($tp->Panjang ? $tp->Panjang : '-') . ' × ' . ($tp->Lebar ? $tp->Lebar : '-');
+      $meta = [];
+      if ($sert !== '' && $sert !== '-') $meta[] = '<i class="fas fa-certificate" style="font-size:.55rem;color:#94a3b8"></i> ' . html_escape($sert);
+      if ($dim !== '-') $meta[] = '<i class="fas fa-ruler-combined" style="font-size:.55rem;color:#94a3b8"></i> ' . html_escape($dim) . ' m';
+      if (!empty($tp->Luaslahan) && trim($tp->Luaslahan) !== '0') $meta[] = '<i class="fas fa-expand-alt" style="font-size:.55rem;color:#94a3b8"></i> ' . html_escape($tp->Luaslahan) . ' m²';
+      $search = strtolower(trim(($tp->Jenissarana ?? '')) . ' ' . trim(($tp->Namaprasarana ?? '')) . ' ' . $sert . ' ' . $kond);
+    ?>
+      <div class="app-item" data-search="<?= html_escape($search) ?>">
+        <div class="avatar-sm" style="width:42px;height:42px;border-radius:.6rem;background:<?= $icBg ?>;color:<?= $icCol ?>"><i class="fas fa-warehouse" style="font-size:.95rem"></i></div>
+        <div class="app-item-main">
+          <div class="d-flex align-items-center" style="gap:.45rem;margin-bottom:.2rem">
+            <div style="font-weight:700;color:#1e293b;font-size:.84rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><?= html_escape($tp->Namaprasarana) ?></div>
+            <span class="kondisi-badge <?= $badgeClass ?>" style="flex-shrink:0"><?= html_escape($tp->kondisi ?: '—') ?></span>
+          </div>
+          <div class="d-flex align-items-center" style="gap:.4rem;flex-wrap:wrap;margin-bottom:.2rem">
+            <span class="app-chip"><i class="fas fa-tag"></i><?= html_escape($tp->Jenissarana) ?></span>
+            <?php if (!empty($tp->Banyaknya)) { ?><span class="app-chip"><i class="fas fa-cubes"></i><?= html_escape($tp->Banyaknya) ?> unit</span><?php } ?>
+          </div>
+          <?php if (!empty($meta)) { ?><div class="small text-muted d-flex" style="gap:.7rem;flex-wrap:wrap;font-size:.68rem"><?php foreach ($meta as $__m) echo '<span>' . $__m . '</span>'; ?></div><?php } ?>
+        </div>
+        <div class="app-item-actions">
+          <a href="<?= base_url("sapras/form_ubah/$tp->Id") ?>" class="app-action act-edit"><i class="fas fa-pen" style="font-size:.66rem"></i>Ubah</a>
+          <a href="#" class="app-action act-del" data-toggle="modal" data-target="#deleteSapModal" data-id="<?= $tp->Id ?>" data-nama="<?= html_escape($tp->Namaprasarana) ?>"><i class="fas fa-trash-alt" style="font-size:.66rem"></i>Hapus</a>
+        </div>
+      </div>
+    <?php } ?>
+  </div>
+  <div id="appEmptySap" class="text-center py-4 d-none">
+    <div class="mx-auto mb-2 d-flex align-items-center justify-content-center" style="width:44px;height:44px;border-radius:.7rem;background:#f8fafc;border:1px solid #eef0f4;color:#94a3b8"><i class="fas fa-search"></i></div>
+    <div class="small font-weight-bold" style="color:#334155">Tidak ada sarana</div>
+    <div class="small text-muted">Coba ubah pencarian</div>
+  </div>
+  <?php if ($__total === 0) { ?>
+    <div class="text-center py-5 px-3"><div class="mx-auto mb-3 d-flex align-items-center justify-content-center" style="width:56px;height:56px;border-radius:.85rem;background:#f8fafc;border:1px solid #eef0f4;color:#94a3b8"><i class="fas fa-box-open fa-lg"></i></div><h6 class="font-weight-bold" style="color:#1e293b">Belum ada data sarana</h6><p class="small text-muted mb-0">Tambahkan sarana prasarana pertama untuk mulai mengelola inventaris.</p></div>
+  <?php } ?>
+</div>
+
+<!-- FAB tambah (mobile) -->
+<a href="<?= base_url('sapras/form') ?>" class="fab-sap d-md-none" aria-label="Tambah Sarana"><i class="fas fa-plus"></i></a>
+
+<!-- Table Card desktop -->
+<div class="card sapras-card mb-4 d-none d-md-block">
   <div class="card-header py-3 d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-2">
     <div class="d-flex align-items-center gap-2">
       <h6 class="m-0 font-weight-bold" style="color:#1e293b;font-size:.9rem">Daftar Sarana</h6>
@@ -197,25 +288,9 @@ foreach ($sapras as $__r) {
                 <a href="<?= base_url("sapras/form_ubah/$tp->Id") ?>" class="btn btn-sm" style="background:#fff;border:1px solid #e2e8f0;color:#475569;border-radius:.45rem;padding:.32rem .5rem" title="Ubah">
                   <i class="fas fa-pen" style="font-size:.7rem"></i>
                 </a>
-                <a href="#" class="btn btn-sm" style="background:#fff;border:1px solid #fecaca;color:#dc2626;border-radius:.45rem;padding:.32rem .5rem" data-toggle="modal" data-target="#deleteSarpras<?= $tp->Id; ?>" title="Hapus">
+                <a href="#" class="btn btn-sm" style="background:#fff;border:1px solid #fecaca;color:#dc2626;border-radius:.45rem;padding:.32rem .5rem" data-toggle="modal" data-target="#deleteSapModal" data-id="<?= $tp->Id ?>" data-nama="<?= html_escape($tp->Namaprasarana) ?>" title="Hapus">
                   <i class="fas fa-trash-alt" style="font-size:.7rem"></i>
                 </a>
-              </div>
-              <!-- delete modal -->
-              <div class="modal fade" id="deleteSarpras<?= $tp->Id; ?>" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:420px">
-                  <div class="modal-content" style="border:0;border-radius:.85rem;box-shadow:0 20px 60px rgba(15,23,42,.18)">
-                    <div class="modal-body p-4 text-center">
-                      <div class="mx-auto mb-3 d-flex align-items-center justify-content-center" style="width:48px;height:48px;border-radius:50%;background:#fef2f2;color:#dc2626"><i class="fas fa-trash-alt"></i></div>
-                      <h6 class="font-weight-bold mb-1" style="color:#1e293b">Hapus sarana?</h6>
-                      <p class="small text-muted mb-0">Yakin ingin menghapus <span style="font-weight:600;color:#334155"><?= html_escape($tp->Namaprasarana) ?></span> ? Tindakan tidak dapat dibatalkan.</p>
-                    </div>
-                    <div class="modal-footer border-0 pt-0 px-4 pb-4 d-flex" style="gap:.5rem">
-                      <button type="button" class="btn flex-fill" data-dismiss="modal" style="border:1px solid #e2e8f0;background:#fff;color:#475569;border-radius:.55rem;font-weight:600">Batal</button>
-                      <a href="<?= base_url('sapras/hapus/' . $tp->Id) ?>" class="btn btn-danger flex-fill" style="border-radius:.55rem;font-weight:600">Hapus</a>
-                    </div>
-                  </div>
-                </div>
               </div>
             </td>
           </tr>
@@ -233,10 +308,26 @@ foreach ($sapras as $__r) {
   <?php } ?>
 </div>
 
+<!-- Modal hapus (shared) -->
+<div class="modal fade modal-sapras" id="deleteSapModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document" style="max-width:420px">
+    <div class="modal-content">
+      <div class="modal-body p-4 text-center">
+        <div class="mx-auto mb-3 d-flex align-items-center justify-content-center" style="width:48px;height:48px;border-radius:50%;background:#fef2f2;color:#dc2626"><i class="fas fa-trash-alt"></i></div>
+        <h6 class="font-weight-bold mb-1" style="color:#1e293b">Hapus sarana?</h6>
+        <p class="small text-muted mb-0">Yakin ingin menghapus <span style="font-weight:600;color:#334155" id="deleteSapName"></span> ? Tindakan tidak dapat dibatalkan.</p>
+      </div>
+      <div class="modal-footer border-0 pt-0 px-4 pb-4 d-flex" style="gap:.5rem">
+        <button type="button" class="btn flex-fill" data-dismiss="modal" style="border:1px solid #e2e8f0;background:#fff;color:#475569;border-radius:.55rem;font-weight:600">Batal</button>
+        <a href="#" id="deleteSapConfirm" class="btn btn-danger flex-fill" style="border-radius:.55rem;font-weight:600">Hapus</a>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script type="text/javascript">document.title = "Sarana Prasarana";</script>
 <script>
 $(function(){
-  // modernize DataTable — override default init from footer
   function initSaprasTable(){
     var $t = $('#dataTableHover');
     if (!$t.length) return;
@@ -263,25 +354,32 @@ $(function(){
         zeroRecords: "Tidak ada data yang cocok",
         emptyTable: "Belum ada data sarana",
         paginate: { first: "Awal", last: "Akhir", next: "›", previous: "‹" }
-      },
-      drawCallback: function(){
-        // keep mobile card labels in sync (ruang-admin mobile pattern)
-        var api = this.api();
-        var headers = [];
-        api.columns().header().toArray().forEach(function(th){ headers.push($(th).text().trim()); });
-        api.rows({page:'current'}).nodes().toArray().forEach(function(row){
-          $(row).find('td').each(function(i){ if(headers[i]) $(this).attr('data-label', headers[i]); });
-        });
       }
     });
-    // move pagination to Bootstrap pagination markup for our styling
-    $t.on('draw.dt', function(){
-      $('.dataTables_paginate .pagination').addClass('mb-0');
-    });
   }
-  // run after footer's default init
   if (document.readyState === 'complete') setTimeout(initSaprasTable, 80);
   else $(window).on('load', function(){ setTimeout(initSaprasTable, 80); });
   setTimeout(initSaprasTable, 300);
+
+  function filterSapApp(){
+    var q=(($('#appSearchSap').val()||'').toLowerCase());
+    var vis=0;
+    $('#appListSap .app-item').each(function(){
+      var $it=$(this);
+      var s=String($it.data('search')||'').toLowerCase();
+      if(!s) s=$it.text().toLowerCase();
+      var show=!q || s.indexOf(q)!==-1;
+      $it.toggle(show);
+      if(show) vis++;
+    });
+    $('#appEmptySap').toggleClass('d-none', vis>0);
+  }
+  $(document).on('input','#appSearchSap', filterSapApp);
+
+  $('#deleteSapModal').on('show.bs.modal', function(e){
+    var b=$(e.relatedTarget); if(!b||!b.length) return;
+    $('#deleteSapName').text(b.data('nama')||'');
+    $('#deleteSapConfirm').attr('href','<?= base_url('sapras/hapus/') ?>'+b.data('id'));
+  });
 });
 </script>

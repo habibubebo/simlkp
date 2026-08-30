@@ -5,6 +5,7 @@ $__initial = strtoupper(substr(trim($__n),0,1) . (strpos(trim($__n),' ') ? subst
 $__total = count($presensi);
 $__materi = count(array_unique(array_map(fn($r)=>trim($r->Materi ?? ''), $presensi)));
 $__last = end($presensi)->Tgl ?? $__p->Tgl ?? '';
+$__bulanAktif = !empty($presensi) ? date('Y-m', strtotime($presensi[0]->Tgl)) : date('Y-m');
 $__statusLulus = '';
 $__nipd = $__p->Nipd ?? '';
 if ($__nipd !== '') { $q = $this->db->query("SELECT Tgllulus FROM lulusan WHERE Nipd='". $this->db->escape_str($__nipd) ."'"); if ($q->num_rows()==0) $__statusLulus='Belum Lulus'; else $__statusLulus='Lulus '.date('d-m-Y', strtotime($q->row()->Tgllulus)); }
@@ -43,10 +44,20 @@ if ($__nipd !== '') { $q = $this->db->query("SELECT Tgllulus FROM lulusan WHERE 
 .dt-btn{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:.45rem;font-size:.7rem;border:1px solid transparent;transition:all .15s;flex-shrink:0;text-decoration:none!important}
 .dt-btn-edit{background:#fff;border-color:#e2e8f0;color:#475569}
 .dt-btn-edit:hover{background:#f8fafc;border-color:#cbd5e1;color:#1e293b}
-@media(max-width:767.98px){.modern-head .breadcrumb{display:none}.modern-card .dt-top{flex-direction:column;align-items:stretch}.modern-card .dataTables_filter input{width:100%}.modern-card .dataTables_filter label{width:100%}}
+.app-search{position:relative;display:flex;align-items:center;background:#fff;border:1px solid #e2e8f0;border-radius:9999px;padding:.6rem 1rem .6rem 2.5rem;box-shadow:0 1px 2px rgba(15,23,42,.04)}
+.app-search i{position:absolute;left:1rem;color:#94a3b8;font-size:.85rem}
+.app-search input{border:none;outline:none;width:100%;font-size:.82rem;color:#1e293b;background:transparent}
+.app-search input::placeholder{color:#94a3b8}
+.app-list{display:grid;gap:.7rem}
+.app-item{background:#fff;border:1px solid #eef0f4;border-radius:.85rem;padding:.75rem;box-shadow:0 1px 3px rgba(15,23,42,.04);display:flex;gap:.7rem;align-items:center}
+.app-item-main{flex:1;min-width:0;overflow:hidden}
+.app-item-date{min-width:52px;text-align:center;flex-shrink:0}
+.app-item-date-day{font-weight:800;color:#1e293b;font-size:1.05rem;line-height:1}
+.app-item-date-mon{font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:#64748b}
+@media(max-width:767.98px){.modern-head .breadcrumb{display:none}.modern-card .dt-top{flex-direction:column;align-items:stretch}.modern-card .dataTables_filter input{width:100%}.modern-card .dataTables_filter label{width:100%}.profile-head{padding:1rem !important}.avatar-lg{width:44px;height:44px;font-size:.95rem}.profile-card .row.no-gutters .col-4{padding:.75rem .5rem !important}}
 </style>
 
-<div class="modern-head d-flex flex-column flex-md-row align-items-md-center justify-content-between mt-4 mb-3">
+<div class="modern-head d-none d-md-flex flex-column flex-md-row align-items-md-center justify-content-between mt-4 mb-3">
   <div class="mb-2 mb-md-0">
     <a href="<?= base_url('pages/presensi') ?>" class="small d-inline-flex align-items-center mb-2" style="color:#64748b;text-decoration:none;font-weight:500"><i class="fas fa-arrow-left mr-1" style="font-size:.7rem"></i> Kembali ke Presensi</a>
     <h1 class="h4 mb-1 font-weight-bold text-gray-800" style="font-weight:800">Presensi Peserta</h1>
@@ -74,8 +85,24 @@ if ($__nipd !== '') { $q = $this->db->query("SELECT Tgllulus FROM lulusan WHERE 
     <div class="row no-gutters text-center" style="font-size:.78rem">
       <div class="col-4 py-3" style="border-right:1px solid #f1f5f9"><div class="text-muted" style="font-size:.65rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700">Pertemuan</div><div style="font-weight:800;color:#1e293b;font-size:1.1rem"><?= $__total ?></div></div>
       <div class="col-4 py-3" style="border-right:1px solid #f1f5f9"><div class="text-muted" style="font-size:.65rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700">Materi</div><div style="font-weight:800;color:#1e293b;font-size:1.1rem"><?= $__materi ?></div></div>
-      <div class="col-4 py-3"><div class="text-muted" style="font-size:.65rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700">Terakhir</div><div class="mono" style="font-weight:700;color:#334155;font-size:.78rem"><?= $__last ? date('d-m-Y', strtotime($__last)) : '-' ?></div></div>
+      <div class="col-4 py-3"><div class="text-muted" style="font-size:.65rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700">Masuk</div><div class="mono" style="font-weight:700;color:#334155;font-size:.78rem"><?= $__last ? date('d-m-Y', strtotime($__last)) : '-' ?></div></div>
     </div>
+  </div>
+</div>
+
+<div class="card modern-card mb-3">
+  <div class="card-header py-3 d-flex align-items-center justify-content-between" style="gap:.6rem">
+    <div class="d-flex align-items-center" style="gap:.5rem">
+      <span class="d-flex align-items-center justify-content-center" style="width:28px;height:28px;border-radius:.6rem;background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe"><i class="fas fa-chart-bar" style="font-size:.75rem"></i></span>
+      <h6 class="m-0 font-weight-bold" style="color:#1e293b;font-size:.9rem">Grafik Kehadiran</h6>
+    </div>
+    <input type="month" id="bulanPickerPeserta" class="form-control form-control-sm" style="width:auto;min-width:140px;border:1px solid #e2e8f0;border-radius:.5rem;font-size:.78rem;padding:.3rem .5rem" value="<?= $__bulanAktif ?>">
+  </div>
+  <div class="card-body">
+    <div style="height:200px;position:relative">
+      <canvas id="chartBulananPeserta"></canvas>
+    </div>
+    <div class="small text-muted mt-2" style="font-size:.68rem"><i class="fas fa-info-circle mr-1" style="color:#94a3b8"></i>Menampilkan sesi per tanggal di bulan terpilih</div>
   </div>
 </div>
 
@@ -84,7 +111,37 @@ if ($__nipd !== '') { $q = $this->db->query("SELECT Tgllulus FROM lulusan WHERE 
     <h6 class="m-0 font-weight-bold" style="color:#1e293b;font-size:.9rem">Riwayat Presensi</h6>
     <span class="badge" style="background:#f1f5f9;color:#475569;font-weight:600;font-size:.68rem;border-radius:9999px;padding:.3rem .55rem"><?= $__total ?> sesi</span>
   </div>
-  <div class="modern-table-wrap table-responsive">
+  <div class="d-block d-md-none p-3">
+    <div class="app-search"><i class="fas fa-search"></i><input type="search" id="appSearchPeserta" placeholder="Cari materi, tanggal..."></div>
+    <div id="appListPeserta" class="app-list mt-3">
+      <?php foreach ($presensi as $tp) {
+        $d = strtotime($tp->Tgl);
+        $day = date('d', $d);
+        $mon = date('M', $d);
+        $jam = date('H:i', $d);
+      ?>
+        <div class="app-item" data-search="<?= html_escape(strtolower($tp->Materi.' '.$tp->NamaInstruktur.' '.date('d-m-Y',$d))) ?>">
+          <div class="app-item-date">
+            <div class="app-item-date-day"><?= $day ?></div>
+            <div class="app-item-date-mon"><?= $mon ?></div>
+            <div class="mono" style="font-size:.62rem;color:#94a3b8"><?= $jam ?></div>
+          </div>
+          <div class="app-item-main">
+            <div style="font-weight:700;color:#1e293b;font-size:.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><?= html_escape($tp->Materi) ?></div>
+            <div class="small text-muted" style="font-size:.70rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><i class="fas fa-chalkboard-teacher mr-1" style="font-size:.6rem;color:#94a3b8"></i><?= html_escape($tp->NamaInstruktur) ?></div>
+            <div class="mono small text-muted" style="font-size:.66rem"><?= date('d/m/Y H:i', $d) ?></div>
+          </div>
+          <a href="#" class="dt-btn dt-btn-edit flex-shrink-0" data-toggle="modal" data-target="#editPresensi" data-id="<?= $tp->Idpr ?>" data-tgl="<?= html_escape($tp->Tgl) ?>" data-nipd="<?= html_escape($tp->Nipd) ?>" data-nama="<?= html_escape($tp->Nama ?? $__n) ?>" data-jks="<?= html_escape($tp->Jeniskursus ?? '') ?>" data-ins="<?= html_escape($tp->IdI ?? $tp->Instruktur ?? '') ?>" data-materi="<?= html_escape($tp->Materi) ?>" title="Ubah"><i class="fas fa-pen" style="font-size:.65rem"></i></a>
+        </div>
+      <?php } ?>
+    </div>
+    <div id="appEmptyPeserta" class="text-center py-4 d-none">
+      <div class="mx-auto mb-2 d-flex align-items-center justify-content-center" style="width:44px;height:44px;border-radius:.7rem;background:#f8fafc;border:1px solid #eef0f4;color:#94a3b8"><i class="fas fa-search"></i></div>
+      <div class="small font-weight-bold" style="color:#334155">Tidak ada sesi</div>
+      <div class="small text-muted">Coba ubah pencarian</div>
+    </div>
+  </div>
+  <div class="d-none d-md-block modern-table-wrap table-responsive">
     <table class="table modern-table table-hover mb-0" id="tabelpresensipeserta" style="width:100%">
       <thead>
         <tr>
@@ -116,7 +173,7 @@ $(function(){
     var $t=$('#tabelpresensipeserta'); if(!$t.length) return;
     if($.fn.DataTable.isDataTable($t)){ try{$t.DataTable().destroy();}catch(e){} $t.removeAttr('style'); }
     $t.DataTable({
-      pageLength:10, lengthMenu:[5,10,25,50], order:[[1,'desc']],
+      pageLength:10, lengthMenu:[5,10,25,50], order:[[0,'asc']],
       columnDefs:[{orderable:false,targets:[4]}],
       dom:'<"dt-top"lf>rt<"dt-bottom"ip>',
       language:{search:"",searchPlaceholder:"Cari materi, instruktur...",lengthMenu:"Tampil _MENU_",info:"Menampilkan _START_–_END_ dari _TOTAL_ sesi",infoEmpty:"Tidak ada sesi",infoFiltered:"(difilter dari _MAX_ total)",zeroRecords:"Tidak ada data yang cocok",emptyTable:"Belum ada presensi",paginate:{first:"Awal",last:"Akhir",next:"›",previous:"‹"}},
@@ -125,6 +182,53 @@ $(function(){
   }
   if(document.readyState==='complete') setTimeout(initPP,80); else $(window).on('load',function(){setTimeout(initPP,80);});
   setTimeout(initPP,300);
+  function filterPesertaApp(){
+    var q=(($('#appSearchPeserta').val()||'').toLowerCase());
+    var vis=0;
+    $('#appListPeserta .app-item').each(function(){
+      var $it=$(this);
+      var s=String($it.data('search')||'').toLowerCase();
+      // fallback to text if no data-search
+      if(!s) s=$it.text().toLowerCase();
+      var show=!q || s.indexOf(q)!==-1;
+      $it.toggle(show);
+      if(show) vis++;
+    });
+    $('#appEmptyPeserta').toggleClass('d-none', vis>0);
+  }
+  $(document).on('input','#appSearchPeserta', filterPesertaApp);
+});
+</script>
+<script src="<?= base_url("asset/vendor/chart.js/Chart.min.js") ?>"></script>
+<script>
+$(function(){
+  var presensiData = <?= json_encode($presensi) ?>;
+  var ctx = document.getElementById('chartBulananPeserta');
+  if(!ctx) return;
+  var chartInst = null;
+  function renderBulan(ym){
+    if(!ym) return;
+    var parts = ym.split('-');
+    var y = parseInt(parts[0],10), m = parseInt(parts[1],10);
+    var daysInMonth = new Date(y, m, 0).getDate();
+    var labels = []; var data = [];
+    for(var d=1; d<=daysInMonth; d++){ labels.push(String(d).padStart(2,'0')); data.push(0); }
+    presensiData.forEach(function(row){
+      var dt = new Date(row.Tgl);
+      if(dt.getFullYear()===y && (dt.getMonth()+1)===m){ var day=dt.getDate(); data[day-1]++; }
+    });
+    if(chartInst) chartInst.destroy();
+    Chart.defaults.global.defaultFontFamily='Nunito, -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+    Chart.defaults.global.defaultFontColor='#64748b';
+    chartInst = new Chart(ctx, {
+      type: 'bar',
+      data: { labels: labels, datasets: [{ label:'Sesi', data:data, backgroundColor:'rgba(37,99,235,0.85)', borderColor:'#2563eb', borderWidth:1, borderRadius:4, barThickness:10, maxBarThickness:14 }] },
+      options: { maintainAspectRatio:false, legend:{display:false}, scales:{ xAxes:[{ gridLines:{display:false}, ticks:{fontSize:10, fontColor:'#94a3b8', maxTicksLimit:15} }], yAxes:[{ ticks:{beginAtZero:true, min:0, precision:0, fontSize:10, fontColor:'#94a3b8'}, gridLines:{color:'#f1f5f9', zeroLineColor:'#eef0f4', borderDash:[4,4]} }] }, tooltips:{ backgroundColor:'#1e293b', titleFontColor:'#94a3b8', bodyFontColor:'#fff', borderColor:'#334155', borderWidth:1, displayColors:false, callbacks:{ title:function(t){ return 'Tanggal '+t[0].xLabel; }, label:function(t){ return t.yLabel+' sesi'; } } } }
+    });
+  }
+  var initialYM = $('#bulanPickerPeserta').val() || '<?= date('Y-m') ?>';
+  setTimeout(function(){ renderBulan(initialYM); }, 180);
+  $('#bulanPickerPeserta').on('change', function(){ renderBulan(this.value); });
 });
 </script>
 <style>

@@ -14,10 +14,15 @@ class cetak extends CI_Controller {
     }
     
 	function index(){
-		$Id = $_REQUEST['Id'];
+		$Id = $this->input->get('Id');
+		$id0 = (int)($Id[0] ?? 0);
+		$id1 = (int)($Id[1] ?? 0);
+		if ($id0 <= 0 || $id1 <= 0) {
+			redirect(base_url("pages/lulusan"));
+		}
 		$merge = new FPDF_Merge();
-		$merge->add(base_url("sertifikat?Id=$Id[0]"));
-		$merge->add(base_url("sertifikat?Id=$Id[1]"));
+		$merge->add(base_url("sertifikat?Id=$id0"));
+		$merge->add(base_url("sertifikat?Id=$id1"));
 		$merge->output();
 	}
 

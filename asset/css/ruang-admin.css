@@ -2200,14 +2200,13 @@ body.sidebar-toggled footer.sticky-footer {
 
 @media (hover: none) and (pointer: coarse), (max-width: 767.98px) {
   .topbar {
-    position: fixed !important;
+    position: sticky !important;
     top: 0; width: 100%; z-index: 1030;
   }
-  body { padding-top: 4.375rem; }
   .sidebar { display: none !important; }
   #wrapper { flex-direction: column; }
   #content-wrapper { width: 100% !important; margin-left: 0 !important; }
-  #container-wrapper { padding-bottom: 5rem !important; }
+  #container-wrapper { padding-bottom: 2rem !important; }
 
   div.dataTables_filter label { width: 100%; }
   div.dataTables_filter input { width: 100% !important; max-width: 100% !important; }

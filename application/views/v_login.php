@@ -300,6 +300,75 @@
       animation: rise .5s cubic-bezier(.16, 1, .3, 1) .16s both;
     }
 
+    .alumni-hook {
+      margin-top: 22px;
+      animation: rise .5s cubic-bezier(.16, 1, .3, 1) .12s both;
+    }
+
+    .alumni-divider {
+      border: 0;
+      border-top: 1px solid var(--line);
+      margin: 0 0 16px;
+    }
+
+    .alumni-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--ink);
+      background: var(--field);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px 14px;
+      transition: all .2s ease;
+    }
+
+    .alumni-link:hover {
+      background: #fff;
+      border-color: var(--brand);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 20px rgba(78, 115, 223, .14);
+    }
+
+    .alumni-ic {
+      width: 38px;
+      height: 38px;
+      flex-shrink: 0;
+      border-radius: 12px;
+      background: var(--brand);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .95rem;
+    }
+
+    .alumni-txt {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.3;
+      min-width: 0;
+    }
+
+    .alumni-txt strong {
+      font-size: .82rem;
+    }
+
+    .alumni-txt small {
+      color: var(--muted);
+      font-size: .72rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .alumni-arrow {
+      margin-left: auto;
+      color: #b6bccf;
+      font-size: .75rem;
+    }
+
     /* Hero panel (desktop only) */
     .hero-panel {
       display: none;
@@ -553,6 +622,18 @@
 
           <button type="submit" class="btn-submit" id="btnLogin">Masuk</button>
         </form>
+
+        <div class="alumni-hook">
+          <div class="alumni-divider"></div>
+          <a class="alumni-link" href="<?= base_url('alumni') ?>">
+            <span class="alumni-ic"><i class="fas fa-certificate"></i></span>
+            <span class="alumni-txt">
+              <strong>Cek Data Alumni</strong>
+              <small><?= htmlspecialchars((string)($namalembaga ?? ''), ENT_QUOTES) ?>?</small>
+            </span>
+            <i class="fas fa-chevron-right alumni-arrow"></i>
+          </a>
+        </div>
       </div>
 
       <p class="login-foot">

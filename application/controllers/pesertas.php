@@ -25,8 +25,8 @@ class Pesertas extends CI_Controller {
 	}
 
 	public function lastPresensi(){
-		$nipd = $this->input->post('Nipd');
-		$q = $this->db->query("SELECT MAX(Tgl) as Tgl FROM presensi WHERE Nipd='$nipd'")->row();
+		$nipd = (int)$this->input->post('Nipd');
+		$q = $this->db->query("SELECT MAX(Tgl) as Tgl FROM presensi WHERE Nipd=$nipd")->row();
 		echo json_encode($q);
 	}
 

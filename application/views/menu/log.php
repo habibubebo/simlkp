@@ -1,4 +1,6 @@
-<?php
+<?php 
+$bulanIndo = [1=>'Januari',2=>'Februari',3=>'Maret',4=>'April',5=>'Mei',6=>'Juni',7=>'Juli',8=>'Agustus',9=>'September',10=>'Oktober',11=>'November',12=>'Desember']; 
+$bulanPendekIndo = [1=>'Jan',2=>'Feb',3=>'Mar',4=>'Apr',5=>'Mei',6=>'Jun',7=>'Jul',8=>'Agu',9=>'Sep',10=>'Okt',11=>'Nov',12=>'Des'];
 $__total = count($logs);
 $__today = date('Y-m-d');
 $__todayCount = 0; $__byType = [];
@@ -52,7 +54,7 @@ $__delete = ($__byType['delete'] ?? 0);
 @media(max-width:767.98px){.modern-head .breadcrumb{display:none}.modern-card .dt-top{flex-direction:column;align-items:stretch}.modern-card .dataTables_filter input{width:100%}.modern-card .dataTables_filter label{width:100%}}
 </style>
 
-<div class="modern-head d-flex flex-column flex-md-row align-items-md-center justify-content-between mt-4 mb-3">
+<div class="modern-head d-none d-md-flex flex-column flex-md-row align-items-md-center justify-content-between mt-4 mb-3">
   <div class="mb-2 mb-md-0">
     <h1 class="h4 mb-1 font-weight-bold text-gray-800" style="font-weight:800">Log Sistem</h1>
     <p class="text-muted small mb-0">Riwayat aktivitas pengguna — 200 terbaru</p>
@@ -65,7 +67,7 @@ $__delete = ($__byType['delete'] ?? 0);
 
 <div class="row mb-3">
   <div class="col-6 col-xl-3 mb-3"><div class="card modern-card modern-stat stat-total h-100"><div class="card-body py-3 d-flex align-items-center justify-content-between"><div><div class="text-muted" style="font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700">Total Log</div><div class="h4 mb-0 mt-1" style="font-weight:800;color:#1e293b"><?= $__total ?></div><div class="small text-muted" style="font-size:.72rem">Terbaru 200</div></div><div class="stat-icon"><i class="fas fa-list-alt"></i></div></div></div></div>
-  <div class="col-6 col-xl-3 mb-3"><div class="card modern-card modern-stat stat-today h-100"><div class="card-body py-3 d-flex align-items-center justify-content-between"><div><div class="text-muted" style="font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700">Hari Ini</div><div class="h4 mb-0 mt-1" style="font-weight:800;color:#065f46"><?= $__todayCount ?></div><div class="small text-muted" style="font-size:.72rem"><?= date('d M Y') ?></div></div><div class="stat-icon"><i class="fas fa-calendar-day"></i></div></div></div></div>
+  <div class="col-6 col-xl-3 mb-3"><div class="card modern-card modern-stat stat-today h-100"><div class="card-body py-3 d-flex align-items-center justify-content-between"><div><div class="text-muted" style="font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700">Hari Ini</div><div class="h4 mb-0 mt-1" style="font-weight:800;color:#065f46"><?= $__todayCount ?></div><div class="small text-muted" style="font-size:.72rem"><?= date('d').' '.$bulanPendekIndo[date('n')].' '.date('Y')?></div></div><div class="stat-icon"><i class="fas fa-calendar-day"></i></div></div></div></div>
   <div class="col-6 col-xl-3 mb-3"><div class="card modern-card modern-stat stat-login h-100"><div class="card-body py-3 d-flex align-items-center justify-content-between"><div><div class="text-muted" style="font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700">Login</div><div class="h4 mb-0 mt-1" style="font-weight:800;color:#5b21b6"><?= $__login ?></div><div class="small text-muted" style="font-size:.72rem">Akses sistem</div></div><div class="stat-icon"><i class="fas fa-sign-in-alt"></i></div></div></div></div>
   <div class="col-6 col-xl-3 mb-3"><div class="card modern-card modern-stat stat-act h-100"><div class="card-body py-3 d-flex align-items-center justify-content-between"><div><div class="text-muted" style="font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700">Aktivitas</div><div class="h4 mb-0 mt-1" style="font-weight:800;color:#92400e"><?= $__add + $__edit + $__delete ?></div><div class="small text-muted" style="font-size:.72rem">Add <?= $__add ?> · Edit <?= $__edit ?> · Del <?= $__delete ?></div></div><div class="stat-icon"><i class="fas fa-exchange-alt"></i></div></div></div></div>
 </div>
@@ -87,7 +89,9 @@ $__delete = ($__byType['delete'] ?? 0);
         </tr>
       </thead>
       <tbody>
-        <?php $no=1; foreach ($logs as $tp) {
+        <?php 
+$bulanIndo = [1=>'Januari',2=>'Februari',3=>'Maret',4=>'April',5=>'Mei',6=>'Juni',7=>'Juli',8=>'Agustus',9=>'September',10=>'Oktober',11=>'November',12=>'Desember']; 
+$bulanPendekIndo = [1=>'Jan',2=>'Feb',3=>'Mar',4=>'Apr',5=>'Mei',6=>'Jun',7=>'Jul',8=>'Agu',9=>'Sep',10=>'Okt',11=>'Nov',12=>'Des']; $no=1; foreach ($logs as $tp) {
           $tipe = strtolower(trim($tp->log_tipe ?? ''));
           $badgeClass = 'badge-logout';
           if ($tipe==='login') $badgeClass='badge-login';
@@ -112,7 +116,9 @@ $__delete = ($__byType['delete'] ?? 0);
             <td><span class="badge-tipe <?= $badgeClass ?>"><?= html_escape($tp->log_tipe) ?></span></td>
             <td><span class="small" style="color:#334155"><?= html_escape($tp->log_desc) ?></span></td>
           </tr>
-        <?php } ?>
+        <?php 
+$bulanIndo = [1=>'Januari',2=>'Februari',3=>'Maret',4=>'April',5=>'Mei',6=>'Juni',7=>'Juli',8=>'Agustus',9=>'September',10=>'Oktober',11=>'November',12=>'Desember']; 
+$bulanPendekIndo = [1=>'Jan',2=>'Feb',3=>'Mar',4=>'Apr',5=>'Mei',6=>'Jun',7=>'Jul',8=>'Agu',9=>'Sep',10=>'Okt',11=>'Nov',12=>'Des']; } ?>
       </tbody>
     </table>
   </div>

@@ -41,10 +41,27 @@ $__ruanganCount = count($__ruangan);
 .modern-card .dataTables_paginate .paginate_button:hover{background:#f8fafc!important;border-color:#cbd5e1!important;color:#1e293b!important}
 .modern-card .dataTables_paginate .paginate_button.current,.modern-card .dataTables_paginate .paginate_button.current:hover{background:#2563eb!important;border-color:#2563eb!important;color:#fff!important;box-shadow:0 2px 8px rgba(37,99,235,.25)}
 .modern-card .dataTables_paginate .paginate_button.disabled{opacity:.4;pointer-events:none}
+.app-search{position:relative;display:flex;align-items:center;background:#fff;border:1px solid #e2e8f0;border-radius:9999px;padding:.6rem 1rem .6rem 2.5rem;box-shadow:0 1px 2px rgba(15,23,42,.04);transition:border-color .15s,box-shadow .15s}
+.app-search:focus-within{border-color:#93b4f5;box-shadow:0 0 0 .2rem rgba(37,99,235,.12)}
+.app-search i{position:absolute;left:1rem;color:#94a3b8;font-size:.85rem}
+.app-search input{border:none;outline:none;width:100%;font-size:.82rem;color:#1e293b;background:transparent}
+.app-search input::placeholder{color:#94a3b8}
+.app-filters{display:flex;gap:.5rem;overflow-x:auto;padding:.85rem 0 .25rem;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.app-filters::-webkit-scrollbar{display:none}
+.app-filter{flex-shrink:0;padding:.45rem .9rem;border-radius:9999px;border:1px solid #e2e8f0;background:#fff;color:#475569;font-size:.74rem;font-weight:700;white-space:nowrap;transition:all .15s}
+.app-filter.active{background:#2563eb;color:#fff;border-color:#2563eb;box-shadow:0 4px 12px rgba(37,99,235,.2)}
+.app-list{display:grid;gap:.75rem}
+.app-item{background:#fff;border:1px solid #eef0f4;border-radius:.85rem;padding:.85rem;box-shadow:0 1px 3px rgba(15,23,42,.04),0 8px 24px rgba(15,23,42,.04);display:flex;gap:.75rem;align-items:center;transition:transform .12s}
+.app-item:active{transform:scale(.98)}
+.app-item-icon{width:44px;height:44px;border-radius:.75rem;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.85rem;flex-shrink:0;background:rgba(37,99,235,.08);color:#2563eb}
+.app-item-main{flex:1;min-width:0;overflow:hidden}
+.app-item-name{font-weight:800;color:#1e293b;font-size:.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.app-item-sub{font-size:.70rem;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:.35rem;flex-wrap:wrap}
+.app-item-arrow{width:32px;height:32px;border-radius:9999px;background:#f8fafc;border:1px solid #eef0f4;display:flex;align-items:center;justify-content:center;color:#94a3b8;flex-shrink:0}
 @media(max-width:767.98px){.modern-head .breadcrumb{display:none}.modern-card .dt-top{flex-direction:column;align-items:stretch}.modern-card .dataTables_filter input{width:100%}.modern-card .dataTables_filter label{width:100%}.modern-card .dt-bottom{flex-direction:column;align-items:stretch;text-align:center}.modern-card .dataTables_paginate .pagination{justify-content:center}}
 </style>
 
-<div class="modern-head d-flex flex-column flex-md-row align-items-md-center justify-content-between mt-4 mb-3">
+<div class="modern-head d-none d-md-flex flex-column flex-md-row align-items-md-center justify-content-between mt-4 mb-3">
   <div class="mb-2 mb-md-0">
     <h1 class="h4 mb-1 font-weight-bold text-gray-800" style="font-weight:800">Program Pelatihan</h1>
     <p class="text-muted small mb-0">Kelola rombongan belajar, kelas dan ruangan</p>
@@ -76,9 +93,41 @@ $__ruanganCount = count($__ruangan);
       <h6 class="m-0 font-weight-bold" style="color:#1e293b;font-size:.9rem">Daftar Program</h6>
       <span class="badge" style="background:#f1f5f9;color:#475569;font-weight:600;font-size:.68rem;border-radius:9999px;padding:.3rem .55rem"><?= $__total ?> program</span>
     </div>
-    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#tambahRombel" style="background:#2563eb;border-color:#2563eb;border-radius:.5rem;font-weight:600;font-size:.78rem;padding:.42rem .75rem"><i class="fas fa-plus mr-1"></i> Tambah Program</button>
+    <button class="btn btn-primary btn-sm d-none d-md-inline-flex align-items-center" data-toggle="modal" data-target="#tambahRombel" style="background:#2563eb;border-color:#2563eb;border-radius:.5rem;font-weight:600;font-size:.78rem;padding:.42rem .75rem"><i class="fas fa-plus mr-1"></i> Tambah Program</button>
   </div>
-  <div class="modern-table-wrap table-responsive">
+  <div class="d-block d-md-none">
+    <div class="px-3 pt-3">
+      <div class="app-search"><i class="fas fa-search"></i><input type="search" id="appSearchRombel" placeholder="Cari program, kelas, ruangan..."></div>
+      <div class="app-filters" id="appFiltersRombel">
+        <button class="app-filter active" data-filter="">Semua</button>
+        <?php $ruangOpts=[]; foreach($rombel as $r){ $rk=trim($r->Ruangan); if($rk!=='') $ruangOpts[$rk]=true; } $ruangOpts=array_keys($ruangOpts); sort($ruangOpts); foreach(array_slice($ruangOpts,0,4) as $ro){ ?>
+          <button class="app-filter" data-filter="<?= html_escape(strtolower($ro)) ?>"><?= html_escape($ro) ?></button>
+        <?php } ?>
+      </div>
+    </div>
+    <div class="px-3 pb-3">
+      <div id="appListRombel" class="app-list">
+        <?php foreach ($rombel as $tp) {
+          $initR = strtoupper(substr(trim($tp->Namarombel),0,1));
+        ?>
+          <div class="app-item" role="button" tabindex="0" data-search="<?= html_escape(strtolower($tp->Namarombel.' '.$tp->Kelas.' '.$tp->Ruangan.' '.$tp->Jumlahpeserta)) ?>" data-ruang="<?= html_escape(strtolower(trim($tp->Ruangan))) ?>" data-id="<?= $tp->Id ?>">
+            <div class="app-item-icon"><?= html_escape($initR) ?></div>
+            <div class="app-item-main">
+              <div class="app-item-name"><?= html_escape($tp->Namarombel) ?> <span class="badge-kelas" style="margin-left:.3rem;vertical-align:middle;font-size:.62rem"><?= html_escape($tp->Kelas) ?></span></div>
+              <div class="app-item-sub"><span class="badge-ruang" style="font-size:.62rem"><i class="fas fa-map-marker-alt mr-1" style="font-size:.6rem"></i><?= html_escape($tp->Ruangan) ?></span><span style="width:3px;height:3px;border-radius:50%;background:#cbd5e1;display:inline-block"></span><span class="mono" style="font-size:.68rem;color:#2563eb;font-weight:700"><?= html_escape($tp->Jumlahpeserta) ?> peserta</span></div>
+            </div>
+            <div class="app-item-arrow"><i class="fas fa-chevron-right" style="font-size:.65rem"></i></div>
+          </div>
+        <?php } ?>
+      </div>
+      <div id="appEmptyRombel" class="text-center py-4 d-none">
+        <div class="mx-auto mb-2 d-flex align-items-center justify-content-center" style="width:44px;height:44px;border-radius:.7rem;background:#f8fafc;border:1px solid #eef0f4;color:#94a3b8"><i class="fas fa-search"></i></div>
+        <div class="small font-weight-bold" style="color:#334155">Tidak ada program</div>
+        <div class="small text-muted">Coba ubah pencarian atau filter</div>
+      </div>
+    </div>
+  </div>
+  <div class="d-none d-md-block modern-table-wrap table-responsive">
     <table class="table modern-table table-hover mb-0" id="tabelrombel" style="width:100%">
       <thead>
         <tr>
@@ -234,6 +283,33 @@ $(function(){
   }
   if(document.readyState==='complete') setTimeout(initRombel,80); else $(window).on('load',function(){setTimeout(initRombel,80);});
   setTimeout(initRombel,300);
+  function filterRombelApp(){
+    var q=(($('#appSearchRombel').val()||'').toLowerCase());
+    var f=$('#appFiltersRombel .app-filter.active').data('filter')||""; f=String(f).toLowerCase();
+    var vis=0;
+    $('#appListRombel .app-item').each(function(){
+      var $it=$(this);
+      var matchSearch=!q || String($it.data('search')).indexOf(q)!==-1;
+      var matchFilter=!f || String($it.data('ruang')).indexOf(f)!==-1;
+      var show=matchSearch && matchFilter;
+      $it.toggle(show);
+      if(show) vis++;
+    });
+    $('#appEmptyRombel').toggleClass('d-none', vis>0);
+    if($.fn.DataTable.isDataTable('#tabelrombel')){ try{ $('#tabelrombel').DataTable().search($('#appSearchRombel').val()).draw(); }catch(e){} }
+  }
+  $(document).on('input','#appSearchRombel', filterRombelApp);
+  $(document).on('click','#appFiltersRombel .app-filter', function(){
+    $('#appFiltersRombel .app-filter').removeClass('active');
+    $(this).addClass('active');
+    filterRombelApp();
+  });
+  $('#appListRombel').on('click', '.app-item', function(e){
+    if($(e.target).closest('a,button').length) return;
+    var id=$(this).data('id');
+    var $btn=$('[data-id="'+id+'"][data-toggle="modal"]');
+    if($btn.length) $btn.trigger('click');
+  });
 });
 </script>
 <script type="text/javascript">document.title = "Program Pelatihan <?= $profil[0]->Namalkp?>";</script>

@@ -255,7 +255,7 @@ $(document).ready(function () {
           <div class="footer-meta">
             <span class="footer-render">Render: {elapsed_time} ms</span>
             <span class="footer-copy">&copy; <script>document.write(new Date().getFullYear());</script> <a href="https://instagram.com/habibubebo" target="_blank" rel="noopener">Habibubebo</a></span>
-            <a href="<?= base_url('index.php/pages/log'); ?>" class="footer-version">v0.9</a>
+            <a href="<?= base_url('index.php/pages/log'); ?>" class="footer-version">v1.0</a>
           </div>
         </div>
       </div>
@@ -263,10 +263,7 @@ $(document).ready(function () {
     <!-- Footer -->
     </div>
     </div>
-    <!-- Scroll to top -->
-    <a class="scroll-to-top rounded" href="#page-top">
-      <i class="fas fa-angle-up"></i>
-    </a>
+
 
     <!-- <script src="<?= base_url("asset/vendor/bootstrap/js/bootstrap.bundle.min.js") ?>"></script> -->
     <!-- <script src="	https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> -->
@@ -726,7 +723,80 @@ $(document).ready(function () {
     }); </script>
 <script src="<?= base_url("asset/js/ruang-admin.min.js") ?>"></script>
 
-    <nav class="mobile-bottom-nav">
+    <style>
+      .pill-nav{ display:none; }
+      @media(max-width:767.98px){
+        .pill-nav{
+          display:flex;
+          position:fixed;
+          bottom:calc(14px + env(safe-area-inset-bottom, 0px));
+          left:50%;
+          transform:translateX(-50%);
+          z-index:1030;
+          background:var(--pill-bg, #fff);
+          border:1px solid var(--pill-border, #eef0f4);
+          border-radius:9999px;
+          box-shadow:var(--pill-shadow, 0 8px 32px rgba(15,23,42,.14));
+          padding:6px;
+          gap:4px;
+          max-width:calc(100vw - 24px);
+          width:auto;
+        }
+        .pill-nav .pill-item{
+          display:flex;
+          flex-direction:row;
+          align-items:center;
+          justify-content:center;
+          gap:6px;
+          padding:10px 14px;
+          border-radius:9999px;
+          text-decoration:none;
+          color:#64748b;
+          font-size:.72rem;
+          font-weight:700;
+          line-height:1;
+          white-space:nowrap;
+          transition:background .18s, color .18s, transform .15s, box-shadow .18s;
+          -webkit-tap-highlight-color:transparent;
+        }
+        .pill-nav .pill-item i{font-size:1rem; line-height:1; flex-shrink:0}
+        .pill-nav .pill-item span{ display:none; }
+        .pill-nav .pill-item.active{
+          background:var(--pill-active, #2563eb);
+          color:var(--pill-active-text, #fff);
+          box-shadow:0 4px 14px rgba(37,99,235,.28);
+          padding:10px 16px;
+        }
+        .pill-nav .pill-item.active span{ display:inline; }
+        .pill-nav .pill-item.active i{ color:#fff; }
+        .pill-nav .pill-item:active{ transform:scale(.96) }
+        .pill-nav .pill-item:not(.active):hover{ background:#f8fafc; color:#1e293b }
+        /* show labels for active only, keep pill compact */
+        @media(min-width:360px){
+          .pill-nav{ gap:6px; padding:6px 8px; }
+        }
+        /* push content and fab above pill */
+        #container-wrapper{ padding-bottom:calc(1.5rem + env(safe-area-inset-bottom, 0px)) !important; }
+        .fab-presensi{
+          bottom:calc(76px + env(safe-area-inset-bottom, 0px)) !important;
+          right:16px !important;
+        }
+        .modern-footer{ padding-bottom:calc(88px + env(safe-area-inset-bottom, 0)) !important; }
+        /* hide old bottom bar if still present */
+        .mobile-bottom-nav{ display:none !important; }
+      }
+      @media(prefers-reduced-motion:reduce){
+        .pill-nav .pill-item{ transition:none }
+      }
+    </style>
+    <nav class="pill-nav" aria-label="Navigasi utama">
+      <a class="pill-item" href="<?= base_url("pages/dashboard") ?>" title="Dashboard" data-title="Dashboard"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
+      <a class="pill-item" href="<?= base_url("pages/peserta") ?>" title="Peserta" data-title="Peserta"><i class="fas fa-users"></i><span>Peserta</span></a>
+      <a class="pill-item" href="<?= base_url("pages/presensi") ?>" title="Presensi" data-title="Presensi" data-match="/presensi"><i class="fas fa-clipboard-list"></i><span>Presensi</span></a>
+      <a class="pill-item" href="<?= base_url("pages/lulusan") ?>" title="Lulusan" data-title="Lulusan"><i class="fas fa-graduation-cap"></i><span>Lulusan</span></a>
+      <a class="pill-item" href="<?= base_url("pages/rombel") ?>" title="Program" data-title="Program"><i class="fas fa-th-list"></i><span>Program</span></a>
+    </nav>
+    <nav class="mobile-bottom-nav" style="display:none" aria-hidden="true">
       <a class="bottom-nav-item" href="<?= base_url("pages/dashboard") ?>" title="Dashboard"><div class="nav-icon-wrap"><i class="fas fa-tachometer-alt"></i></div><span>Dashboard</span></a>
       <a class="bottom-nav-item" href="<?= base_url("pages/peserta") ?>" title="Peserta"><div class="nav-icon-wrap"><i class="fas fa-users"></i></div><span>Peserta</span></a>
       <a class="bottom-nav-item" href="<?= base_url("pages/presensi") ?>" title="Presensi"><div class="nav-icon-wrap"><i class="fas fa-clipboard-list"></i></div><span>Presensi</span></a>
@@ -736,14 +806,32 @@ $(document).ready(function () {
     <script>
     document.addEventListener('DOMContentLoaded', function(){
       setTimeout(function(){
-        var p = window.location.pathname;
-        document.querySelectorAll('.bottom-nav-item').forEach(function(a){
-          var h = a.pathname;
-          var pageMobile = document.getElementById("pageMobile");
-          if (h && p.indexOf(h) !== -1) a.classList.add('active');
-          if (h && p.indexOf(h) !== -1) pageMobile.innerText = a.getAttribute('title');
+        var p = window.location.pathname.replace(/^\/index\.php/, '');
+        var found=false;
+        document.querySelectorAll('.pill-item').forEach(function(a){
+          var pat = a.getAttribute('data-match') || a.pathname;
+          if (pat && p.indexOf(pat) !== -1){ a.classList.add('active'); found=true; }
         });
-      }, 200);
+        if(!found){
+          var dash=document.querySelector('.pill-item[href*="dashboard"]');
+          if(dash) dash.classList.add('active');
+        }
+        var active=document.querySelector('.pill-item.active');
+        var pageMobile=document.getElementById("pageMobile");
+        if(pageMobile){
+          var ownHead=document.querySelector('.app-page-head h1');
+          if(!found && ownHead && ownHead.textContent.trim()){
+            pageMobile.innerText = ownHead.textContent.trim();
+          } else if(active){
+            pageMobile.innerText = active.getAttribute('data-title') || active.getAttribute('title');
+          }
+        }
+        // keep legacy bottom-nav sync
+        document.querySelectorAll('.bottom-nav-item').forEach(function(a){
+          var h2=a.pathname;
+          if(h2 && p.indexOf(h2)!==-1) a.classList.add('active');
+        });
+      }, 180);
     });
     </script>
     </body>

@@ -13,7 +13,10 @@ class sertifikat extends CI_Controller
 
     function index()
     {
-        $Id = $_REQUEST['Id'];
+        $Id = (int)$this->input->get('Id');
+        if ($Id <= 0) {
+            show_404();
+        }
         $data['lulusan'] = $this->db->query("SELECT *,lulusan.Id AS Idl,rombel.Id AS Idr FROM lulusan JOIN instruktur JOIN peserta JOIN rombel JOIN unitkompetensi on lulusan.Instruktur=instruktur.Id AND lulusan.Nipd=peserta.Nipd AND peserta.Jeniskursus=rombel.Id AND unitkompetensi.Rombel=rombel.Id WHERE lulusan.Id=$Id")->result();
         function tgl_indo($tanggal)
         {

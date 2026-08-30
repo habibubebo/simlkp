@@ -52,10 +52,54 @@ $__lulus = (int)($this->db->query("SELECT COUNT(*) as c FROM peserta WHERE Statu
 .dt-btn-edit:hover{background:#f8fafc;border-color:#cbd5e1;color:#1e293b}
 .dt-btn-delete{background:#fff;border-color:#fecaca;color:#dc2626}
 .dt-btn-delete:hover{background:#fef2f2;border-color:#fca5a5;color:#991b1b}
-@media(max-width:767.98px){.modern-head .breadcrumb{display:none}.modern-card .dt-top{flex-direction:column;align-items:stretch}.modern-card .dataTables_filter input{width:100%}.modern-card .dataTables_filter label{width:100%}.modern-card .dt-buttons{width:100%;justify-content:flex-start}}
+@media(max-width:767.98px){
+  .modern-head .breadcrumb{display:none}
+  .modern-card .dt-top{flex-direction:column;align-items:stretch}
+  .modern-card .dataTables_filter input{width:100%}.modern-card .dataTables_filter label{width:100%}
+  .modern-card .dt-buttons{width:100%;justify-content:flex-start}
+}
+.app-search{position:relative;display:flex;align-items:center;background:#fff;border:1px solid #e2e8f0;border-radius:9999px;padding:.6rem 1rem .6rem 2.5rem;box-shadow:0 1px 2px rgba(15,23,42,.04);transition:border-color .15s,box-shadow .15s}
+.app-search:focus-within{border-color:#93b4f5;box-shadow:0 0 0 .2rem rgba(37,99,235,.12)}
+.app-search i{position:absolute;left:1rem;color:#94a3b8;font-size:.85rem}
+.app-search input{border:none;outline:none;width:100%;font-size:.82rem;color:#1e293b;background:transparent}
+.app-search input::placeholder{color:#94a3b8}
+.app-filters{display:flex;gap:.5rem;overflow-x:auto;padding:.85rem 0 .25rem;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.app-filters::-webkit-scrollbar{display:none}
+.app-filter{flex-shrink:0;padding:.45rem .9rem;border-radius:9999px;border:1px solid #e2e8f0;background:#fff;color:#475569;font-size:.74rem;font-weight:700;white-space:nowrap;transition:all .15s}
+.app-filter.active{background:#2563eb;color:#fff;border-color:#2563eb;box-shadow:0 4px 12px rgba(37,99,235,.2)}
+.app-list{display:grid;gap:.75rem}
+.app-item{background:#fff;border:1px solid #eef0f4;border-radius:.85rem;padding:.85rem;box-shadow:0 1px 3px rgba(15,23,42,.04),0 8px 24px rgba(15,23,42,.04);display:flex;gap:.75rem;align-items:center;transition:transform .12s,box-shadow .15s}
+.app-item:active{transform:scale(.98)}
+.app-item-avatar{width:44px;height:44px;border-radius:.75rem;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.78rem;flex-shrink:0}
+.app-item-main{flex:1;min-width:0}
+.app-item-name{font-weight:800;color:#1e293b;font-size:.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.app-item-sub{font-size:.70rem;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:.35rem;flex-wrap:wrap}
+.app-item-meta{font-size:.68rem;color:#94a3b8}
+.app-item-arrow{width:32px;height:32px;border-radius:9999px;background:#f8fafc;border:1px solid #eef0f4;display:flex;align-items:center;justify-content:center;color:#94a3b8;flex-shrink:0}
+@media(max-width:767.98px){
+  .modern-table thead{display:none !important}
+  .modern-table tbody tr{display:block;background:#fff;border:1px solid #eef0f4;border-radius:.85rem;box-shadow:0 1px 3px rgba(15,23,42,.04),0 8px 24px rgba(15,23,42,.04);margin-bottom:.9rem;overflow:hidden}
+  .modern-table tbody tr:hover td{background:#fff !important}
+  .modern-table tbody td{display:flex;align-items:center;justify-content:space-between;gap:.6rem;padding:.65rem .9rem !important;border:none !important;border-bottom:1px solid #f8fafc !important;min-height:auto}
+  .modern-table tbody td:before{content:attr(data-label);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:#94a3b8;flex-shrink:0;white-space:nowrap}
+  .modern-table tbody td:nth-child(1){background:#fcfdff;padding:.85rem .9rem !important;border-bottom:1px solid #f1f5f9 !important}
+  .modern-table tbody td:nth-child(1):before{display:none}
+  .modern-table tbody td:nth-child(1) .avatar-sm{width:40px;height:40px;border-radius:.7rem;font-size:.75rem}
+  .modern-table tbody td:nth-child(2):before{content:"Status"}
+  .modern-table tbody td:nth-child(3):before{content:"JK"}
+  .modern-table tbody td:nth-child(4):before{content:"TTL"}
+  .modern-table tbody td:nth-child(5):before{content:"Program"}
+  .modern-table tbody td:nth-child(5) div{text-align:right}
+  .modern-table tbody td:nth-child(6):before{content:"Masuk"}
+  .modern-table tbody td:last-child{justify-content:stretch;padding:.6rem !important;border-bottom:none !important;background:#f8fafc}
+  .modern-table tbody td:last-child:before{display:none}
+  .modern-table tbody td:last-child .d-inline-flex{width:100%}
+  .modern-table tbody td:last-child .dt-btn{flex:1;width:auto;height:38px;border-radius:.6rem;font-size:.78rem;font-weight:600;gap:.4rem}
+  .modern-table tbody td:last-child .dt-btn .m-label{display:inline !important}
+}
 </style>
 
-<div class="modern-head d-flex flex-column flex-md-row align-items-md-center justify-content-between mt-4 mb-3">
+<div class="modern-head d-none d-md-flex flex-column flex-md-row align-items-md-center justify-content-between mt-4 mb-3">
   <div class="mb-2 mb-md-0">
     <h1 class="h4 mb-1 font-weight-bold text-gray-800" style="font-weight:800">Peserta</h1>
     <p class="text-muted small mb-0">Kelola data peserta didik dan status keaktifan</p>
@@ -87,9 +131,36 @@ $__lulus = (int)($this->db->query("SELECT COUNT(*) as c FROM peserta WHERE Statu
       <h6 class="m-0 font-weight-bold" style="color:#1e293b;font-size:.9rem">Daftar Peserta</h6>
       <span class="badge" style="background:#f1f5f9;color:#475569;font-weight:600;font-size:.68rem;border-radius:9999px;padding:.3rem .55rem" id="badgeTotal"><?= $__total ?> data</span>
     </div>
-    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#tambahPeserta" style="background:#2563eb;border-color:#2563eb;border-radius:.5rem;font-weight:600;font-size:.78rem;padding:.42rem .75rem"><i class="fas fa-plus mr-1"></i> Tambah Peserta</button>
+    <button class="btn btn-primary btn-sm d-none d-md-inline-flex align-items-center" data-toggle="modal" data-target="#tambahPeserta" style="background:#2563eb;border-color:#2563eb;border-radius:.5rem;font-weight:600;font-size:.78rem;padding:.42rem .75rem"><i class="fas fa-plus mr-1"></i> Tambah Peserta</button>
   </div>
-  <div class="table-responsive" style="border-radius:0 0 .85rem .85rem;overflow:hidden">
+  <!-- Mobile app view -->
+  <div class="d-block d-md-none">
+    <div class="px-3 pt-3">
+      <div class="app-search"><i class="fas fa-search"></i><input type="search" id="appSearch" placeholder="Cari nama, NIPD, program..."></div>
+      <div class="app-filters" id="appFilters">
+        <button class="app-filter active" data-status="">Semua</button>
+        <button class="app-filter" data-status="1">Aktif</button>
+        <button class="app-filter" data-status="2">Lulus</button>
+        <button class="app-filter" data-status="0">Nonaktif</button>
+      </div>
+    </div>
+    <div class="px-3 pb-3">
+      <div id="appList" class="app-list"></div>
+      <div id="appEmpty" class="text-center py-4 d-none">
+        <div class="mx-auto mb-2 d-flex align-items-center justify-content-center" style="width:44px;height:44px;border-radius:.7rem;background:#f8fafc;border:1px solid #eef0f4;color:#94a3b8"><i class="fas fa-search"></i></div>
+        <div class="small font-weight-bold" style="color:#334155">Tidak ada peserta</div>
+        <div class="small text-muted">Coba ubah pencarian atau filter</div>
+      </div>
+      <div class="d-flex align-items-center justify-content-between mt-3" id="appPagination" style="gap:.5rem">
+        <span class="small text-muted" id="appInfo" style="font-size:.72rem"></span>
+        <div style="display:flex;gap:.4rem">
+          <button id="appPrev" class="btn btn-sm" style="background:#fff;border:1px solid #e2e8f0;border-radius:.5rem;padding:.35rem .7rem;font-size:.72rem"><i class="fas fa-chevron-left"></i></button>
+          <button id="appNext" class="btn btn-sm" style="background:#fff;border:1px solid #e2e8f0;border-radius:.5rem;padding:.35rem .7rem;font-size:.72rem"><i class="fas fa-chevron-right"></i></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="d-none d-md-block table-responsive" style="border-radius:0 0 .85rem .85rem;overflow:hidden">
     <table class="table modern-table table-hover mb-0" id="tabelpeserta-tes" style="width:100%">
       <thead>
         <tr>
@@ -470,9 +541,9 @@ $(document).ready(function(){
         render:function(data,type,row){
           var id=row.Idp;
           var namaAttr=escHtml(row.Nama).replace(/"/g,'&quot;');
-          return '<div class="d-inline-flex" style="gap:.3rem">'
-            +'<a href="#" class="dt-btn dt-btn-edit btn-edit-peserta" data-id="'+id+'" title="Ubah"><i class="fas fa-pen"></i></a>'
-            +'<a href="#" class="dt-btn dt-btn-delete" data-toggle="modal" data-target="#deleteuser'+id+'" title="Hapus"><i class="fas fa-trash-alt"></i></a>'
+          return '<div class="d-inline-flex" style="gap:.45rem">'
+            +'<a href="#" class="dt-btn dt-btn-edit btn-edit-peserta" data-id="'+id+'" title="Ubah"><i class="fas fa-pen"></i><span class="m-label" style="display:none">Ubah</span></a>'
+            +'<a href="#" class="dt-btn dt-btn-delete" data-toggle="modal" data-target="#deleteuser'+id+'" title="Hapus"><i class="fas fa-trash-alt"></i><span class="m-label" style="display:none">Hapus</span></a>'
             +'</div>'
             +'<div class="modal fade" id="deleteuser'+id+'" tabindex="-1" role="dialog" aria-hidden="true"><div class="modal-dialog modal-dialog-centered" role="document" style="max-width:420px"><div class="modal-content" style="border:0;border-radius:.9rem;box-shadow:0 20px 60px rgba(15,23,42,.18)"><div class="modal-body p-4 text-center"><div class="mx-auto mb-3 d-flex align-items-center justify-content-center" style="width:48px;height:48px;border-radius:50%;background:#fef2f2;color:#dc2626"><i class="fas fa-trash-alt"></i></div><h6 class="font-weight-bold mb-1" style="color:#1e293b">Hapus peserta?</h6><p class="small text-muted mb-0">Yakin ingin menghapus <span style="font-weight:600;color:#334155">'+namaAttr+'</span> ?</p></div><div class="modal-footer border-0 pt-0 px-4 pb-4 d-flex" style="gap:.5rem"><button type="button" class="btn flex-fill" data-dismiss="modal" style="border:1px solid #e2e8f0;background:#fff;color:#475569;border-radius:.55rem;font-weight:600">Batal</button><a href="'+appPath+'peserta/hapus/'+id+'" class="btn btn-danger flex-fill" style="border-radius:.55rem;font-weight:600">Hapus</a></div></div></div></div>';
         }
@@ -504,6 +575,61 @@ $(document).ready(function(){
   tabel.on('draw',function(){
     var info=tabel.page.info();
     $('#badgeTotal').text(info.recordsTotal+' data');
+  });
+  function renderAppList(){
+    var $list=$('#appList'); if(!$list.length) return;
+    var data=tabel.rows({page:'current'}).data().toArray();
+    $list.empty();
+    if(!data.length){
+      $('#appEmpty').removeClass('d-none');
+      $('#appInfo').text('Tidak ada data');
+      $('#appPrev,#appNext').prop('disabled',true).css('opacity',.4);
+      return;
+    }
+    $('#appEmpty').addClass('d-none');
+    var info=tabel.page.info();
+    $('#appInfo').text('Menampilkan '+(info.start+1)+'–'+info.end+' dari '+info.recordsTotal);
+    $('#appPrev').prop('disabled',!info.page).css('opacity',info.page?1:.4);
+    $('#appNext').prop('disabled',info.page>=info.pages-1).css('opacity',info.page>=info.pages-1?.4:1);
+    data.forEach(function(row){
+      var init=initialsFromName(row.Nama);
+      var statusClass=row.Status=='0'?'badge-non':(row.Status=='1'?'badge-aktif':'badge-lulus');
+      var statusText=row.Status=='0'?'Nonaktif':(row.Status=='1'?'Aktif':'Lulus');
+      var isL=(row.Kelamin||'').toLowerCase().indexOf('laki')!==-1;
+      var jk=isL?'L':'P'; var jkClass=isL?'badge-jk-l':'badge-jk-p';
+      var prog=escHtml(row.Namarombel||'-');
+      var kelas=escHtml(row.Kelas||'');
+      var nipd=escHtml(row.Nipd);
+      var nama=escHtml(row.Nama);
+      var tgl=row.Tglmasuk? new Date(row.Tglmasuk) : null;
+      var tglStr='-'; if(tgl && !isNaN(tgl.getTime())){ tglStr=String(tgl.getDate()).padStart(2,'0')+'/'+String(tgl.getMonth()+1).padStart(2,'0')+'/'+tgl.getFullYear(); }
+      var html='<div class="app-item" data-id="'+row.Idp+'">'
+        +'<div class="app-item-avatar avatar-peserta">'+init+'</div>'
+        +'<div class="app-item-main">'
+          +'<div class="app-item-name">'+nama+' <span class="badge-jk '+jkClass+'" style="margin-left:.3rem;vertical-align:middle">'+jk+'</span></div>'
+          +'<div class="app-item-sub"><span class="mono" style="font-size:.68rem;color:#94a3b8">'+nipd+'</span><span style="width:3px;height:3px;border-radius:50%;background:#cbd5e1;display:inline-block"></span><span>'+prog+'</span></div>'
+          +'<div class="app-item-meta"><span class="badge-status '+statusClass+'" style="font-size:.6rem;padding:.15rem .4rem">'+statusText+'</span>'+(kelas?' <span style="margin-left:.3rem;color:#94a3b8;font-size:.66rem">'+kelas+'</span>':'')+' · <span style="color:#64748b">'+tglStr+'</span></div>'
+        +'</div>'
+        +'<div class="app-item-arrow"><i class="fas fa-chevron-right" style="font-size:.65rem"></i></div>'
+        +'</div>';
+      $list.append(html);
+    });
+  }
+  tabel.on('draw', renderAppList);
+  $('#appSearch').on('input', function(){ tabel.search(this.value).draw(); });
+  $('#appFilters .app-filter').on('click', function(){
+    $('#appFilters .app-filter').removeClass('active');
+    $(this).addClass('active');
+    var s=$(this).data('status'); s=s===""?"":String(s);
+    if(s==="") tabel.search('').draw(); else tabel.search(s).draw();
+  });
+  $('#appPrev').on('click', function(){ tabel.page('previous').draw('page'); });
+  $('#appNext').on('click', function(){ tabel.page('next').draw('page'); });
+  $('#appList').on('click', '.app-item', function(e){
+    if($(e.target).closest('a,button').length) return;
+    var id=$(this).data('id');
+    var $btn=$('.btn-edit-peserta[data-id="'+id+'"]');
+    if($btn.length) $btn.trigger('click'); else window.location.href=appPath+'presensi/peserta?Id='+id;
   });
 });
 </script>

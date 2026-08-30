@@ -17,7 +17,13 @@ class login extends CI_Controller
         if ($this->session->userdata('status') == "masuk") {
             redirect(base_url('pages/dashboard'));
         } else {
-            $this->load->view('V_login.php');
+            // Ambil nama lembaga dari tabel profil untuk hook cek data alumni.
+            $data['namalembaga'] = '';
+            $profil = $this->Model_APS->tampil_data('profil', 'npsn', 'ASC')->result();
+            if (!empty($profil)) {
+                $data['namalembaga'] = trim((string)$profil[0]->Namalkp);
+            }
+            $this->load->view('V_login.php', $data);
         };
     }
     // Fungsi Auth() Untuk memeriksa / memproses inputan yang dikirim dari form login (v_login.php)----------------

@@ -1,22 +1,24 @@
 <?php
-foreach ($profil as $pr);
+foreach (($profil ?? []) as $pr);
+if (!isset($pr)) $pr = (object)[];
 
 $val = function ($x) {
   return ($x !== null && trim((string)$x) !== '') ? html_escape($x) : '-';
 };
-$email = trim((string)$pr->Email);
-$phone = trim((string)$pr->Telepon);
+$email = trim((string)($pr->Email ?? ''));
+$phone = trim((string)($pr->Telepon ?? ''));
 $rt_rw = trim(($pr->Rt <> '' ? $pr->Rt : '') . '/' . ($pr->Rw <> '' ? $pr->Rw : ''), '/');
 ?>
 
 <style>
   .pfl {
-    --pfl-brand: #4e73df;
-    --pfl-deep: #224abe;
-    --pfl-ink: #1f2340;
-    --pfl-muted: #6b7194;
-    --pfl-line: #e3e5ef;
+    --pfl-brand: #2563eb;
+    --pfl-deep: #1d4ed8;
+    --pfl-ink: #1e293b;
+    --pfl-muted: #64748b;
+    --pfl-line: #eef0f4;
   }
+  .modern-head h1{letter-spacing:-.02em}
 
   /* Banner */
   .pfl-banner {
@@ -101,14 +103,14 @@ $rt_rw = trim(($pr->Rt <> '' ? $pr->Rt : '') . '/' . ($pr->Rw <> '' ? $pr->Rw : 
     border-radius: 12px;
     padding: 0 18px;
     font-size: .86rem;
-    font-weight: 600;
+    font-weight: 700;
     text-decoration: none;
     transition: transform .12s ease, box-shadow .2s ease;
   }
 
   .pfl-edit:hover,
   .pfl-edit:focus {
-    color: #3449b2;
+    color: var(--pfl-brand);
     text-decoration: none;
     box-shadow: 0 8px 20px rgba(15, 23, 66, .3);
   }
@@ -141,6 +143,7 @@ $rt_rw = trim(($pr->Rt <> '' ? $pr->Rt : '') . '/' . ($pr->Rw <> '' ? $pr->Rw : 
     font-size: .92rem;
     font-weight: 700;
     color: var(--pfl-ink);
+    letter-spacing: -.01em;
   }
 
   .pfl-card-title i {
@@ -150,7 +153,6 @@ $rt_rw = trim(($pr->Rt <> '' ? $pr->Rt : '') . '/' . ($pr->Rw <> '' ? $pr->Rw : 
     text-align: center;
   }
 
-  /* Compact setting-list rows */
   .pfl-items {
     display: grid;
     margin: 0;
@@ -167,7 +169,7 @@ $rt_rw = trim(($pr->Rt <> '' ? $pr->Rt : '') . '/' . ($pr->Rw <> '' ? $pr->Rw : 
     flex: 0 0 41%;
     max-width: 41%;
     font-size: .68rem;
-    font-weight: 600;
+    font-weight: 700;
     letter-spacing: .04em;
     text-transform: uppercase;
     color: var(--pfl-muted);
@@ -190,6 +192,10 @@ $rt_rw = trim(($pr->Rt <> '' ? $pr->Rt : '') . '/' . ($pr->Rw <> '' ? $pr->Rw : 
 
   .pfl-item dd a:hover {
     text-decoration: underline;
+  }
+
+  @media (max-width: 575.98px) {
+    .pfl-banner { border-radius: 1rem; }
   }
 
   @media (min-width: 640px) {
@@ -248,6 +254,28 @@ $rt_rw = trim(($pr->Rt <> '' ? $pr->Rt : '') . '/' . ($pr->Rw <> '' ? $pr->Rw : 
     }
   }
 </style>
+
+<!-- Header desktop -->
+<div class="modern-head d-none d-md-flex flex-column flex-md-row align-items-md-center justify-content-between mt-4 mb-3">
+  <div class="mb-2 mb-md-0">
+    <h1 class="h4 mb-1 font-weight-bold text-gray-800" style="font-weight:800">Lembaga</h1>
+    <p class="text-muted small mb-0">Data profil dan identitas lembaga kursus</p>
+  </div>
+  <ol class="breadcrumb mb-0 bg-transparent p-0" style="font-size:.8rem">
+    <li class="breadcrumb-item"><a href="<?= base_url('pages/dashboard') ?>" style="color:#94a3b8;text-decoration:none">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page" style="color:#334155;font-weight:600">Lembaga</li>
+  </ol>
+</div>
+
+<!-- Header mobile -->
+<div class="d-md-none mt-3 mb-3 app-page-head">
+  <div class="d-flex align-items-center justify-content-between" style="gap:.6rem">
+    <div style="min-width:0">
+      <h1 style="font-size:1.15rem;font-weight:800;color:#1e293b;letter-spacing:-.01em;margin:0">Lembaga</h1>
+      <div class="small text-muted" style="font-size:.72rem">Data profil dan identitas lembaga kursus</div>
+    </div>
+  </div>
+</div>
 
 <div class="pfl">
   <section class="pfl-banner">
@@ -349,5 +377,5 @@ $rt_rw = trim(($pr->Rt <> '' ? $pr->Rt : '') . '/' . ($pr->Rw <> '' ? $pr->Rw : 
 </div>
 
 <script type="text/javascript">
-  document.title = <?= json_encode("Profil " . $pr->Namalkp) ?>;
+  document.title = <?= json_encode("Profil " . ($pr->Namalkp ?? 'Lembaga')) ?>;
 </script>

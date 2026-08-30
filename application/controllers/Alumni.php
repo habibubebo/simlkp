@@ -1,171 +1,81 @@
 <?php
-// require_once APPPATH . 'libraries/phpqrcode/qrlib.php';
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class Alumni extends CI_Controller
 {
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Alumni_model');
-        $host_web2 = 'https://s1.cenditama.com';
+        $this->load->model('Model_APS');
     }
 
+    // Halaman publik cek data alumni / verifikasi sertifikat.
     public function index()
     {
-        $data['alumni'] = $this->Alumni_model->get_all();
+        $data['profil'] = $this->Model_APS->tampil_data('profil', 'npsn', 'ASC')->result();
+        $data['q'] = trim((string)$this->input->get('q'));
+        $data['hasil'] = ($data['q'] !== '') ? $this->_cari($data['q']) : array();
+
         $this->load->view('alumni/index', $data);
     }
 
-    public function tambah()
+    // Format tanggal ke "d Bulan Y" (mis. 30 Agustus 2026).
+    private function _tgl($tanggal)
     {
-        if ($this->input->post()) {
-            $input = $this->input->post('alumni');
-            $batch = isset($input[0]) ? $input : [$input];
+        if (empty($tanggal)) {
+            return '-';
+        }
+        $bulan = array(
+            1 => 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+            'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+        );
+        $pecah = explode('-', (string)$tanggal);
+        if (count($pecah) !== 3) {
+            return htmlspecialchars((string)$tanggal, ENT_QUOTES);
+        }
+        return $pecah[2] . ' ' . $bulan[(int)$pecah[1]] . ' ' . $pecah[0];
+    }
 
-            $this->Alumni_model->add_batch($batch);
-
-            foreach ($batch as $alumni) {
-                $this->generate_qr($alumni);
-            }
-
-            redirect('alumni');
+    // Cari peserta/lulusan berdasarkan NIPD (identitas unik pada sertifikat).
+    private function _cari($q)
+    {
+        // Ambil angka pertama bila input berupa nomor sertifikat ("123/CU/2026/A").
+        if (!preg_match('/\d+/', (string)$q, $m)) {
+            return array();
+        }
+        $nipd = (int)$m[0];
+        if ($nipd <= 0) {
+            return array();
         }
 
-        $this->load->view('alumni/tambah');
-    }
+        $this->db->select('p.Nipd, p.Nama, p.Kelamin, p.Tglmasuk, r.Namarombel, l.Tgllulus, l.Tglcetak, l.Id AS Idl');
+        $this->db->from('peserta p');
+        $this->db->join('rombel r', 'p.Jeniskursus = r.Id', 'left');
+        $this->db->join('lulusan l', 'l.Nipd = p.Nipd', 'left');
+        $this->db->where('p.Nipd', $nipd);
+        $this->db->order_by('p.Nipd', 'ASC');
+        $this->db->limit(1);
 
-    private function send_to_web2($alumni)
-    {
-        // URL endpoint API di Web 2
-        $url = $host_web2.'/api/receive_alumni';
+        $rows = $this->db->get()->result();
+        $hasil = array();
 
-        // Data yang akan dikirim
-        $data = [
-            'nik' => $alumni['nik'],
-            'nama' => $alumni['nama'],
-            'tanggal_lahir' => $alumni['tanggal_lahir'],
-            'judul_pelatihan' => $alumni['judul_pelatihan'],
-            'tahap' => $alumni['tahap'],
-            'tahun' => $alumni['tahun'],
-            'foto' => $alumni['foto'] ?? null,
-            'qr_code' => base_url("qr_test/{$alumni['tahun']}/TAHAP {$alumni['tahap']}/{$alumni['judul_pelatihan']}/{$alumni['nik']}.png")
-        ];
-
-        // Inisialisasi cURL
-        $ch = curl_init($url);
-
-        // Set opsi cURL
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'X-API-KEY: your-secret-key' // Tambahkan API key untuk autentikasi
-        ]);
-
-        // Eksekusi cURL
-        $response = curl_exec($ch);
-
-        // Cek error
-        if (curl_errno($ch)) {
-            log_message('error', 'cURL error: ' . curl_error($ch));
-        } else {
-            $result = json_decode($response, true);
-            log_message('info', 'Response from Web 2: ' . $result['message']);
+        foreach ($rows as $r) {
+            $valid = ($r->Idl !== null);
+            $hasil[] = (object) array(
+                'Nipd' => $r->Nipd,
+                'Nama' => $r->Nama,
+                'Kelamin' => $r->Kelamin,
+                'Program' => trim((string)$r->Namarombel),
+                'Mulai' => $this->_tgl($r->Tglmasuk),
+                'Selesai' => $this->_tgl($r->Tgllulus),
+                'Cetak' => $this->_tgl($r->Tglcetak),
+                'Valid' => $valid,
+                'NoSertifikat' => ($valid && !empty($r->Tgllulus))
+                    ? 'No. ' . $r->Nipd . '/CU/' . date('Y', strtotime((string)$r->Tgllulus)) . '/A'
+                    : '',
+            );
         }
 
-        // Tutup cURL
-        curl_close($ch);
+        return $hasil;
     }
-
-    public function detail($nik, $tahun)
-    {
-        $alumni = $this->Alumni_model->get_by_key($nik, $tahun);
-        if (!$alumni) show_404();
-
-        $data['alumni'] = $alumni;
-        $this->load->view('alumni/detail', $data);
-    }
-
-    public function edit($nik = null, $tahun = null)
-    {
-        $data = $this->Alumni_model->get_all();
-        $key = "$nik-$tahun";
-
-        if (!isset($data[$key])) {
-            show_404();
-        }
-
-        if ($this->input->post()) {
-            $update = [
-                'nik' => $nik,
-                'nama' => $this->input->post('nama'),
-                'tanggal_lahir' => $this->input->post('tanggal_lahir'),
-                'judul_pelatihan' => $this->input->post('judul_pelatihan'),
-                'tahap' => $this->input->post('tahap'),
-                'tahun' => $this->input->post('tahun'),
-                'foto' => $this->input->post('foto'),
-            ];
-
-            $this->Alumni_model->update($nik, $tahun, $update);
-            $this->generate_qr($update); // QR diperbarui jika judul/tahun berubah
-            redirect('alumni');
-        }
-
-        $data['alumni'] = $data[$key];
-        $this->load->view('alumni/edit', $data);
-    }
-
-    public function hapus($nik, $tahun)
-    {
-        $this->Alumni_model->delete($nik, $tahun);
-        $this->delete_on_web2($nik, $tahun); // Kirim permintaan hapus ke Web 2
-        redirect('alumni');
-    }
-
-    private function delete_on_web2($nik, $tahun)
-    {
-        $url = $host_web2.'/api/delete_alumni';
-        $data = [
-            'nik' => $nik,
-            'tahun' => $tahun
-        ];
-
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'X-API-KEY: your-secret-key'
-        ]);
-
-        $response = curl_exec($ch);
-
-        if (curl_errno($ch)) {
-            log_message('error', 'cURL error: ' . curl_error($ch));
-        } else {
-            $result = json_decode($response, true);
-            log_message('info', 'Response from Web 2: ' . $result['message']);
-        }
-
-        curl_close($ch);
-    }
-
-    private function generate_qr($alumni)
-    {
-        $tahun = $alumni['tahun'];
-        $tahap = $alumni['tahap'];
-        $judul = $alumni['judul_pelatihan'];
-        $nik = $alumni['nik'];
-        $link = base_url("alumni/detail/{$nik}/{$tahun}");
-
-        $folder = FCPATH . "qr_test/$tahun/TAHAP $tahap/$judul";
-        if (!file_exists($folder)) {
-            mkdir($folder, 0755, true);
-        }
-
-        $file_path = "$folder/{$nik}.png";
-        QRcode::png($link, $file_path, 'L', 6, 2);
-    }
-
-    
 }
