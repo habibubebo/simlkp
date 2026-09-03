@@ -2,7 +2,6 @@
 $__ci =& get_instance();
 $__nama = trim($__ci->session->userdata('nama') ?: '-');
 $__user = trim($__ci->session->userdata('username') ?: '-');
-$__pass = (string)$__ci->session->userdata('password');
 $__initial = strtoupper(substr($__nama,0,1) . (strpos($__nama,' ') ? substr($__nama, strpos($__nama,' ')+1,1) : ''));
 ?>
 <style>
@@ -64,10 +63,10 @@ $__initial = strtoupper(substr($__nama,0,1) . (strpos($__nama,' ') ? substr($__n
           <div class="form-group mb-3">
             <label class="field-label" for="akPass">Kata Sandi</label>
             <div class="pass-wrap">
-              <input type="password" class="akun-input" id="akPass" name="password" value="<?= html_escape($__pass) ?>" maxlength="30" required style="padding-right:2.6rem">
+              <input type="password" class="akun-input" id="akPass" name="password" placeholder="Masukkan password baru" maxlength="30" required style="padding-right:2.6rem">
               <button type="button" class="pass-toggle" id="akPassToggle" aria-label="Tampilkan kata sandi"><i class="fas fa-eye"></i></button>
             </div>
-            <div class="small text-muted mt-1" style="font-size:.66rem">Kata sandi disimpan apa adanya; gunakan kombinasi yang tidak mudah ditebak</div>
+            <div class="small text-muted mt-1" style="font-size:.66rem">Kata sandi disimpan dalam bentuk terenkripsi; gunakan kombinasi yang tidak mudah ditebak</div>
           </div>
           <div class="d-flex" style="gap:.5rem">
             <a href="<?= base_url('index.php/utama') ?>" class="btn flex-fill" style="border:1px solid #e2e8f0;background:#fff;color:#475569;border-radius:.6rem;font-weight:600;font-size:.8rem">Kembali</a>

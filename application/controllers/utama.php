@@ -38,10 +38,16 @@ class utama extends CI_Controller {
             $data = array(
                 'nama' => $nama,
                 'username' => $username,
-                'password' => $Password
             );
+
+            // Hash password hanya jika diisi
+            if (!empty($Password)) {
+                $data['password'] = password_hash($Password, PASSWORD_DEFAULT);
+            }
+
             $where = array('id' => $id);
             $this->Model_APS->proses_update($where,$data,'akun');
+            $this->session->set_flashdata('error', '');
             redirect(base_url("login"));
         }
         // function notif(){

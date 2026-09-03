@@ -29,46 +29,38 @@ class login extends CI_Controller
     // Fungsi Auth() Untuk memeriksa / memproses inputan yang dikirim dari form login (v_login.php)----------------
     function auth()
     {
-        // Membuat variabel untuk menampung hasil inputan dari form login (v_login.php)------------------------
         $user = $this->input->post('user');
         $pass = $this->input->post('pass');
         $is_pwa = $this->input->post('is_pwa');
-        // Pemeriksaan Antara inputan dengan data yang ada di database-----------------------------------------
-        $where = array(
-            // 'Field_database' => $var_penampung----------------------------------------------------------
-            'username' => $user,
-            'password' => $pass
-        );
-        // Membuat variabel statement(stat) yang berisi hasil dari pemeriksaan ke database---------------------
-        // Fungsi cek_akun($where) untuk mengecek kondisi yang diberikan dengan data yang ada di tabel akun---
-        // Fungsi num_rows() akan menghasilkan nilai 0 jika tidak ada data / 1 jika ada data yang sesuai -----
-        $stat = $this->Model_APS->cek_akun($where)->num_rows();
-        // Membuat kondisi untuk memeriksa hasil statement-----------------------------------------------------
-        if ($stat > 0) {
-            // Membuat variabel list untuk menampung data kondisi yang diberikan------------------------------- 
-            $data = $this->Model_APS->cek_akun($where)->result();
-            // Membuat pengulangan untuk variabel $data agar data dapat dijabarkan-----------------------------
-            foreach ($data as $data);
-            // Membuat variabel untuk menampung data akun yang login-------------------------------------------
+
+        // Query hanya berdasarkan username
+        $where = array('username' => $user);
+        $query = $this->Model_APS->cek_akun($where);
+
+        if ($query->num_rows() > 0) {
+            $akun = $query->row();
+
+            // Verifikasi password dengan password_verify()
+            if (!password_verify($pass, $akun->password)) {
+                $this->session->set_flashdata('error', 'Username atau password salah!');
+                redirect('login');
+                return;
+            }
+
             $datalogin = array(
-                // 'Field_database' => $var_penampung_data_kondisi-----------------------------------------
-                'id' => $data->id,
-                'nama' => $data->nama,
-                'username' => $data->username,
-                'password' => $data->password,
+                'id' => $akun->id,
+                'nama' => $akun->nama,
+                'username' => $akun->username,
                 'status' => "masuk",
                 'is_pwa' => ($is_pwa === '1' ? '1' : '0'),
                 'last_active' => time(),
             );
-            // jika bukan PWA, set batas waktu sesi 2 jam------------------------------------------------------
             if ($datalogin['is_pwa'] !== '1') {
                 $datalogin['session_expiry'] = time() + 7200;
             }
-            // Membuat Session untuk mengatur data user yang login---------------------------------------------
             $this->session->set_userdata($datalogin);
             $ip = $_SERVER["HTTP_CF_CONNECTING_IP"] ?? $_SERVER['REMOTE_ADDR'];
             helper_log("login", 'login ke sistem dari '.$ip);
-            // Memanggil fungsi header() untuk mengarahkan halaman---------------------------------------------
             header('location:' . base_url() . 'pages/dashboard');
         } else {
             $this->session->set_flashdata('error', 'Username atau password salah!');
