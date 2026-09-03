@@ -33,11 +33,20 @@
       </a>
       <!-- body menu -->
       <hr class="sidebar-divider my-0">
+      <?php if (is_instructor()): ?>
+      <li class="nav-item <?php echo ($active_method == 'dashboard_instruktur') ? 'active' : ''; ?>">
+        <a class="nav-link" href="<?php echo base_url("pages/dashboard_instruktur") ?>">
+          <i class="fas fa-fw fa-tachometer-alt"></i>
+          <span>Dashboard</span></a>
+      </li>
+      <?php else: ?>
       <li class="nav-item <?php echo ($active_method == 'dashboard') ? 'active' : ''; ?>">
         <a class="nav-link" href="<?php echo base_url("pages/dashboard") ?>">
           <i class="fas fa-fw fa-tachometer-alt"></i>
           <span>Dashboard</span></a>
       </li>
+      <?php endif; ?>
+      <?php if (is_admin()): ?>
       <hr class="sidebar-divider">
       <div class="sidebar-heading">
         Menu
@@ -78,16 +87,26 @@
           <span>Unit Kompetensi</span>
         </a>
       </li>
-      <li class="nav-item <?php echo ($active_method == 'peserta') ? 'active' : ''; ?>">
+      <li class="nav-item <?php echo ($active_class == 'laporan' && $active_method == 'form') ? 'active' : ''; ?>">
+        <a class="nav-link" href="<?php echo base_url('Laporan/form'); ?>">
+          <i class="fas fa-fw fa-file"></i>
+          <span>Formulir Pendaftaran</span>
+        </a>
+      </li>
+      <?php if (is_superadmin()): ?>
+      <li class="nav-item <?php echo ($active_class == 'akun') ? 'active' : ''; ?>">
+        <a class="nav-link" href="<?php echo base_url('akun'); ?>">
+          <i class="fas fa-fw fa-user-cog"></i>
+          <span>Manajemen Akun</span>
+        </a>
+      </li>
+      <?php endif; ?>
+      <?php endif; ?>
+      <?php if (is_logged_in()): ?>
+      <li class="nav-item <?php echo ($active_method == 'peserta' || $active_method == 'peserta2') ? 'active' : ''; ?>">
         <a class="nav-link" href="<?php echo base_url("pages/peserta") ?>">
           <i class="fas fa-fw fa-users"></i>
           <span>Peserta</span>
-        </a>
-      </li>
-      <li class="nav-item <?php echo ($active_method == 'presensi') ? 'active' : ''; ?>">
-        <a class="nav-link" href="<?php echo base_url("pages/presensi") ?>">
-          <i class="fas fa-fw fa-archive"></i>
-          <span>Presensi</span>
         </a>
       </li>
       <li class="nav-item <?php echo ($active_method == 'lulusan') ? 'active' : ''; ?>">
@@ -96,12 +115,13 @@
           <span>Lulusan</span>
         </a>
       </li>
-      <li class="nav-item <?php echo ($active_class == 'laporan' && $active_method == 'form') ? 'active' : ''; ?>">
-        <a class="nav-link" href="<?php echo base_url('Laporan/form'); ?>">
-          <i class="fas fa-fw fa-file"></i>
-          <span>Formulir Pendaftaran</span>
+      <li class="nav-item <?php echo ($active_method == 'presensi') ? 'active' : ''; ?>">
+        <a class="nav-link" href="<?php echo base_url("pages/presensi") ?>">
+          <i class="fas fa-fw fa-archive"></i>
+          <span>Presensi</span>
         </a>
       </li>
+      <?php endif; ?>
       <hr class="sidebar-divider">
     </ul>
     <!-- Sidebar -->

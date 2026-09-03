@@ -13,9 +13,7 @@ class presensi extends CI_Controller
         $data['profil'] = $this->Model_APS->tampil_data('profil', 'npsn', 'ASC')->result();
         $this->load->view('layout/sidebar_menu', $data);
         $this->load->view('layout/navbar');
-        if ($this->session->userdata('status') == "") {
-            redirect(base_url("login"));
-        }
+        require_login();
     }
     // form-tambah
     function form()
@@ -29,9 +27,21 @@ class presensi extends CI_Controller
         $tgl = $this->input->post('tgl');
         $waktu_list = (array) $this->input->post('waktu');
         $nipd_list = $this->input->post('nama');
-        $ins = $this->input->post('Instruktur');
         $materi = $this->input->post('materi');
         $jml = $this->input->post('jumlah');
+
+        // Instruktur: dikunci ke akunnya. Admin/superadmin: bebas pilih dari form.
+        if (is_instructor()) {
+            $ins = current_instructor_id();
+        } else {
+            $ins = $this->input->post('Instruktur');
+        }
+
+        if ($ins <= 0) {
+            $this->session->set_flashdata('error', 'Instruktur tidak valid. Hubungi administrator.');
+            redirect('pages/presensi');
+            return;
+        }
 
         $tanggal = date('Y-m-d', strtotime($tgl));
 
@@ -57,6 +67,14 @@ class presensi extends CI_Controller
     // from-Ubah
     function form_ubah($Id)
     {
+        $Id = (int)$Id;
+        if (is_instructor()) {
+            $own = $this->db->query("SELECT Id FROM presensi WHERE Id=$Id AND Instruktur=" . current_instructor_id())->num_rows();
+            if ($own === 0) {
+                redirect('pages/presensi');
+                return;
+            }
+        }
         $where = array('presensi.Id' => $Id);
         $on = "presensi.Nipd=peserta.Nipd";
         $data['presensi'] = $this->Model_APS->edit_data_join2('*, presensi.Id AS PrId, instruktur.Id AS InsId', 'presensi', 'peserta', $on, 'instruktur', 'presensi.Instruktur=instruktur.Id', $where)->result();
@@ -73,6 +91,16 @@ class presensi extends CI_Controller
         $ins = $this->input->post('Instruktur');
         $materi = $this->input->post('materi');
 
+        if (is_instructor()) {
+            $Id = (int)$Id;
+            $own = $this->db->query("SELECT Id FROM presensi WHERE Id=$Id AND Instruktur=" . current_instructor_id())->num_rows();
+            if ($own === 0) {
+                redirect('pages/presensi');
+                return;
+            }
+            $ins = current_instructor_id();
+        }
+
         $data = array(
             'Tgl' => $tgl,
             'Nipd' => $nipd,
@@ -88,6 +116,14 @@ class presensi extends CI_Controller
     // hapus
     function hapus($Id)
     {
+        $Id = (int)$Id;
+        if (is_instructor()) {
+            $own = $this->db->query("SELECT Id FROM presensi WHERE Id=$Id AND Instruktur=" . current_instructor_id())->num_rows();
+            if ($own === 0) {
+                redirect('pages/presensi');
+                return;
+            }
+        }
         $where = array('Id' => $Id);
         $this->Model_APS->hapus_data($where, 'presensi');
         helper_log("delete", "menghapus presensi");

@@ -13,9 +13,7 @@ class lulusan  extends CI_Controller
             $this->load->view('layout/sidebar_menu', $data);
             $this->load->view('layout/navbar');
         }
-        if ($this->session->userdata('status') == "") {
-            redirect(base_url("login"));
-        }
+        require_login();
     }
     // form-tambah
     function form()

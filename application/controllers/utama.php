@@ -14,9 +14,7 @@ class utama extends CI_Controller {
                 $data['profil'] = $this->Model_APS->tampil_data('profil','npsn','ASC')->result();
                 $this->load->view('layout/sidebar_menu',$data);
                 $this->load->view('layout/navbar');
-                if($this->session->userdata('status') == ""){
-                    redirect(base_url("login"));
-                }
+                require_login();
         }
     // Fungsi Index() Untuk menjalankan baris kode secara otomatis ketika program berjalan-------------------------
         public function index()

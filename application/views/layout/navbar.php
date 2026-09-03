@@ -30,7 +30,7 @@
           <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-2 d-none d-md-inline-flex" style="color:#fff">
             <i class="fa fa-bars"></i>
           </button>
-          <a href="<?= base_url('pages/dashboard') ?>" class="topbar-logo d-md-none" aria-label="Beranda">
+          <a href="<?= base_url(is_instructor() ? 'pages/dashboard_instruktur' : 'pages/dashboard') ?>" class="topbar-logo d-md-none" aria-label="Beranda">
             <img src="<?= base_url('asset/img/logo/logo.png') ?>" alt="Logo">
           </a>
           <div class="topbar-title">
@@ -91,8 +91,13 @@
                 <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                 Pengaturan akun
               </a>
+              <?php if (is_admin()): ?>
               <div class="dropdown-divider d-md-none"></div>
               <div class="dropdown-header d-md-none" style="font-size:.65rem;letter-spacing:.07em;text-transform:uppercase;font-weight:800;color:#94a3b8">Menu</div>
+              <a class="dropdown-item d-md-none" href="<?= base_url("pages/dashboard") ?>" <?= $__m == 'dashboard' ? $__act : '' ?>>
+                <i class="fas fa-tachometer-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                Dashboard
+              </a>
               <a class="dropdown-item d-md-none" href="<?= base_url("pages/lembaga") ?>" <?= $__m == 'lembaga' ? $__act : '' ?>>
                 <i class="fas fa-university fa-sm fa-fw mr-2 text-gray-400"></i>
                 Lembaga
@@ -116,6 +121,19 @@
               <a class="dropdown-item d-md-none" href="<?= base_url('Laporan/form'); ?>" <?= $__c == 'laporan' && $__m == 'form' ? $__act : '' ?>>
                 <i class="fas fa-file fa-sm fa-fw mr-2 text-gray-400"></i>
                 Formulir Pendaftaran
+              </a>
+              <?php endif; ?>
+              <a class="dropdown-item d-md-none" href="<?= base_url("pages/peserta") ?>" <?= ($__m == 'peserta' || $__m == 'peserta2') ? $__act : '' ?>>
+                <i class="fas fa-users fa-sm fa-fw mr-2 text-gray-400"></i>
+                Peserta
+              </a>
+              <a class="dropdown-item d-md-none" href="<?= base_url("pages/lulusan") ?>" <?= $__m == 'lulusan' ? $__act : '' ?>>
+                <i class="fas fa-graduation-cap fa-sm fa-fw mr-2 text-gray-400"></i>
+                Lulusan
+              </a>
+              <a class="dropdown-item d-md-none" href="<?= base_url("pages/presensi") ?>" <?= $__m == 'presensi' ? $__act : '' ?>>
+                <i class="fas fa-archive fa-sm fa-fw mr-2 text-gray-400"></i>
+                Presensi
               </a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="<?= base_url('index.php/login/logout'); ?>">

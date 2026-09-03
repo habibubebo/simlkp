@@ -8,9 +8,7 @@ class cetak extends CI_Controller {
         $this->load->model('Model_APS');
     	$this->load->library('pdf');
     	$this->load->library('merge');
-    	if($this->session->userdata('status') == ""){
-            redirect(base_url("login"));
-        }
+    	require_login();
     }
     
 	function index(){

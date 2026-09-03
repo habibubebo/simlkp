@@ -8,6 +8,7 @@ class cek extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Model_APS');
+        require_login();
     }
     
     function index()
@@ -93,9 +94,16 @@ class cek extends CI_Controller
         $base = "FROM presensi JOIN peserta ON presensi.Nipd=peserta.Nipd JOIN instruktur ON presensi.Instruktur=instruktur.Id JOIN rombel ON presensi.Jeniskursus=rombel.Id";
 
         $where = '';
+        $role_where = '';
+        if (is_instructor()) {
+            $role_where = " presensi.Instruktur = " . current_instructor_id();
+        }
         if (!empty($search)) {
             $s = $this->db->escape_like_str($search);
             $where = " WHERE (peserta.Nama LIKE '%$s%' OR rombel.Namarombel LIKE '%$s%' OR instruktur.NamaInstruktur LIKE '%$s%' OR presensi.Materi LIKE '%$s%')";
+        }
+        if (!empty($role_where)) {
+            $where = ($where === '') ? " WHERE $role_where" : " $where AND $role_where";
         }
 
         $total = $this->db->query("SELECT COUNT(*) AS cnt $base $where")->row()->cnt;

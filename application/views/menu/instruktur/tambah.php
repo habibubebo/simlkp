@@ -29,6 +29,20 @@
         </div>
       </div>
     </div>
+    <?php if (is_admin()): ?>
+    <div class="card form-card mb-4">
+      <div class="card-header d-flex align-items-center"><div class="d-flex align-items-center justify-content-center mr-3" style="width:36px;height:36px;border-radius:.6rem;background:rgba(37,99,235,.12);color:#1d4ed8"><i class="fas fa-user-lock" style="font-size:.85rem"></i></div><div><h6 class="mb-0" style="font-weight:700;color:#1e293b;font-size:.9rem">Akun Login</h6><small class="text-muted" style="font-size:.72rem">Akses masuk instruktur (opsional)</small></div></div>
+      <div class="card-body p-4">
+        <div class="row">
+          <div class="form-group col-md-6 mb-3"><label class="field-label">Username <span class="text-muted">(default: email)</span></label><input type="text" class="form-control m-input" name="ak_username" maxlength="100" placeholder="username"></div>
+          <div class="form-group col-md-6 mb-3"><label class="field-label">Password <span class="text-muted">(default: nama)</span></label><input type="text" class="form-control m-input" name="ak_password" maxlength="100" placeholder="Password sementara"></div>
+          <?php if (is_superadmin()): ?>
+          <div class="form-group col-md-6 mb-3"><label class="field-label">Role <span class="text-danger">*</span></label><select name="ak_role" class="form-control m-input"><option value="instructor">Instructor</option><option value="admin">Admin</option><option value="superadmin">Superadmin</option></select></div>
+          <?php endif; ?>
+        </div>
+      </div>
+    </div>
+    <?php endif; ?>
     <div class="d-flex justify-content-end" style="gap:.6rem"><a href="<?= base_url('pages/instruktur') ?>" class="btn" style="background:#fff;border:1px solid #e2e8f0;color:#475569;border-radius:.6rem;font-weight:600;padding:.55rem 1.1rem">Batal</a><button type="submit" class="btn btn-primary" style="background:#2563eb;border-color:#2563eb;border-radius:.6rem;font-weight:600;padding:.55rem 1.2rem;box-shadow:0 4px 14px rgba(37,99,235,.25)"><i class="fas fa-save mr-1"></i> Simpan</button></div>
   </form>
 </div></div>

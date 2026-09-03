@@ -36,6 +36,13 @@
                         <input type="text" class="form-control" id="jks" aria-describedby="emailHelp" placeholder="Jenis Kursus" name="jks" maxlength="50" required>
                     </div>
                     <div class="form-group col-md-12">
+                        <?php if (is_instructor()): ?>
+                        <input type="hidden" name="Instruktur" value="<?= (int) current_instructor_id() ?>">
+                        <div class="form-control-plaintext small" style="color:#334155">
+                          <i class="fas fa-chalkboard-teacher mr-1"></i>
+                          Instruktur: <strong><?= html_escape($this->session->userdata('nama')) ?></strong>
+                        </div>
+                        <?php else: ?>
                         <select type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="Instruktur" maxlength=20 required>
                             <option disabled selected value="">Instruktur</option>
                             <?php
@@ -46,6 +53,7 @@
                                 </option>
                             <?php } ?>
                         </select>
+                        <?php endif; ?>
                     </div>
                     <div class="form-group col-md-12">
                         <input type="text" class="form-control" id="materi" aria-describedby="emailHelp" placeholder="Materi" name="materi" maxlength="50" required>

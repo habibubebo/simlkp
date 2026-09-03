@@ -91,7 +91,9 @@ $_pegNames = implode(', ', $_allStaff);
     </div>
     <div class="d-flex align-items-center" style="gap:.5rem">
       <button class="btn btn-sm d-none d-md-inline-flex align-items-center" style="background:#eff6ff;border:1px solid #bfdbfe;color:#2563eb;border-radius:.5rem;font-weight:600;font-size:.78rem;padding:.38rem .6rem" data-toggle="modal" data-target="#tambahPresensiSiswa"><i class="fas fa-user-plus mr-1"></i> Peserta</button>
+      <?php if (is_admin()): ?>
       <button class="btn btn-sm d-none d-md-inline-flex align-items-center" style="background:#fffbeb;border:1px solid #fde68a;color:#92400e;border-radius:.5rem;font-weight:600;font-size:.78rem;padding:.38rem .6rem" data-toggle="modal" data-target="#tambahPres"><i class="fas fa-id-badge mr-1"></i> Pegawai</button>
+      <?php endif; ?>
     </div>
   </div>
   <div class="d-block d-md-none">

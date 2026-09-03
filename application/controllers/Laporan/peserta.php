@@ -4,6 +4,7 @@ Class peserta extends CI_Controller{
         parent::__construct();
         $this->load->library('pdf');
         $this->load->model('Model_APS');
+        require_admin();
         function garis(){
             $this->SetLineWidth(1);
             $this->Line(10,36,138,36);

@@ -11,9 +11,7 @@ class rombel  extends CI_Controller {
         $data['profil'] = $this->Model_APS->tampil_data('profil','npsn','ASC')->result();
         $this->load->view('layout/sidebar_menu',$data);
         $this->load->view('layout/navbar');
-        if($this->session->userdata('status') == ""){
-            redirect(base_url("login"));
-        }
+        require_admin();
     }
     // form-tambah
     function form(){

@@ -51,6 +51,8 @@ class login extends CI_Controller
                 'id' => $akun->id,
                 'nama' => $akun->nama,
                 'username' => $akun->username,
+                'role' => $akun->role,
+                'instructor_id' => (int) ($akun->instructor_id ?? 0),
                 'status' => "masuk",
                 'is_pwa' => ($is_pwa === '1' ? '1' : '0'),
                 'last_active' => time(),
@@ -61,7 +63,12 @@ class login extends CI_Controller
             $this->session->set_userdata($datalogin);
             $ip = $_SERVER["HTTP_CF_CONNECTING_IP"] ?? $_SERVER['REMOTE_ADDR'];
             helper_log("login", 'login ke sistem dari '.$ip);
-            header('location:' . base_url() . 'pages/dashboard');
+
+            if (is_instructor()) {
+                header('location:' . base_url() . 'pages/dashboard_instruktur');
+            } else {
+                header('location:' . base_url() . 'pages/dashboard');
+            }
         } else {
             $this->session->set_flashdata('error', 'Username atau password salah!');
             redirect('login');

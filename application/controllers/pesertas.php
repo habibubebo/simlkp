@@ -9,9 +9,10 @@ class Pesertas extends CI_Controller {
         // Load Model
         $this->load->model('Model_APS');
     
-        // Load base_url
-        $this->load->helper('url');
-    }
+		// Load base_url
+		$this->load->helper('url');
+		require_login();
+	}
     
     
 	public function Nipd(){
