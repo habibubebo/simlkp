@@ -629,7 +629,6 @@
             <span class="alumni-ic"><i class="fas fa-certificate"></i></span>
             <span class="alumni-txt">
               <strong>Cek Data Alumni</strong>
-              <small><?= htmlspecialchars((string)($namalembaga ?? ''), ENT_QUOTES) ?>?</small>
             </span>
             <i class="fas fa-chevron-right alumni-arrow"></i>
           </a>

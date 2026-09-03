@@ -23,12 +23,13 @@ class pages  extends CI_Controller
         $data['peserta'] = $this->db->query("SELECT * FROM peserta WHERE Status=1 or Status=0")->result();
         $data['rombel'] = $this->db->query("SELECT * FROM rombel")->result();
         $data['instruktur'] = $this->db->query("SELECT * FROM instruktur")->result();
-		$data['totals'] = $this->db->query("SELECT rombel.Id AS Id, Namarombel,IFNULL(BelumLulus, 0) AS BL,IFNULL(TotalPeserta, 0) AS TP, ((TotalPeserta - BelumLulus) / TotalPeserta * 100) AS Persen
+		$data['totals'] = $this->db->query("SELECT rombel.Id AS Id, Namarombel,IFNULL(BelumLulus, 0) AS BL,IFNULL(TotalPeserta, 0) AS TP, IFNULL(ROUND((IFNULL(TotalPeserta, 0) - IFNULL(BelumLulus, 0)) / NULLIF(IFNULL(TotalPeserta, 0), 0) * 100, 1), 0) AS Persen
         FROM rombel 
         left JOIN (SELECT Jeniskursus, COUNT(Nipd) AS BelumLulus FROM peserta WHERE Nipd NOT IN (SELECT Nipd FROM lulusan) GROUP BY Jeniskursus
         ) AS t ON Jeniskursus=rombel.Id 
         left JOIN (SELECT rombel.Id, COUNT(peserta.Nipd) AS TotalPeserta FROM rombel JOIN peserta ON rombel.Id=peserta.Jeniskursus GROUP BY rombel.Id
-        ) AS t2 ON t2.Id=rombel.Id")->result();
+        ) AS t2 ON t2.Id=rombel.Id
+        ORDER BY Persen ASC, rombel.Id ASC")->result();
 		$data['belumLulusNama'] = $this->db->query("SELECT p.Nama AS nm, p.Jeniskursus AS IdRombel, YEAR(p.Tglmasuk) AS ThnMasuk
         FROM peserta p
         WHERE p.Nipd NOT IN (SELECT Nipd FROM lulusan)

@@ -5,7 +5,7 @@
 .modern-stat.stat-rombel .stat-icon{background:rgba(245,158,11,.14);color:#d97706}
 .modern-stat.stat-peserta .stat-icon{background:rgba(16,185,129,.12);color:#059669}
 .modern-stat.stat-lulus .stat-icon{background:rgba(139,92,246,.12);color:#7c3aed}
-.modern-card{border:1px solid #eef0f4;border-radius:.85rem;box-shadow:0 1px 3px rgba(15,23,42,.04),0 8px 24px rgba(15,23,42,.04);background:#fff}
+.modern-card{border:1px solid #eef0f4;border-radius:.85rem;box-shadow:0 1px 3px rgba(15,23,42,.04),0 8px 24px rgba(15,23,42,.04);background:#fff;min-width:0;max-width:100%;overflow:hidden}
 .modern-card .card-header{background:#fff;border-bottom:1px solid #f1f5f9;border-radius:.85rem .85rem 0 0}
 .info-card{border:1px solid #bfdbfe;background:#eff6ff;border-radius:.85rem}
 .info-card .info-icon{width:40px;height:40px;border-radius:.7rem;background:#2563eb;color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 12px rgba(37,99,235,.2)}
@@ -14,11 +14,12 @@
 .insight-icon{width:32px;height:32px;border-radius:.6rem;display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0}
 .chart-area{height:200px !important; position:relative}
 @media(min-width:768px){.chart-area{height:240px !important}}
-.masonry{display:grid;grid-template-columns:1fr;gap:1.5rem;align-items:start}
+.masonry{display:grid;grid-template-columns:1fr;gap:1.5rem;align-items:start;min-width:0;max-width:100%}
 @media(min-width:992px){.masonry{grid-template-columns:1fr 1fr}}
 @media(min-width:992px){.masonry.is-packed{display:block}.masonry.is-packed>.masonry-item{width:calc(50% - .75rem)}}
-.masonry-item{margin-bottom:0}
+.masonry-item{margin-bottom:0;min-width:0;max-width:100%;overflow:hidden}
 .masonry.is-packed>.masonry-item{position:absolute;margin-bottom:0}
+.card-body{min-width:0;max-width:100%}
 #progresAccelerion>.prg-item{border-bottom:1px solid #f1f5f9;padding-bottom:1rem;margin-bottom:1rem}
 #progresAccelerion>.prg-item:last-child{border-bottom:0;padding-bottom:0;margin-bottom:0}
 .tile-btn .fa-chevron-down{transition:transform .2s;margin-left:.3rem}
@@ -30,6 +31,10 @@
 .streak-flame-top{animation:streakFlicker 1.4s ease-in-out infinite;transform-origin:50% 80%}
 @keyframes streakFlicker{0%,100%{transform:scale(1) rotate(-2deg)}30%{transform:scale(1.12) rotate(2deg)}55%{transform:scale(.94) rotate(-1deg)}75%{transform:scale(1.06) rotate(1deg)}}
 @media(prefers-reduced-motion:reduce){.streak-flame-top{animation:none}}
+.streak-copy{width:28px;height:28px;border-radius:.5rem;border:1px solid #eef0f4;background:#fff;color:#94a3b8;display:inline-flex;align-items:center;justify-content:center;padding:0;box-shadow:none;transition:color .15s,border-color .15s,background .15s;flex-shrink:0}
+.streak-copy:hover{color:#ea580c;border-color:#fed7aa;background:#fff7ed}
+.streak-copy.done{color:#059669;border-color:#a7f3d0;background:#ecfdf5}
+.streak-copy.loading i{opacity:.4}
 .bulan-nav{width:28px;height:28px;border-radius:9999px;display:flex;align-items:center;justify-content:center;color:#475569;font-size:.65rem;text-decoration:none;background:transparent}
 .bulan-nav:hover{background:#f8fafc;color:#1e293b}
 .bulan-nav-off{color:#cbd5e1;pointer-events:none}
@@ -365,7 +370,7 @@ endif; ?>
         </div>
         <span class="badge" style="background:#fff7ed;color:#9a3412;border:1px solid #fed7aa;font-size:.68rem;border-radius:9999px;padding:.25rem .5rem"><i class="fas fa-fire mr-1" style="font-size:.6rem;color:#f97316"></i><?= count($streakPeserta ?? []) ?> aktif</span>
       </div>
-      <div class="card-body" style="padding:1.1rem">
+      <div class="card-body" style="padding:1.1rem;min-width:0;max-width:100%;overflow:hidden">
         <?php if (empty($streakPeserta)): ?>
           <div class="text-center py-3">
             <div class="mx-auto mb-2 d-flex align-items-center justify-content-center" style="width:44px;height:44px;border-radius:.7rem;background:#fff7ed;border:1px solid #fed7aa;color:#fdba74"><i class="fas fa-fire"></i></div>
@@ -376,18 +381,19 @@ endif; ?>
           $initialsS = strtoupper(substr(trim($sk->Nama), 0, 1) . (strpos(trim($sk->Nama), ' ') ? substr(trim($sk->Nama), strpos(trim($sk->Nama), ' ') + 1, 1) : ''));
           $flameSize = min(1.15, 0.8 + $sk->streak * 0.03);
         ?>
-          <div class="d-flex align-items-center py-2" style="gap:.7rem;<?= $sRank > 1 ? 'border-top:1px solid #f8fafc' : '' ?>">
+          <div class="d-flex align-items-center py-2" style="gap:.7rem;min-width:0;max-width:100%;overflow:hidden;<?= $sRank > 1 ? 'border-top:1px solid #f8fafc' : '' ?>">
             <span class="d-flex align-items-center justify-content-center flex-shrink-0" style="width:28px;height:28px;border-radius:9999px;background:<?= $sRank == 1 ? '#f97316' : ($sRank == 2 ? '#fb923c' : ($sRank == 3 ? '#fdba74' : '#e2e8f0')) ?>;color:<?= $sRank <= 3 ? '#fff' : '#475569' ?>;font-size:.7rem;font-weight:800"><?= $sRank ?></span>
-            <div class="d-flex align-items-center" style="gap:.6rem;flex:1;min-width:0">
+            <div class="d-flex align-items-center" style="gap:.6rem;flex:1;min-width:0;max-width:100%;overflow:hidden">
               <div class="d-flex align-items-center justify-content-center flex-shrink-0" style="width:32px;height:32px;border-radius:.6rem;background:rgba(249,115,22,.1);color:#ea580c;font-weight:800;font-size:.68rem"><?= html_escape($initialsS) ?></div>
-              <div style="flex:1;min-width:0">
-                <div class="small font-weight-bold" style="color:#1e293b;font-size:.78rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><?= html_escape($sk->Nama) ?></div>
-                <div class="small text-muted" style="font-size:.68rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><?= html_escape($sk->Namarombel ?? '-') ?> · <span class="mono" style="font-size:.66rem"><?= html_escape((string)$sk->Nipd) ?></span></div>
+              <div style="flex:1;min-width:0;max-width:100%;overflow:hidden">
+                <div class="small font-weight-bold" style="color:#1e293b;font-size:.78rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;overflow-wrap:anywhere;word-break:break-word;max-width:100%;display:block;min-width:0" title="<?= html_escape($sk->Nama) ?>"><?= html_escape($sk->Nama) ?></div>
+                <div class="small text-muted" style="font-size:.68rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;display:block;overflow-wrap:anywhere;word-break:break-word;min-width:0"><?= html_escape($sk->Namarombel ?? '-') ?> · <span class="mono" style="font-size:.66rem;white-space:nowrap"><?= html_escape((string)$sk->Nipd) ?></span></div>
               </div>
             </div>
             <div class="d-flex align-items-center flex-shrink-0" style="gap:.4rem">
               <i class="fas fa-fire-alt streak-flame<?= $sRank == 1 ? ' streak-flame-top' : '' ?>" style="font-size:<?= $flameSize ?>rem"></i>
               <span style="line-height:1;white-space:nowrap"><span class="streak-num" style="font-size:1.05rem;font-weight:800"><?= $sk->streak ?></span> <span style="font-size:.62rem;color:#9a3412;font-weight:700">hari</span></span>
+              <button type="button" class="btn streak-copy" data-streak-url="<?= base_url('cek/streak?hari=' . (int)$sk->streak . '&nama=') . rawurlencode($sk->Nama) ?>" title="Copy gambar streak <?= html_escape($sk->Nama) ?> ke clipboard" aria-label="Copy gambar streak <?= html_escape($sk->Nama) ?> ke clipboard"><i class="fas fa-copy"></i></button>
             </div>
           </div>
         <?php $sRank++; } ?>
@@ -757,5 +763,77 @@ window.addEventListener('resize', function(){ Chart.helpers.each(Chart.instances
       }
     });
   }
+})();
+</script>
+<script>
+(function(){
+  var btns = document.querySelectorAll('.streak-copy');
+  if (!btns.length) return;
+  var GIFTLESS = !(window.isSecureContext && window.ClipboardItem && window.navigator.clipboard && window.navigator.clipboard.write);
+
+  function setState(btn, done, msg){
+    var ic = btn.querySelector('i');
+    if (done) {
+      btn.classList.add('done');
+      if (ic) ic.className = 'fas fa-check';
+    } else {
+      if (ic) ic.className = 'fas fa-copy';
+    }
+    if (ic) ic.style.transition = 'opacity .15s';
+    btn.title = msg;
+    if (done) {
+      setTimeout(function(){
+        btn.classList.remove('done');
+        btn.classList.remove('loading');
+        if (ic) ic.className = 'fas fa-copy';
+        btn.title = btn.getAttribute('aria-label') || 'Copy gambar streak ke clipboard';
+      }, 1600);
+    }
+  }
+
+  function copyImage(imgUrl){
+    return fetch(imgUrl, { cache: 'no-store' })
+      .then(function(r){ if (!r.ok) throw new Error('HTTP ' + r.status); return r.blob(); })
+      .then(function(blob){
+        var item = new ClipboardItem({ 'image/png': blob });
+        return navigator.clipboard.write([item]);
+      });
+  }
+
+  function downloadImage(imgUrl){
+    var a = document.createElement('a');
+    a.href = imgUrl;
+    a.download = 'streak.png';
+    a.rel = 'noopener';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
+  btns.forEach(function(btn){
+    var url = btn.getAttribute('data-streak-url');
+    if (GIFTLESS) {
+      btn.title = 'Browser tidak mendukung copy gambar, akan diunduh';
+      btn.addEventListener('click', function(e){
+        e.preventDefault();
+        downloadImage(url);
+      });
+      return;
+    }
+    btn.addEventListener('click', function(e){
+      e.preventDefault();
+      if (btn.classList.contains('loading')) return;
+      btn.classList.add('loading');
+      copyImage(url)
+        .then(function(){
+          setState(btn, true, 'Gambar streak disalin ke clipboard');
+        })
+        .catch(function(){
+          setState(btn, false, 'Gagal menyalin, mencoba mengunduh');
+          setTimeout(function(){ btn.classList.remove('loading'); }, 800);
+          downloadImage(url);
+        });
+    });
+  });
 })();
 </script>
